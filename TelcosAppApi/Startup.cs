@@ -57,6 +57,7 @@ namespace TelcosAppApi
                 });
             });
             services.AddDbContext<TelcosApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelcosConnectionString")));
+            services.AddAutoMapper(typeof(Startup).Assembly);
             _ConfigOthers(services);            
 
         }

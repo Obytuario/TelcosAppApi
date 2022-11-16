@@ -6,18 +6,15 @@ using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
 using TelcosAppApi.AplicationServices.Application.Roles;
 using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
 using TelcosAppApi.DomainServices.Domain.Roles;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var startup = new Startup(builder.Configuration);
 
+
 startup.ConfigureServices(builder.Services);
-#region Application
-builder.Services.AddTransient<IRolesServices, RolesAppServices>();
-#endregion
-#region Domain
-builder.Services.AddTransient<IRolesDomain, RolesDomain>();
-#endregion
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                .AddJwtBearer(opciones => opciones.TokenValidationParameters = new TokenValidationParameters
