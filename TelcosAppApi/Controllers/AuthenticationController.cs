@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using TelcosAppApi.DataAccess;
 using TelcosAppApi.DataAccess.DataAccess;
-using TelcosAppApi.DTOs.Authentication;
+using TelcosAppApi.AplicationServices.DTOs.Authentication;
 
 namespace TelcosAppApi.Controllers
 {
