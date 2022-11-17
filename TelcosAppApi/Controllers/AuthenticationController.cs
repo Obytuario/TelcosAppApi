@@ -9,7 +9,9 @@ using TelcosAppApi.DataAccess;
 using TelcosAppApi.DataAccess.DataAccess;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
 using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
-using AplicationServices.Application.Contracts.Authentication;
+using TelcosAppApi.AplicationServices.Application.Contracts.Authentication;
+using TelcosAppApi.DataAccess.Entities;
+using AutoMapper;
 
 namespace TelcosAppApi.Controllers
 {
@@ -22,16 +24,18 @@ namespace TelcosAppApi.Controllers
         /// Instancia al servicio de aplicación
         /// </summary>
         private readonly IAuthenticationServices _AuthenticationServices;
-      
-        public AuthenticationController(IAuthenticationServices authenticationServices)        {      
+        private readonly IMapper _mapper;
+
+        public AuthenticationController(IAuthenticationServices authenticationServices,IMapper mapper)        {      
            
-            _AuthenticationServices = authenticationServices;   
+            _AuthenticationServices = authenticationServices;
+            _mapper = mapper;
         }
 
         [HttpPost("login", Name = "loginUsuario")]
         public async Task<ActionResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credencialesUsuario)
-        {
-            var resultado = await _AuthenticationServices.Login(credencialesUsuario);
+        {            
+            var resultado = await _AuthenticationServices.Login(credencialesUsuario);            
 
             if (resultado != null)
             {

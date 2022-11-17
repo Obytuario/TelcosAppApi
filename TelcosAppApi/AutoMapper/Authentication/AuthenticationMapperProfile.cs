@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
 using TelcosAppApi.DataAccess.Entities;
 
-namespace TelcosAppApi.AplicationServices.AutoMapper.Authentication
+namespace TelcosAppApi.AutoMapper.Authentication
 {
     
     public class AuthenticationMapperProfile: Profile

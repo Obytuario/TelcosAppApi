@@ -12,6 +12,7 @@ using TelcosAppApi.DI;
 using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
 using TelcosAppApi.DomainServices.Domain.Roles;
 using TelcosAppApi.DataAccess.DataAccess;
+using System.Reflection;
 
 namespace TelcosAppApi
 {
@@ -57,7 +58,8 @@ namespace TelcosAppApi
                 });
             });
             services.AddDbContext<TelcosApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelcosConnectionString")));
-            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllersWithViews();
             _ConfigOthers(services);            
 
         }

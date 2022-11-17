@@ -3,9 +3,9 @@ using TelcosAppApi.AplicationServices.Application.Roles;
 using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
 using TelcosAppApi.DomainServices.Domain.Roles;
 using Microsoft.Extensions.DependencyInjection;
-using AplicationServices.Application.Contracts.Authentication;
+using TelcosAppApi.AplicationServices.Application.Contracts.Authentication;
 using DomainServices.Domain.Contracts.Authentication;
-using AplicationServices.Application.Authentication;
+using TelcosAppApi.AplicationServices.Application.Authentication;
 using DomainServices.Domain.Authentication;
 using AutoMapper;
 
@@ -20,7 +20,7 @@ namespace TelcosAppApi.DI
         public static void RegisterProfile(IServiceCollection services, IConfiguration configuration)
         {
             #region Application
-            services.AddTransient<IMapper, Mapper>();
+            //services.AddTransient<IMapper, Mapper>();
             services.AddTransient<IRolesServices, RolesAppServices>();
             services.AddTransient<IAuthenticationServices, AuthenticationAppServices>();
            

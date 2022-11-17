@@ -1,4 +1,4 @@
-﻿using AplicationServices.Application.Contracts.Authentication;
+﻿using TelcosAppApi.AplicationServices.Application.Contracts.Authentication;
 using AutoMapper;
 using DomainServices.Domain.Contracts.Authentication;
 using Microsoft.EntityFrameworkCore;
@@ -13,9 +13,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
 using TelcosAppApi.DataAccess.Entities;
-using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
 
-namespace AplicationServices.Application.Authentication
+
+namespace TelcosAppApi.AplicationServices.Application.Authentication
 {
     public class AuthenticationAppServices : IAuthenticationServices
     {
@@ -28,7 +28,7 @@ namespace AplicationServices.Application.Authentication
         /// </summary>
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
-        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IConfiguration configuration, Mapper mapper)
+        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IConfiguration configuration, IMapper mapper)
         {
             _authenticationDomain = authenticationDomain;
             _configuration = configuration;
@@ -39,9 +39,8 @@ namespace AplicationServices.Application.Authentication
         {
             try
             {
-
-                Usuario usuario = _mapper.Map<CredencialesUsuarioDto,Usuario>(credencialesUsuario);
-
+                
+                var usuario = _mapper.Map<CredencialesUsuarioDto,Usuario>(credencialesUsuario);
              
                 var result = await _authenticationDomain.Login(usuario);
                 if (result == null)

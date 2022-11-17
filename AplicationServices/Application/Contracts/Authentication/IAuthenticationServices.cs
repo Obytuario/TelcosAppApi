@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
 
-namespace AplicationServices.Application.Contracts.Authentication
+namespace TelcosAppApi.AplicationServices.Application.Contracts.Authentication
 {
     public interface IAuthenticationServices
     {

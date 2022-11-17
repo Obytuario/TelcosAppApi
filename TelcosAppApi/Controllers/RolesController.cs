@@ -21,7 +21,7 @@ namespace TelcosAppApi.Controllers
         /// Instancia al servicio de aplicación
         /// </summary>
         private readonly IRolesServices _rolesServices;
-        private readonly TelcosApiContext _telcosApiContext;
+      
 
         #endregion Fiedls
         public RolesController(IRolesServices rolesServices)
