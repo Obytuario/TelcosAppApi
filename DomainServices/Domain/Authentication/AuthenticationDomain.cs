@@ -15,8 +15,8 @@ namespace DomainServices.Domain.Authentication
 {
     public class AuthenticationDomain : IAuthenticationDomain
     {
-        private readonly TelcosApiContext _context;
-        public AuthenticationDomain(TelcosApiContext telcosApiContext)
+        private readonly TelcosSuiteContext _context;
+        public AuthenticationDomain(TelcosSuiteContext telcosApiContext)
         {
             _context = telcosApiContext;
         }

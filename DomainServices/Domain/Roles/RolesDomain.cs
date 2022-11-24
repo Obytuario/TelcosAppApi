@@ -12,9 +12,9 @@ namespace TelcosAppApi.DomainServices.Domain.Roles
 {
     public class RolesDomain:IRolesDomain
     {
-        private readonly TelcosApiContext _context;
+        private readonly TelcosSuiteContext _context;
 
-        public RolesDomain(TelcosApiContext telcosApiContext)
+        public RolesDomain(TelcosSuiteContext telcosApiContext)
         {
             _context = telcosApiContext;
         }
