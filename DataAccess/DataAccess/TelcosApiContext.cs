@@ -5,7 +5,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
 {
     public class TelcosApiContext: TelcosSuiteContext
     {
-        public TelcosApiContext(DbContextOptions options)
+        public TelcosApiContext(CustomDbSettings options)
         {
 
         }

@@ -1,4 +1,4 @@
-﻿namespace TelcosAppApi.DTOs.Authentication
+﻿namespace TelcosAppApi.AplicationServices.DTOs.Authentication
 {
     public class CredencialesUsuarioDto
     {

@@ -12,12 +12,17 @@ using TelcosAppApi.DI;
 using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
 using TelcosAppApi.DomainServices.Domain.Roles;
 using TelcosAppApi.DataAccess.DataAccess;
+using System.Reflection;
 
 namespace TelcosAppApi
 {
     public class Startup
     {
-        public Startup(IConfiguration  configuration)
+        #region Properties
+        private const string _DBSETTING = "DbSetting";
+        #endregion Properties
+
+        public Startup(IConfiguration configuration)
         {
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             Configuration = configuration;
@@ -26,7 +31,7 @@ namespace TelcosAppApi
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-           
+
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
@@ -56,8 +61,22 @@ namespace TelcosAppApi
                     }
                 });
             });
-            services.AddDbContext<TelcosApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelcosConnectionString")));
-            _ConfigOthers(services);            
+            //services.AddDbContext<TelcosApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelcosConnectionString")));
+            services.AddAutoMapper(typeof(Startup));
+            services.AddControllersWithViews();
+            _ConfigOthers(services);
+            _ConfigSQL(services);
+
+        }
+
+        private void _ConfigSQL(IServiceCollection services)
+        {
+            var dbSettings = new CustomDbSettings();
+            Configuration.Bind(_DBSETTING, dbSettings);
+            //if (!string.IsNullOrEmpty(KeyEncripct)) dbSettings.ConnectionString = Core.SSB
+            //        .Lib.Helpers.CryptoHelper.DecryptSHA256(dbSettings.ConnectionString, KeyEncripct);
+            //Configuration.Bind(_DBSETTING, dbSettings);
+            services.AddSingleton(dbSettings);
 
         }
 
