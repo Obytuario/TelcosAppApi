@@ -26,14 +26,14 @@ namespace TelcosAppApi.Controllers
             _WorkOrderManagementServices = WorkOrderManagementServices;
         }
 
-        [HttpGet]
+        [HttpGet("GetWorkOrderByUser")]
         public async Task<ActionResult<List<GetWorkOrderManagementDTO>>> GetWorkOrderByUser(Guid? user)
         {
 
             return await _WorkOrderManagementServices.GetWorkOrderByUser(user);
         }
-        [HttpPost]
-        public async Task<ActionResult<PostWorkOrderManagementDTO>> GetWorkOrderByUser(PostWorkOrderManagementDTO workOrder)
+        [HttpPost("SaveWorkOrder")]
+        public async Task<ActionResult<PostWorkOrderManagementDTO>> SaveWorkOrder(PostWorkOrderManagementDTO workOrder)
         {
             return await _WorkOrderManagementServices.SaveWorkOrder(workOrder);
         }
