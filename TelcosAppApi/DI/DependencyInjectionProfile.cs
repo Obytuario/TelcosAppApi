@@ -12,6 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Runtime;
 using TelcosAppApi.DataAccess.Entities;
 using TelcosAppApi.DataAccess.DataAccess;
+using DomainServices.Domain.Contracts.WorkOrderManagement;
+using DomainServices.Domain.WorkOrderManagement;
+using AplicationServices.Application.Contracts.WorkOrderManagement;
+using AplicationServices.Application.WorkOrderManagement;
 
 namespace TelcosAppApi.DI
 {
@@ -39,14 +43,16 @@ namespace TelcosAppApi.DI
             //services.AddTransient<IMapper, Mapper>();
             services.AddTransient<IRolesServices, RolesAppServices>();
             services.AddTransient<IAuthenticationServices, AuthenticationAppServices>();
-           
+            services.AddTransient<IWorkOrderManagementServices, WorkOrderManagementAppServices>();
+
             #endregion
 
             #region Domain
 
             services.AddTransient<IRolesDomain, RolesDomain>();
             services.AddTransient<IAuthenticationDomain, AuthenticationDomain>();
-            
+            services.AddTransient<IWorkOrderManagementDomain, WorkOrderManagementDomain>();
+
             #endregion Domain
         }
 
