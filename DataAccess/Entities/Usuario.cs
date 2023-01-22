@@ -15,5 +15,7 @@ public partial class Usuario
 
     public Guid Rol { get; set; }
 
+    public virtual ICollection<OrdenTrabajo> OrdenTrabajo { get; } = new List<OrdenTrabajo>();
+
     public virtual Rol RolNavigation { get; set; } = null!;
 }
