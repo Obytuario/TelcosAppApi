@@ -1,5 +1,6 @@
 ﻿using AplicationServices.Application.Contracts.WorkOrderManagement;
 using AplicationServices.DTOs.workOrderManagement;
+using AplicationServices.DTOs.Generics;
 using AutoMapper;
 using DomainServices.Domain.Contracts.WorkOrderManagement;
 using DomainServices.Domain.WorkOrderManagement;
@@ -38,16 +39,16 @@ namespace AplicationServices.Application.WorkOrderManagement
         /// </summary>
         /// <author>Ariel Bejarano</author>
         /// <param name="user">id del tecnico</param>
-        public async Task<List<GetWorkOrderManagementDTO>> GetWorkOrderByUser(Guid? user)
+        public async Task<RequestResult<List<GetWorkOrderManagementDTO>>> GetWorkOrderByUser(Guid? user)
         {
             try
             {
-                return  _mapper.Map<List<OrdenTrabajo>,List<GetWorkOrderManagementDTO>>(await _workOrderManagementDomain.GetWorkOrderByUser(user));
-                
+                return RequestResult<List<GetWorkOrderManagementDTO>>.CreateSuccessful(_mapper.Map<List<OrdenTrabajo>, List<GetWorkOrderManagementDTO>>(await _workOrderManagementDomain.GetWorkOrderByUser(user)));
+                               
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return RequestResult<List<GetWorkOrderManagementDTO>>.CreateError(ex.Message);
             }
         }
         /// <summary>
@@ -55,18 +56,18 @@ namespace AplicationServices.Application.WorkOrderManagement
         /// </summary>
         /// <author>Ariel Bejarano</author>
         /// <param name="workOrder">objeto para guardar orden de trabajo</param>
-        public async Task<PostWorkOrderManagementDTO>SaveWorkOrder(PostWorkOrderManagementDTO workOrder)
+        public async Task<RequestResult<PostWorkOrderManagementDTO>> SaveWorkOrder(PostWorkOrderManagementDTO workOrder)
         {
             try
             {
                 var ordenTrabajo = _mapper.Map<PostWorkOrderManagementDTO, OrdenTrabajo>(workOrder);
                 _workOrderManagementDomain.SaveWorkOrder(ordenTrabajo);                
-                return workOrder;
+                return RequestResult<PostWorkOrderManagementDTO>.CreateSuccessful(workOrder);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return RequestResult<PostWorkOrderManagementDTO>.CreateError(ex.Message);
             }
         }
         #endregion

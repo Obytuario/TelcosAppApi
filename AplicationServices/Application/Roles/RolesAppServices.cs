@@ -8,31 +8,40 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
 using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
+using AplicationServices.DTOs.Generics;
+using AutoMapper;
+using TelcosAppApi.AplicationServices.DTOs.Generics;
 
 namespace TelcosAppApi.AplicationServices.Application.Roles
 {
+
     public class RolesAppServices :IRolesServices
     {
         /// <summary>
         /// Instancia al servicio de Dominio
         /// </summary>
         private readonly IRolesDomain _rolesDomain;
-        public RolesAppServices(IRolesDomain rolesDomain)
+        /// <summary>
+        /// Mapper
+        /// </summary>
+        private readonly IMapper _mapper;
+        public RolesAppServices(IRolesDomain rolesDomain, IMapper mapper)
         {
             _rolesDomain = rolesDomain;
+            _mapper = mapper;
         }
         #region Method
-        public async Task<List<Rol>> GetRoles()
+        public async Task<RequestResult<List<GenericDto>>> GetRoles()
         {
             try
             {
-                //var claims = HttpContext.User.Claims.Where(claim => claim.Type == "id").FirstOrDefault();
-                return await _rolesDomain.GetRoles();
+                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<Rol>, List<GenericDto>>(await _rolesDomain.GetRoles()));
+               
+                
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                return RequestResult<List<GenericDto>>.CreateError(ex.Message);
             }
         }
         #endregion

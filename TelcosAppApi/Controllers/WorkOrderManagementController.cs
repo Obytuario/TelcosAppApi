@@ -1,4 +1,5 @@
 ﻿using AplicationServices.Application.Contracts.WorkOrderManagement;
+using AplicationServices.DTOs.Generics;
 using AplicationServices.DTOs.workOrderManagement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -25,15 +26,26 @@ namespace TelcosAppApi.Controllers
         {
             _WorkOrderManagementServices = WorkOrderManagementServices;
         }
-
+        /// <summary>
+        /// Consulta las ordenes del dia de un tecnico.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
         [HttpGet("GetWorkOrderByUser")]
-        public async Task<ActionResult<List<GetWorkOrderManagementDTO>>> GetWorkOrderByUser(Guid? user)
+        public async Task<RequestResult<List<GetWorkOrderManagementDTO>>> GetWorkOrderByUser(Guid? user)
         {
 
             return await _WorkOrderManagementServices.GetWorkOrderByUser(user);
         }
+        /// <summary>
+        /// Guarda la informacion de una orden de trabajo
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
         [HttpPost("SaveWorkOrder")]
-        public async Task<ActionResult<PostWorkOrderManagementDTO>> SaveWorkOrder(PostWorkOrderManagementDTO workOrder)
+        public async Task<RequestResult<PostWorkOrderManagementDTO>> SaveWorkOrder(PostWorkOrderManagementDTO workOrder)
         {
             return await _WorkOrderManagementServices.SaveWorkOrder(workOrder);
         }
