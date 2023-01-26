@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
-using TelcosAppApi.AplicationServices.DTOs.Generics;
 using TelcosAppApi.DataAccess;
 using TelcosAppApi.DataAccess.DataAccess;
 using TelcosAppApi.DataAccess.Entities;

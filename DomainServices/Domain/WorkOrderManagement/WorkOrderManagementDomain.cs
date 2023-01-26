@@ -25,6 +25,10 @@ namespace DomainServices.Domain.WorkOrderManagement
                 .Include(x => x.SuscriptorNavigation)
                 .ToListAsync();
         }
+        public async Task<List<TipoSuscriptor>> GetSubscriberType()
+        {
+            return await _context.TipoSuscriptor.Where(x => x.Activo).ToListAsync();
+        }
         /// <summary>
         ///     Guarda una orden de trabajo.
         /// </summary>

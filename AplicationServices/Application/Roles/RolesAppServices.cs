@@ -10,7 +10,7 @@ using TelcosAppApi.DataAccess.Entities;
 using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
 using AplicationServices.DTOs.Generics;
 using AutoMapper;
-using TelcosAppApi.AplicationServices.DTOs.Generics;
+
 
 namespace TelcosAppApi.AplicationServices.Application.Roles
 {

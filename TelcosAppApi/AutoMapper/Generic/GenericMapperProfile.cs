@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using TelcosAppApi.AplicationServices.DTOs.Generics;
+using AplicationServices.DTOs.Generics;
 using TelcosAppApi.DataAccess.Entities;
 
 namespace TelcosAppApi.AutoMapper.Generic
@@ -9,7 +9,7 @@ namespace TelcosAppApi.AutoMapper.Generic
         public GenericMapperProfile()
         {
             FromRolToGenericDto();
-            // FromUsuarioToCredencialesUsuarioDto();
+            FromTipoSuscriptorToGenericDto();        
         }
         /// <summary>
         /// Convierte desde rol hasta GenericDto
@@ -20,6 +20,16 @@ namespace TelcosAppApi.AutoMapper.Generic
               .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
               .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
               .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion)); 
+        }
+        /// <summary>
+        /// Convierte desde tipo suscriptor hasta GenericDto
+        /// </summary>
+        private void FromTipoSuscriptorToGenericDto()
+        {
+            CreateMap<TipoSuscriptor, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
         }
     }
 }

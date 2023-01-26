@@ -10,6 +10,7 @@ namespace DomainServices.Domain.Contracts.WorkOrderManagement
     public interface IWorkOrderManagementDomain
     {
         Task<List<OrdenTrabajo>> GetWorkOrderByUser(Guid? user);
+        Task<List<TipoSuscriptor>> GetSubscriberType();
         void SaveWorkOrder(OrdenTrabajo workOrder);
     }
 }

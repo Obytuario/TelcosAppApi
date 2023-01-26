@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TelcosAppApi.AplicationServices.DTOs.Generics
+namespace AplicationServices.DTOs.Generics
 {
     public class GenericDto
     {

@@ -12,6 +12,7 @@ namespace AplicationServices.Application.Contracts.WorkOrderManagement
     public interface IWorkOrderManagementServices
     {        
         Task<RequestResult<List<GetWorkOrderManagementDTO>>> GetWorkOrderByUser(Guid? user);
+        Task<RequestResult<List<GenericDto>>> GetSubscriberType();
         Task<RequestResult<PostWorkOrderManagementDTO>> SaveWorkOrder(PostWorkOrderManagementDTO workOrder);
 
     }

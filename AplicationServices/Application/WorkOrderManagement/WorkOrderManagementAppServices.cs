@@ -9,9 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TelcosAppApi.AplicationServices.DTOs.Authentication;
 using TelcosAppApi.DataAccess.Entities;
-
 
 
 namespace AplicationServices.Application.WorkOrderManagement
@@ -51,6 +49,24 @@ namespace AplicationServices.Application.WorkOrderManagement
                 return RequestResult<List<GetWorkOrderManagementDTO>>.CreateError(ex.Message);
             }
         }
+        /// <summary>
+        ///     Obtiene la lista de tipo de suscriptores
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">id del tecnico</param>
+        public async Task<RequestResult<List<GenericDto>>> GetSubscriberType()
+        {
+            try
+            {
+                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<TipoSuscriptor>, List<GenericDto>>(await _workOrderManagementDomain.GetSubscriberType()));
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<GenericDto>>.CreateError(ex.Message);
+            }
+        }
+        
         /// <summary>
         ///     Guarda una orden de trabajo.
         /// </summary>
