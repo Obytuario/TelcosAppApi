@@ -29,6 +29,10 @@ namespace DomainServices.Domain.WorkOrderManagement
         {
             return await _context.TipoSuscriptor.Where(x => x.Activo).ToListAsync();
         }
+        public async Task<List<EstadoOrdenTrabajo>> GetWorkOrderStatus()
+        {
+            return await _context.EstadoOrdenTrabajo.Where(x => x.Activo).ToListAsync();
+        }
         /// <summary>
         ///     Guarda una orden de trabajo.
         /// </summary>

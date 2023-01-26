@@ -49,6 +49,17 @@ namespace TelcosAppApi.Controllers
             return await _WorkOrderManagementServices.GetSubscriberType();
         }
         /// <summary>
+        /// Consulta los tipos de ordenes de trabajo.
+        /// </summary>        
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetWorkOrderStatus")]
+        public async Task<RequestResult<List<GenericDto>>> GetWorkOrderStatus()
+        {
+            return await _WorkOrderManagementServices.GetWorkOrderStatus();
+        }
+        
+        /// <summary>
         /// Guarda la informacion de una orden de trabajo
         /// </summary>
         /// <param name="workOrder"></param>

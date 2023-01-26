@@ -11,6 +11,7 @@ namespace DomainServices.Domain.Contracts.WorkOrderManagement
     {
         Task<List<OrdenTrabajo>> GetWorkOrderByUser(Guid? user);
         Task<List<TipoSuscriptor>> GetSubscriberType();
+        Task<List<EstadoOrdenTrabajo>> GetWorkOrderStatus();
         void SaveWorkOrder(OrdenTrabajo workOrder);
     }
 }

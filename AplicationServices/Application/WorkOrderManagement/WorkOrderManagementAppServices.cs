@@ -66,7 +66,25 @@ namespace AplicationServices.Application.WorkOrderManagement
                 return RequestResult<List<GenericDto>>.CreateError(ex.Message);
             }
         }
+        /// <summary>
+        ///     Obtiene la lista de estados de ordenes de trabajo
+        /// </summary>
+        /// <author>Ariel Bejarano</author>       
+        public async Task<RequestResult<List<GenericDto>>> GetWorkOrderStatus()
+        {
+            try
+            {
+                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<EstadoOrdenTrabajo>, List<GenericDto>>(await _workOrderManagementDomain.GetWorkOrderStatus()));
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<GenericDto>>.CreateError(ex.Message);
+            }
+        }
         
+
+
         /// <summary>
         ///     Guarda una orden de trabajo.
         /// </summary>
