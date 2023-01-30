@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
-using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
+using AplicationServices.Application.Contracts.Roles;
 using TelcosAppApi.DataAccess;
 using TelcosAppApi.DataAccess.DataAccess;
 using TelcosAppApi.DataAccess.Entities;

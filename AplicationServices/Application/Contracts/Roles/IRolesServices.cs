@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
 
-namespace TelcosAppApi.AplicationServices.Application.Contracts.Roles
+namespace AplicationServices.Application.Contracts.Roles
 {
     public interface IRolesServices
     {

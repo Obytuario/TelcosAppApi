@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
 using TelcosAppApi.DataAccess.Entities;
-
+using AplicationServices.Helpers.HashResource;
 
 namespace TelcosAppApi.AplicationServices.Application.Authentication
 {
@@ -28,18 +28,27 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
         /// </summary>
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
+        private readonly Hash _hash;
         public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IConfiguration configuration, IMapper mapper)
         {
             _authenticationDomain = authenticationDomain;
             _configuration = configuration;
             _mapper = mapper;
+            _hash = new Hash();
         }
 
         public async Task<RespuestaAutenticacionDto?> Login(CredencialesUsuarioDto credencialesUsuario)
         {
             try
             {
-                
+                var hash1 = _hash.GetHash(credencialesUsuario.Password);
+                var hash2 = _hash.GetHash(credencialesUsuario.Password);
+                Console.WriteLine(hash1.Hash);
+                Console.WriteLine(hash2.Hash);
+                var hash3 = _hash.GetHash(credencialesUsuario.Password, hash1.SaltHash);
+                Console.WriteLine(hash3.Hash);
+
+
                 var usuario = _mapper.Map<CredencialesUsuarioDto,Usuario>(credencialesUsuario);
              
                 var result = await _authenticationDomain.Login(usuario);

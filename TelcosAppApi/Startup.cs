@@ -5,12 +5,7 @@ using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
-using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
-using TelcosAppApi.AplicationServices.Application.Roles;
-using TelcosAppApi.DataAccess;
 using TelcosAppApi.DI;
-using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
-using TelcosAppApi.DomainServices.Domain.Roles;
 using TelcosAppApi.DataAccess.DataAccess;
 using System.Reflection;
 

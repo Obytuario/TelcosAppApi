@@ -31,10 +31,7 @@ public partial class TelcosSuiteContext : DbContext
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=DW-P10697;Database=TelcosSuite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EstadoOrdenTrabajo>(entity =>
@@ -154,6 +151,7 @@ public partial class TelcosSuiteContext : DbContext
             entity.Property(e => e.PrimerNombre)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Salt).IsUnicode(false);
 
             entity.HasOne(d => d.RolNavigation).WithMany(p => p.Usuario)
                 .HasForeignKey(d => d.Rol)

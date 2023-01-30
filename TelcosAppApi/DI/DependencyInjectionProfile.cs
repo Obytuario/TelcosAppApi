@@ -1,7 +1,7 @@
-﻿using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
-using TelcosAppApi.AplicationServices.Application.Roles;
-using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
-using TelcosAppApi.DomainServices.Domain.Roles;
+﻿using AplicationServices.Application.Contracts.Roles;
+using AplicationServices.Application.Roles;
+using DomainServices.Domain.Contracts.Roles;
+using DomainServices.Domain.Roles;
 using Microsoft.Extensions.DependencyInjection;
 using TelcosAppApi.AplicationServices.Application.Contracts.Authentication;
 using DomainServices.Domain.Contracts.Authentication;
@@ -16,6 +16,10 @@ using DomainServices.Domain.Contracts.WorkOrderManagement;
 using DomainServices.Domain.WorkOrderManagement;
 using AplicationServices.Application.Contracts.WorkOrderManagement;
 using AplicationServices.Application.WorkOrderManagement;
+using AplicationServices.Application.Contracts.User;
+using AplicationServices.Application.User;
+using DomainServices.Domain.Contracts.User;
+using DomainServices.Domain.User;
 
 namespace TelcosAppApi.DI
 {
@@ -44,6 +48,8 @@ namespace TelcosAppApi.DI
             services.AddTransient<IRolesServices, RolesAppServices>();
             services.AddTransient<IAuthenticationServices, AuthenticationAppServices>();
             services.AddTransient<IWorkOrderManagementServices, WorkOrderManagementAppServices>();
+            services.AddTransient<IUserServices, UserAppServices>();
+            
 
             #endregion
 
@@ -52,6 +58,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<IRolesDomain, RolesDomain>();
             services.AddTransient<IAuthenticationDomain, AuthenticationDomain>();
             services.AddTransient<IWorkOrderManagementDomain, WorkOrderManagementDomain>();
+            services.AddTransient<IUserDomain, UserDomain>();
 
             #endregion Domain
         }

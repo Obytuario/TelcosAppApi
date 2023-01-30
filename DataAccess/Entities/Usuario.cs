@@ -11,6 +11,8 @@ public partial class Usuario
 
     public string NumeroDocumento { get; set; } = null!;
 
+    public string? Salt { get; set; }
+
     public string Contraseña { get; set; } = null!;
 
     public Guid Rol { get; set; }

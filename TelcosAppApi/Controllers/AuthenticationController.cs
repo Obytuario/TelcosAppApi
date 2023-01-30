@@ -8,7 +8,7 @@ using System.Text;
 using TelcosAppApi.DataAccess;
 using TelcosAppApi.DataAccess.DataAccess;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
-using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
+using AplicationServices.Application.Contracts.Roles;
 using TelcosAppApi.AplicationServices.Application.Contracts.Authentication;
 using TelcosAppApi.DataAccess.Entities;
 using AutoMapper;

@@ -1,4 +1,4 @@
-﻿using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
+﻿using AplicationServices.Application.Contracts.Roles;
 //using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
-using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
+using DomainServices.Domain.Contracts.Roles;
 using AplicationServices.DTOs.Generics;
 using AutoMapper;
 
 
-namespace TelcosAppApi.AplicationServices.Application.Roles
+namespace AplicationServices.Application.Roles
 {
 
     public class RolesAppServices :IRolesServices

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
 
-namespace DomainServices.Domain.Contracts.Roles
+namespace DomainServices.Domain.Contracts.User
 {
-    public interface IRolesDomain
+    public interface IUserDomain
     {
-        Task<List<Rol>> GetRoles();
+        void SaveUser(Usuario user);
     }
 }

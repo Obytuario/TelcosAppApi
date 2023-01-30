@@ -128,6 +128,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                 entity.Property(e => e.PrimerNombre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+                entity.Property(e => e.Salt).IsUnicode(false);
 
                 entity.HasOne(d => d.RolNavigation).WithMany(p => p.Usuario)
                     .HasForeignKey(d => d.Rol)
@@ -135,7 +136,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasConstraintName("FK_Usuario_Rol");
             });
 
-           
+            //OnModelCreatingPartial(modelBuilder);
         }
     }
 }
