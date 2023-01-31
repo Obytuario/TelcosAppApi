@@ -15,6 +15,10 @@ public partial class Usuario
 
     public string Contraseña { get; set; } = null!;
 
+    public bool GenerarContraseña { get; set; }
+
+    public bool Activo { get; set; }
+
     public Guid Rol { get; set; }
 
     public virtual ICollection<OrdenTrabajo> OrdenTrabajo { get; } = new List<OrdenTrabajo>();

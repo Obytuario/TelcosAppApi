@@ -18,6 +18,9 @@ namespace TelcosAppApi.AutoMapper.User
         {
             _ = CreateMap<PostUserDto, Usuario>()
                  .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
+                 .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
+                 .ForMember(target => target.GenerarContraseña, opt => opt.MapFrom(source => true))
+                 .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.NumeroDocumentoDto))
                  .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.NumeroDocumentoDto))
                  .ForMember(target => target.Rol, opt => opt.MapFrom(source => source.RolDto))
                  .ForMember(target => target.PrimerNombre, opt => opt.MapFrom(source => source.PrimerNombreDto));

@@ -31,7 +31,7 @@ public partial class TelcosSuiteContext : DbContext
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-    
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<EstadoOrdenTrabajo>(entity =>

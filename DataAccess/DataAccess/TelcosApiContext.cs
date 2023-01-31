@@ -136,7 +136,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasConstraintName("FK_Usuario_Rol");
             });
 
-            //OnModelCreatingPartial(modelBuilder);
+            
         }
     }
 }

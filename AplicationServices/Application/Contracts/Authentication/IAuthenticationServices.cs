@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AplicationServices.DTOs.Generics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,6 @@ namespace TelcosAppApi.AplicationServices.Application.Contracts.Authentication
 {
     public interface IAuthenticationServices
     {
-        Task<RespuestaAutenticacionDto?> Login(CredencialesUsuarioDto credencialesUsuario);
+        Task<RequestResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credencialesUsuario);
     }
 }

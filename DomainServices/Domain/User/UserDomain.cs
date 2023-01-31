@@ -17,7 +17,16 @@ namespace DomainServices.Domain.User
             _context = telcosApiContext;
         }
 
-        #region Method
+        #region Public Methods
+        /// <summary>
+        ///     obtiene usuario por numero de documento
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">entidad usuario para obtener los datos</param>
+        public async Task<Usuario> GetUser(string numeroDocumento)
+        {
+            return await _context.Usuario.Where(x => x.NumeroDocumento.Equals(numeroDocumento)).FirstOrDefaultAsync();
+        }
 
         /// <summary>
         ///     Guarda un usuario

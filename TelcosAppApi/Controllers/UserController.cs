@@ -1,13 +1,16 @@
 ﻿using AplicationServices.Application.Contracts.User;
 using AplicationServices.DTOs.Generics;
 using AplicationServices.DTOs.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TelcosAppApi.Controllers
 {
     [ApiController]
-    [Route("Api/User")]  
+    [Route("Api/User")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : ControllerBase
     {
         #region Fiedls

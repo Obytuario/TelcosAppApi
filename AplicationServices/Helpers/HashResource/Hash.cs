@@ -1,4 +1,5 @@
 ﻿using AplicationServices.DTOs.Generics;
+using DomainServices.Domain.Contracts.User;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Newtonsoft.Json;
 using System;
@@ -7,14 +8,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using TelcosAppApi.DataAccess.Entities;
 
 namespace AplicationServices.Helpers.HashResource
 {
     public class Hash
     {
+        
         public Hash()
         {
-                
+            
         }
 
         #region Public Methods
@@ -45,6 +48,7 @@ namespace AplicationServices.Helpers.HashResource
             return new RequestHash() { Hash = hash ,SaltHash =salt};
 
         }
+        
         #endregion
 
     }

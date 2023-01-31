@@ -23,12 +23,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>RequestResultMsm.resx</DependentUpon>
     </Compile>
+    <Compile Update="Helpers\TextResorce\ResourceUserMsm.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ResourceUserMsm.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Helpers\TextResorce\RequestResultMsm.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RequestResultMsm.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Helpers\TextResorce\ResourceUserMsm.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourceUserMsm.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

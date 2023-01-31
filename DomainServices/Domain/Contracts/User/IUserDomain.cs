@@ -9,6 +9,7 @@ namespace DomainServices.Domain.Contracts.User
 {
     public interface IUserDomain
     {
+        Task<Usuario> GetUser(string numeroDocumento);
         void SaveUser(Usuario user);
     }
 }

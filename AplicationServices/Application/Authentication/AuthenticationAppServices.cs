@@ -14,6 +14,11 @@ using System.Threading.Tasks;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
 using TelcosAppApi.DataAccess.Entities;
 using AplicationServices.Helpers.HashResource;
+using AplicationServices.DTOs.Generics;
+using AplicationServices.DTOs.User;
+using AplicationServices.Helpers.TextResorce;
+using DomainServices.Domain.Contracts.User;
+using Microsoft.VisualBasic;
 
 namespace TelcosAppApi.AplicationServices.Application.Authentication
 {
@@ -23,45 +28,56 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
         /// Instancia al servicio de Dominio
         /// </summary>
         private readonly IAuthenticationDomain _authenticationDomain;
+        private readonly IUserDomain _userDomain;
         /// <summary>
         /// Mapper
         /// </summary>
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly Hash _hash;
-        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IConfiguration configuration, IMapper mapper)
+        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IUserDomain userDomain, IConfiguration configuration, IMapper mapper)
         {
             _authenticationDomain = authenticationDomain;
+            _userDomain = userDomain;
             _configuration = configuration;
             _mapper = mapper;
             _hash = new Hash();
         }
 
-        public async Task<RespuestaAutenticacionDto?> Login(CredencialesUsuarioDto credencialesUsuario)
+        public async Task<RequestResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credencialesUsuario)
         {
             try
             {
-                var hash1 = _hash.GetHash(credencialesUsuario.Password);
-                var hash2 = _hash.GetHash(credencialesUsuario.Password);
-                Console.WriteLine(hash1.Hash);
-                Console.WriteLine(hash2.Hash);
-                var hash3 = _hash.GetHash(credencialesUsuario.Password, hash1.SaltHash);
-                Console.WriteLine(hash3.Hash);
+                #region Validaciones
+                List<string> errorMessageValidations = new List<string>();
+                LoginValidations(ref errorMessageValidations, credencialesUsuario);
+                if (errorMessageValidations.Any())
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(errorMessageValidations);
+                var user = await _userDomain.GetUser(credencialesUsuario.User);
+                if (user == null)
+                {
+                    errorMessageValidations.Add(ResourceUserMsm.CredentialsInvalidate);
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(errorMessageValidations);
+                }
+                #endregion
 
+                /*comparacion de hash*/               
+                bool isHash = _hash.GetHash(credencialesUsuario.Password, Convert.FromBase64String(user.Salt)).Hash.Equals(user.Contraseña);
+                if (!isHash)
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(new string[] { ResourceUserMsm.CredentialsInvalidate });                
 
-                var usuario = _mapper.Map<CredencialesUsuarioDto,Usuario>(credencialesUsuario);
-             
-                var result = await _authenticationDomain.Login(usuario);
-                if (result == null)
-                    return null;
-
-                return ConstruirToken(credencialesUsuario, result.ID);
+                /*Construccion de token*/
+                return RequestResult<RespuestaAutenticacionDto>.CreateSuccessful(ConstruirToken(credencialesUsuario, user.ID)); 
+              
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return RequestResult<RespuestaAutenticacionDto>.CreateError(ex.Message);
+               
             }
         }
+
+        #region Private Methods
         private RespuestaAutenticacionDto ConstruirToken(CredencialesUsuarioDto credencialesUsuario, Guid idUser)
         {
             var claims = new List<Claim>()
@@ -89,5 +105,22 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
                 //Expiracion = expiracion
             };
         }
+        /// <summary>
+        ///     valida los datos para crear un usuario.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="userDto">objeto para guardar orden de trabajo</param>
+        private void LoginValidations(ref List<string> errorMessageValidations, CredencialesUsuarioDto credencialesUsuarioDto)
+        {
+            if (string.IsNullOrEmpty(credencialesUsuarioDto.User))
+            {
+                errorMessageValidations.Add(ResourceUserMsm.InvalidParameterDocument);
+            }
+            if (string.IsNullOrEmpty(credencialesUsuarioDto.Password))
+            {
+                errorMessageValidations.Add(ResourceUserMsm.InvalidParameterDocument);
+            }            
+        }
+        #endregion
     }
 }
