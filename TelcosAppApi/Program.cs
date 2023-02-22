@@ -2,10 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TelcosAppApi;
-using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
-using TelcosAppApi.AplicationServices.Application.Roles;
-using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
-using TelcosAppApi.DomainServices.Domain.Roles;
+
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);

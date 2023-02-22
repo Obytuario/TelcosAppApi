@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.DataAccess;
 using TelcosAppApi.DataAccess.Entities;
-using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
+using DomainServices.Domain.Contracts.Roles;
 
-namespace TelcosAppApi.DomainServices.Domain.Roles
+namespace DomainServices.Domain.Roles
 {
     public class RolesDomain:IRolesDomain
     {

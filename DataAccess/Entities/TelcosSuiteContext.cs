@@ -15,20 +15,36 @@ public partial class TelcosSuiteContext : DbContext
     {
     }
 
+    public virtual DbSet<EstadoOrdenTrabajo> EstadoOrdenTrabajo { get; set; }
+
     public virtual DbSet<Modulo> Modulo { get; set; }
 
     public virtual DbSet<OpcionModulo> OpcionModulo { get; set; }
 
+    public virtual DbSet<OrdenTrabajo> OrdenTrabajo { get; set; }
+
     public virtual DbSet<Rol> Rol { get; set; }
+
+    public virtual DbSet<Suscriptor> Suscriptor { get; set; }
+
+    public virtual DbSet<TipoSuscriptor> TipoSuscriptor { get; set; }
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-//    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Data Source=DW-P10697;Database=TelcosSuite;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-
+  
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<EstadoOrdenTrabajo>(entity =>
+        {
+            entity.Property(e => e.ID).ValueGeneratedNever();
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(6)
+                .IsUnicode(false);
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<Modulo>(entity =>
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
@@ -59,6 +75,31 @@ public partial class TelcosSuiteContext : DbContext
                 .HasConstraintName("FK_OpcionModulo_Rol");
         });
 
+        modelBuilder.Entity<OrdenTrabajo>(entity =>
+        {
+            entity.Property(e => e.ID).ValueGeneratedNever();
+            entity.Property(e => e.FechaOrden).HasColumnType("datetime");
+            entity.Property(e => e.FechaRegistro).HasColumnType("datetime");
+            entity.Property(e => e.NumeroOrden)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.EstadoOrdenNavigation).WithMany(p => p.OrdenTrabajo)
+                .HasForeignKey(d => d.EstadoOrden)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrdenTrabajo_EstadoOrdenTrabajo");
+
+            entity.HasOne(d => d.SuscriptorNavigation).WithMany(p => p.OrdenTrabajo)
+                .HasForeignKey(d => d.Suscriptor)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrdenTrabajo_Suscriptor");
+
+            entity.HasOne(d => d.UsuarioRegistraNavigation).WithMany(p => p.OrdenTrabajo)
+                .HasForeignKey(d => d.UsuarioRegistra)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OrdenTrabajo_Usuario");
+        });
+
         modelBuilder.Entity<Rol>(entity =>
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
@@ -67,6 +108,36 @@ public partial class TelcosSuiteContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(20)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<Suscriptor>(entity =>
+        {
+            entity.Property(e => e.ID).ValueGeneratedNever();
+            entity.Property(e => e.Apellido)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroCuenta)
+                .HasMaxLength(20)
+                .IsUnicode(false);
+
+            entity.HasOne(d => d.TipoSuscriptorNavigation).WithMany(p => p.Suscriptor)
+                .HasForeignKey(d => d.TipoSuscriptor)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Suscriptor_TipoSuscriptor");
+        });
+
+        modelBuilder.Entity<TipoSuscriptor>(entity =>
+        {
+            entity.Property(e => e.ID).ValueGeneratedNever();
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(6)
+                .IsUnicode(false);
+            entity.Property(e => e.Descripcion)
+                .HasMaxLength(50)
                 .IsUnicode(false);
         });
 
@@ -80,6 +151,7 @@ public partial class TelcosSuiteContext : DbContext
             entity.Property(e => e.PrimerNombre)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Salt).IsUnicode(false);
 
             entity.HasOne(d => d.RolNavigation).WithMany(p => p.Usuario)
                 .HasForeignKey(d => d.Rol)

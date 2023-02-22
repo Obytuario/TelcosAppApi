@@ -5,12 +5,7 @@ using Microsoft.OpenApi.Models;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text;
-using TelcosAppApi.AplicationServices.Application.Contracts.Roles;
-using TelcosAppApi.AplicationServices.Application.Roles;
-using TelcosAppApi.DataAccess;
 using TelcosAppApi.DI;
-using TelcosAppApi.DomainServices.Domain.Contracts.Roles;
-using TelcosAppApi.DomainServices.Domain.Roles;
 using TelcosAppApi.DataAccess.DataAccess;
 using System.Reflection;
 
@@ -20,6 +15,7 @@ namespace TelcosAppApi
     {
         #region Properties
         private const string _DBSETTING = "DbSetting";
+        private const string _NAMECORSPOLICY = "MyAllowSpecificOrigins";
         #endregion Properties
 
         public Startup(IConfiguration configuration)
@@ -64,9 +60,20 @@ namespace TelcosAppApi
             //services.AddDbContext<TelcosApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelcosConnectionString")));
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
+            _ConfigCorsPolicy(services);
             _ConfigOthers(services);
             _ConfigSQL(services);
 
+        }
+        private void _ConfigCorsPolicy(IServiceCollection services)
+        {
+            services.AddCors(opt => {
+                opt.AddPolicy(name: _NAMECORSPOLICY, o => {
+                    o.AllowAnyHeader();
+                    o.AllowAnyMethod();
+                    o.AllowAnyOrigin();
+                });
+            });
         }
 
         private void _ConfigSQL(IServiceCollection services)
@@ -92,6 +99,7 @@ namespace TelcosAppApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            _SetCorsPolicy(app);
 
             app.UseAuthorization();
 
@@ -99,10 +107,15 @@ namespace TelcosAppApi
             {
                 endPoints.MapControllers();
             });
+            
         }
         private void _ConfigOthers(IServiceCollection services)
         {
             DependencyInjectionProfile.RegisterProfile(services, Configuration);
+        }
+        private void _SetCorsPolicy(IApplicationBuilder app)
+        {
+            app.UseCors(_NAMECORSPOLICY);
         }
     }
 }
