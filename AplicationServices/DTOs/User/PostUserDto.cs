@@ -8,9 +8,12 @@ namespace AplicationServices.DTOs.User
 {
     public class PostUserDto
     {
-        public string? PrimerNombreDto { get; set; }
-        public string? NumeroDocumentoDto { get; set; }
-        public string? ContrasenaDto { get; set; }
-        public Guid RolDto { get; set; }
+        public Guid? id { get; set; }
+        public string? fName { get; set; }
+        public string? lName { get; set; }
+        public string? numberDocument { get; set; }
+        public string? password { get; set; }
+        public Guid idRol { get; set; }
+        public string? rol { get; set; }
     }
 }

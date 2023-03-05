@@ -1,6 +1,7 @@
 ﻿using AplicationServices.DTOs.User;
 using AplicationServices.DTOs.workOrderManagement;
 using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 using TelcosAppApi.DataAccess.Entities;
 
 namespace TelcosAppApi.AutoMapper.User
@@ -17,13 +18,13 @@ namespace TelcosAppApi.AutoMapper.User
         private void FromUserDtoToUsuario()
         {
             _ = CreateMap<PostUserDto, Usuario>()
-                 .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
+                 .ForMember(target => target.ID, opt => opt.MapFrom(source => source.id != null ? source.id: Guid.NewGuid()))
                  .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
                  .ForMember(target => target.GenerarContraseña, opt => opt.MapFrom(source => true))
-                 .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.NumeroDocumentoDto))
-                 .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.NumeroDocumentoDto))
-                 .ForMember(target => target.Rol, opt => opt.MapFrom(source => source.RolDto))
-                 .ForMember(target => target.PrimerNombre, opt => opt.MapFrom(source => source.PrimerNombreDto));
+                 .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.numberDocument))
+                 .ForMember(target => target.Rol, opt => opt.MapFrom(source => source.idRol))
+                 .ForMember(target => target.PrimerNombre, opt => opt.MapFrom(source => source.fName))
+                 .ForMember(target => target.Apellidos, opt => opt.MapFrom(source => source.lName));
         }
     }
 }

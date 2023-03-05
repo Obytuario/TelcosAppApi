@@ -24,7 +24,7 @@ namespace DomainServices.Domain.User
         /// <author>Ariel Bejarano</author>
         /// <param name="user">entidad usuario para obtener los datos</param>
         public async Task<Usuario> GetUser(string numeroDocumento)
-        {
+        {            
             return await _context.Usuario.Where(x => x.NumeroDocumento.Equals(numeroDocumento)).FirstOrDefaultAsync();
         }
 

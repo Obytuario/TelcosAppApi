@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
 using AplicationServices.Helpers.TextResorce;
+using TelcosAppApi.AplicationServices.DTOs.Authentication;
 
 namespace AplicationServices.Application.User
 {
@@ -40,13 +41,23 @@ namespace AplicationServices.Application.User
             {
                 List<string> errorMessageValidations = new List<string>();
                 var user = _mapper.Map<PostUserDto, Usuario>(userDto);
-                SaveUserValidations(ref errorMessageValidations, user);
+                SaveUserValidations(ref errorMessageValidations,user);
                 if(errorMessageValidations.Any())
                     return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
 
+                var findUser = await _userDomain.GetUser(user.NumeroDocumento);
+                if (findUser != null)
+                {                    
+                    errorMessageValidations.Add(ResourceUserMsm.ExistUser);
+                    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                }
+                //detereminar contraseña generica en el config o una tabla de variables genericas
+                user.Contraseña = "Telcos2023";
                 var hash = _hash.GetHash(user.Contraseña);
                 user.Contraseña = hash.Hash;
                 user.Salt = Convert.ToBase64String(hash.SaltHash);
+                user.Cargo = Guid.Parse("37DBB247-1A27-40A5-9609-7CAFB0AED636");
+                user.CentroOperacion = Guid.Parse("05557273-ED6C-4BC7-9B95-0BBA7485088C");
                 _userDomain.SaveUser(user);
                 return RequestResult<PostUserDto>.CreateSuccessful(userDto);
 
@@ -62,17 +73,13 @@ namespace AplicationServices.Application.User
         /// </summary>
         /// <author>Ariel Bejarano</author>
         /// <param name="userDto">objeto para guardar orden de trabajo</param>
-        private void SaveUserValidations(ref List<string> errorMessageValidations, Usuario user)
+        private  void SaveUserValidations(ref List<string> errorMessageValidations, Usuario user)
         {
             if (string.IsNullOrEmpty(user.NumeroDocumento))
             {
                 errorMessageValidations.Add(ResourceUserMsm.InvalidParameterDocument);
-            }
-
-            if (_userDomain.GetUser(user.NumeroDocumento) != null)
-            {
-                errorMessageValidations.Add(ResourceUserMsm.ExistUser);
-            }
+            }          
+           
         }
         #endregion
     }

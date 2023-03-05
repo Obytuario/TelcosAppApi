@@ -34,7 +34,7 @@ namespace TelcosAppApi.Controllers
         /// <returns></returns>
         /// <author>Ariel Bejarano</author>
         [HttpPost("SaveUser")]
-        public async Task<RequestResult<PostUserDto>> SaveWorkOrder(PostUserDto userDto)
+        public async Task<RequestResult<PostUserDto>> SaveUser(PostUserDto userDto)
         {
             return await _userServices.SaveUser(userDto);
         }
