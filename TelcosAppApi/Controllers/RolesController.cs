@@ -31,7 +31,13 @@ namespace TelcosAppApi.Controllers
             _rolesServices = rolesServices;
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Obtiene todos los roles del sistema
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetAllRol")]
         public async Task <RequestResult<List<GenericDto>>> Get() 
         {            
             return await _rolesServices.GetRoles();

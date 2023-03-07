@@ -11,6 +11,8 @@ namespace TelcosAppApi.AutoMapper.Generic
             FromRolToGenericDto();
             FromTipoSuscriptorToGenericDto();
             FromEstadoOrdenTrabajoToGenericDto();
+            FromCargoToGenericDto();
+            FromCentrooperacionToGenericDto();
         }
         /// <summary>
         /// Convierte desde rol hasta GenericDto
@@ -38,6 +40,26 @@ namespace TelcosAppApi.AutoMapper.Generic
         private void FromEstadoOrdenTrabajoToGenericDto()
         {
             CreateMap<EstadoOrdenTrabajo, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
+        }
+        /// <summary>
+        /// Convierte desde cargo hasta GenericDto
+        /// </summary>
+        private void FromCargoToGenericDto()
+        {
+            CreateMap<Cargo, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
+        }
+        /// <summary>
+        /// Convierte desde centro operacion hasta GenericDto
+        /// </summary>
+        private void FromCentrooperacionToGenericDto()
+        {
+            CreateMap<CentroOperacion, GenericDto>()
               .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
               .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
               .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));

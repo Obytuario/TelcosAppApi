@@ -10,6 +10,8 @@ namespace AplicationServices.Application.Contracts.User
 {
     public interface IUserServices
     {
+
+        Task<RequestResult<List<PostUserDto>>> GetAllUsers();
         Task<RequestResult<PostUserDto>> SaveUser(PostUserDto userDto);
     }
 }

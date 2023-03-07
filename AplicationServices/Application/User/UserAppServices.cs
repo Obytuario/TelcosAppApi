@@ -31,6 +31,31 @@ namespace AplicationServices.Application.User
             _hash = new Hash();
         }
         /// <summary>
+        ///     Obtiene la lista de usuarios del sitema.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>    
+        public async Task<RequestResult<List<PostUserDto>>> GetAllUsers()
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                //var user = _mapper.Map<PostUserDto, Usuario>(userDto);
+
+                //if (errorMessageValidations.Any())
+                //    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                var findUser = await _userDomain.GetAllUser();
+                var Users = _mapper.Map<List<Usuario>,List<PostUserDto>>(await _userDomain.GetAllUser());
+
+                          
+                return RequestResult<List<PostUserDto>>.CreateSuccessful(Users);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<PostUserDto>>.CreateError(ex.Message);
+            }
+        }
+        /// <summary>
         ///     Guarda un usuario.
         /// </summary>
         /// <author>Ariel Bejarano</author>

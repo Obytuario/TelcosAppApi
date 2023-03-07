@@ -19,6 +19,17 @@ namespace DomainServices.Domain.User
 
         #region Public Methods
         /// <summary>
+        ///     obtiene lista de usurios activoa
+        /// </summary>
+        /// <author>Ariel Bejarano</author>       
+        public async Task<List<Usuario>> GetAllUser()
+        {
+            return await _context.Usuario.Where(x => x.Activo == true)
+                                         .Include(i => i.RolNavigation)
+                                         .Include(i => i.CargoNavigation)
+                                         .Include(i => i.CentroOperacionNavigation).ToListAsync();
+        }
+        /// <summary>
         ///     obtiene usuario por numero de documento
         /// </summary>
         /// <author>Ariel Bejarano</author>

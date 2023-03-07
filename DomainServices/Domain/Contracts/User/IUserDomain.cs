@@ -8,7 +8,8 @@ using TelcosAppApi.DataAccess.Entities;
 namespace DomainServices.Domain.Contracts.User
 {
     public interface IUserDomain
-    {
+    {        
+        Task<List<Usuario>> GetAllUser();
         Task<Usuario> GetUser(string numeroDocumento);
         void SaveUser(Usuario user);
     }

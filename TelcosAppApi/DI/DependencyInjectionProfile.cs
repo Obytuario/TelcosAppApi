@@ -20,6 +20,14 @@ using AplicationServices.Application.Contracts.User;
 using AplicationServices.Application.User;
 using DomainServices.Domain.Contracts.User;
 using DomainServices.Domain.User;
+using AplicationServices.Application.Contracts.Cargos;
+using AplicationServices.Application.Cargos;
+using DomainServices.Domain.Contracts.cargos;
+using DomainServices.Domain.Cargos;
+using AplicationServices.Application.Contracts.CentroOperaciones;
+using AplicationServices.Application.CentroOperaciones;
+using DomainServices.Domain.Contracts.CentroOperaciones;
+using DomainServices.Domain.CentroOperaciones;
 
 namespace TelcosAppApi.DI
 {
@@ -49,7 +57,9 @@ namespace TelcosAppApi.DI
             services.AddTransient<IAuthenticationServices, AuthenticationAppServices>();
             services.AddTransient<IWorkOrderManagementServices, WorkOrderManagementAppServices>();
             services.AddTransient<IUserServices, UserAppServices>();
-            
+            services.AddTransient<ICargosServices, CargosAppServices>();
+            services.AddTransient<ICentroOperacionServices, CentroOperacionesAppServices>();
+
 
             #endregion
 
@@ -59,6 +69,8 @@ namespace TelcosAppApi.DI
             services.AddTransient<IAuthenticationDomain, AuthenticationDomain>();
             services.AddTransient<IWorkOrderManagementDomain, WorkOrderManagementDomain>();
             services.AddTransient<IUserDomain, UserDomain>();
+            services.AddTransient<ICargosDomain, CargosDomain>();
+            services.AddTransient<ICentroOperacionesDomain, CentroOperacionesDomain>();
 
             #endregion Domain
         }

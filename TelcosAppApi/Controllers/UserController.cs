@@ -26,6 +26,17 @@ namespace TelcosAppApi.Controllers
         {
             _userServices = userServices;
         }
+        /// <summary>
+        /// Obtiene todos los usuarios del sistema
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetAllUsers")]
+        public async Task<RequestResult<List<PostUserDto>>> GetAllUsers()
+        {
+            return await _userServices.GetAllUsers();
+        }
 
         /// <summary>
         /// Guarda la informacion de un usuario
@@ -38,5 +49,6 @@ namespace TelcosAppApi.Controllers
         {
             return await _userServices.SaveUser(userDto);
         }
+
     }
 }

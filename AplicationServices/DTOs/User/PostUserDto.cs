@@ -15,5 +15,13 @@ namespace AplicationServices.DTOs.User
         public string? password { get; set; }
         public Guid idRol { get; set; }
         public string? rol { get; set; }
+        public Guid idCharge { get; set; }
+        public string? charge { get; set; }
+        public Guid idOperationCenter { get; set; }
+        public bool active { get; set; }
+        public string? operationCenter { get; set; }
+        public string? mobile { get; set; }
+        public string? email { get; set; }
+        
     }
 }
