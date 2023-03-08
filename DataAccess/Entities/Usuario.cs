@@ -27,6 +27,10 @@ public partial class Usuario
 
     public Guid? UsuarioSuperior { get; set; }
 
+    public string? NumeroContacto { get; set; }
+
+    public string? Correo { get; set; }
+
     public Guid Rol { get; set; }
 
     public virtual Cargo? CargoNavigation { get; set; }

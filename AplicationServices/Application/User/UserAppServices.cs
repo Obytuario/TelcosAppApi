@@ -80,9 +80,7 @@ namespace AplicationServices.Application.User
                 user.Contraseña = "Telcos2023";
                 var hash = _hash.GetHash(user.Contraseña);
                 user.Contraseña = hash.Hash;
-                user.Salt = Convert.ToBase64String(hash.SaltHash);
-                user.Cargo = Guid.Parse("37DBB247-1A27-40A5-9609-7CAFB0AED636");
-                user.CentroOperacion = Guid.Parse("05557273-ED6C-4BC7-9B95-0BBA7485088C");
+                user.Salt = Convert.ToBase64String(hash.SaltHash);               
                 _userDomain.SaveUser(user);
                 return RequestResult<PostUserDto>.CreateSuccessful(userDto);
 
