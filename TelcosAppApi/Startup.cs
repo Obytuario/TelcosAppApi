@@ -8,6 +8,7 @@ using System.Text;
 using TelcosAppApi.DI;
 using TelcosAppApi.DataAccess.DataAccess;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace TelcosAppApi
 {
@@ -60,6 +61,7 @@ namespace TelcosAppApi
             //services.AddDbContext<TelcosApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelcosConnectionString")));
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             _ConfigCorsPolicy(services);
             _ConfigOthers(services);
             _ConfigSQL(services);
@@ -107,7 +109,7 @@ namespace TelcosAppApi
             {
                 endPoints.MapControllers();
             });
-            
+
         }
         private void _ConfigOthers(IServiceCollection services)
         {

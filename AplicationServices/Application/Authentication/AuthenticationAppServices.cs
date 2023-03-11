@@ -102,6 +102,7 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
             return new RespuestaAutenticacionDto()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
+                UserID = idUser
                 //Expiracion = expiracion
             };
         }
