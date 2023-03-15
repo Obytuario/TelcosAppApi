@@ -10,7 +10,10 @@ namespace DomainServices.Domain.Contracts.User
     public interface IUserDomain
     {        
         Task<List<Usuario>> GetAllUser();
-        Task<Usuario> GetUser(string numeroDocumento);
+        Task<List<Usuario>> GetUserAssignmentById(Guid user);
+        Task<List<Usuario>> GetUserAssignmentByRol(Guid rol);
+        Task<Usuario> GetUser(string numeroDocumento); 
         void SaveUser(Usuario user);
+        void UpdateUser(Usuario userUpdate, Usuario user);
     }
 }

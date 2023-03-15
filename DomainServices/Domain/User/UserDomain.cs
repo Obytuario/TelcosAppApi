@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
@@ -27,7 +28,79 @@ namespace DomainServices.Domain.User
             return await _context.Usuario.Where(x => x.Activo == true)
                                          .Include(i => i.RolNavigation)
                                          .Include(i => i.CargoNavigation)
+                                         .Include(i => i.UsuarioSuperiorNavigation)
                                          .Include(i => i.CentroOperacionNavigation).ToListAsync();
+        }/// <summary>
+         ///     obtiene lista de usuarios asignados
+         /// </summary>
+         /// <author>Ariel Bejarano</author>       
+        public async Task<List<Usuario>> GetUserAssignmentById(Guid user)
+        {
+            return await _context.Usuario.Where(x => x.Activo == true)
+                                         .Include(i => i.RolNavigation)
+                                         .Include(i => i.CargoNavigation)
+                                         .Include(i => i.CentroOperacionNavigation)
+                                         .Where(x => x.UsuarioSuperior == user).ToListAsync();
+        }
+        /// <summary>
+        ///     obtiene lista de usuarios asignados
+        /// </summary>
+        /// <author>Ariel Bejarano</author>       
+        public async Task<List<Usuario>> GetUserAssignmentByRol(Guid rol)
+        {
+            var resultRoles = await _context.Rol.Where(x => x.Activo == true)
+                                        .Include(i => i.RolSuperiorNavigation.Usuario)
+                                        .Include(i => i.InverseRolSuperiorNavigation).ThenInclude(t => t.Usuario)
+                                        .Include(i => i.Usuario)
+                                        .Where(x => x.RolSuperiorNavigation.ID == rol).ToListAsync();
+
+            List<Usuario> usuarios = new List<Usuario>();
+
+            validateUsers(resultRoles);
+
+            void validateUsers(List<Rol> roles)
+            {
+                roles.ForEach(rol => {
+                    usuarios.AddRange(rol.Usuario);                    
+                });
+            }
+
+            return usuarios;
+
+            //return await _context.Usuario.Where(x => x.Activo == true)
+            //                             .Include(i => i.RolNavigation.RolSuperiorNavigation.Usuario)
+            //                             .Include(i => i.RolNavigation.InverseRolSuperiorNavigation)
+            //                             .Include(i => i.CargoNavigation)
+            //                             .Include(i => i.CentroOperacionNavigation)
+            //                             .Where(x => x.InverseUsuarioSuperiorNavigation.All(x => x.ID == rol)).ToListAsync();
+        }
+        /// <summary>
+        ///     obtiene lista de usuarios asignados
+        /// </summary>
+        /// <author>Ariel Bejarano</author>       
+        public List<Usuario> GetUserAssignmentByRol2(Guid rol)
+        {
+            var otro = _context.Rol.Where(x => x.Activo == true)
+                                        .Include(i => i.RolSuperiorNavigation.Usuario)
+                                        .Include(i => i.InverseRolSuperiorNavigation).ThenInclude(t => t.Usuario)
+                                        .Include(i => i.Usuario)
+                                        .Where(x => x.RolSuperiorNavigation.ID == rol).ToList();
+
+            List<Usuario> usuarios = new List<Usuario>();
+
+            validateUsers(otro);
+
+            void validateUsers(List<Rol> roles)
+            {
+                roles.ForEach(rol => {
+                    usuarios.AddRange(rol.Usuario);
+                    //if (rol.InverseRolSuperiorNavigation.Count > 0)
+                    //    validateUsers(rol.InverseRolSuperiorNavigation.ToList());
+                });
+            }
+
+            
+            return null;
         }
         /// <summary>
         ///     obtiene usuario por numero de documento
@@ -47,6 +120,18 @@ namespace DomainServices.Domain.User
         public void SaveUser(Usuario user)
         {
             _context.Usuario.Add(user);
+            _context.SaveChanges();
+        }
+        /// <summary>
+        ///     actualiza un usuario
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">objeto para Actualizar un usuario</param>
+        public void UpdateUser(Usuario userUpdate, Usuario user)
+        {
+            user.Contraseña = userUpdate.Contraseña;
+            user.Salt = userUpdate.Salt;
+            _context.Entry(userUpdate).CurrentValues.SetValues(user);           
             _context.SaveChanges();
         }
         #endregion|

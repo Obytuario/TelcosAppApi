@@ -86,5 +86,14 @@ namespace AplicationServices.Helpers.TextResorce {
                 return ResourceManager.GetString("InvalidParameterDocument", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Usuario No existe, valide por favor..
+        /// </summary>
+        internal static string NotExistUser {
+            get {
+                return ResourceManager.GetString("NotExistUser", resourceCulture);
+            }
+        }
     }
 }

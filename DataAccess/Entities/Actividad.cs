@@ -7,11 +7,11 @@ public partial class Actividad
 {
     public Guid ID { get; set; }
 
-    public byte[] Descripcion { get; set; } = null!;
+    public string Descripcion { get; set; } = null!;
 
     public bool Activo { get; set; }
 
-    public byte[] Codigo { get; set; } = null!;
+    public string Codigo { get; set; } = null!;
 
     public Guid Carpeta { get; set; }
 

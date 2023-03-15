@@ -12,6 +12,9 @@ namespace AplicationServices.Application.Contracts.User
     {
 
         Task<RequestResult<List<PostUserDto>>> GetAllUsers();
-        Task<RequestResult<PostUserDto>> SaveUser(PostUserDto userDto);
+        Task<RequestResult<List<PostUserDto>>> GetUserAssignmentById(Guid user);
+        Task<RequestResult<List<PostUserDto>>> GetAssignmentByRol(Guid rol);
+        Task<RequestResult<PostUserDto>> SaveUser(PostUserDto userDto);        
+        Task<RequestResult<PostUserDto>> UpdateUser(PostUserDto userDto);
     }
 }

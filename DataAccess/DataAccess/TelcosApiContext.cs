@@ -14,8 +14,12 @@ namespace TelcosAppApi.DataAccess.DataAccess
             modelBuilder.Entity<Actividad>(entity =>
             {
                 entity.Property(e => e.ID).ValueGeneratedNever();
-                entity.Property(e => e.Codigo).HasMaxLength(10);
-                entity.Property(e => e.Descripcion).HasMaxLength(50);
+                entity.Property(e => e.Codigo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.CarpetaNavigation).WithMany(p => p.Actividad)
                     .HasForeignKey(d => d.Carpeta)
@@ -429,6 +433,12 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasMaxLength(50)
                     .IsUnicode(false);
                 entity.Property(e => e.Contraseña).IsUnicode(false);
+                entity.Property(e => e.Correo)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+                entity.Property(e => e.NumeroContacto)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
                 entity.Property(e => e.NumeroDocumento)
                     .HasMaxLength(10)
                     .IsUnicode(false);
@@ -455,6 +465,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasConstraintName("FK_Usuario_Usuario");
             });
 
+          
         }
     }
 }

@@ -126,4 +126,7 @@
   <data name="InvalidParameterDocument" xml:space="preserve">
     <value>Numero de Documento Invalido</value>
   </data>
+  <data name="NotExistUser" xml:space="preserve">
+    <value>Usuario No existe, valide por favor.</value>
+  </data>
 </root>

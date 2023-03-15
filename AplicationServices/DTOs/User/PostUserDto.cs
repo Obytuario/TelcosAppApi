@@ -17,6 +17,8 @@ namespace AplicationServices.DTOs.User
         public string? rol { get; set; }
         public Guid idCharge { get; set; }
         public string? charge { get; set; }
+        public Guid? idSuperior { get; set; }
+        public string? nameSuperior { get; set; }
         public Guid idOperationCenter { get; set; }
         public bool active { get; set; }
         public string? operationCenter { get; set; }

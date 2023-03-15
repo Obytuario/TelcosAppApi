@@ -56,6 +56,47 @@ namespace AplicationServices.Application.User
             }
         }
         /// <summary>
+        ///     Obtiene la lista de usuarios del sitema.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>    
+        public async Task<RequestResult<List<PostUserDto>>> GetAssignmentByRol(Guid rol)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                var Users = _mapper.Map<List<Usuario>, List<PostUserDto>>(await _userDomain.GetUserAssignmentByRol(rol));
+
+
+                return RequestResult<List<PostUserDto>>.CreateSuccessful(Users);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<PostUserDto>>.CreateError(ex.Message);
+            }
+        }
+        /// <summary>
+        ///     Obtiene la lista de usuarios del sitema.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>    
+        public async Task<RequestResult<List<PostUserDto>>> GetUserAssignmentById(Guid user)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+
+                var Users = _mapper.Map<List<Usuario>, List<PostUserDto>>(await _userDomain.GetUserAssignmentById(user));
+
+
+                return RequestResult<List<PostUserDto>>.CreateSuccessful(Users);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<PostUserDto>>.CreateError(ex.Message);
+            }
+        }
+        /// <summary>
         ///     Guarda un usuario.
         /// </summary>
         /// <author>Ariel Bejarano</author>
@@ -82,6 +123,41 @@ namespace AplicationServices.Application.User
                 user.Contraseña = hash.Hash;
                 user.Salt = Convert.ToBase64String(hash.SaltHash);               
                 _userDomain.SaveUser(user);
+                return RequestResult<PostUserDto>.CreateSuccessful(userDto);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<PostUserDto>.CreateError(ex.Message);
+            }
+        }
+        
+        /// <summary>
+        ///     Guarda un usuario.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="userDto">objeto para guardar orden de trabajo</param>
+        public async Task<RequestResult<PostUserDto>> UpdateUser(PostUserDto userDto)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                var user = _mapper.Map<PostUserDto, Usuario>(userDto);
+                SaveUserValidations(ref errorMessageValidations, user);
+                if (errorMessageValidations.Any())
+                    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+
+                Usuario findUser = await _userDomain.GetUser(user.NumeroDocumento);
+                if (findUser == null)
+                {
+                    //Context.Entry(resultUpdate).CurrentValues.SetValues(recordAnestesia);
+                    errorMessageValidations.Add(ResourceUserMsm.NotExistUser);
+                    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                }
+
+               
+
+                _userDomain.UpdateUser(findUser,user);
                 return RequestResult<PostUserDto>.CreateSuccessful(userDto);
 
             }

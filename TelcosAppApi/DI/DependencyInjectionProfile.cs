@@ -28,6 +28,10 @@ using AplicationServices.Application.Contracts.CentroOperaciones;
 using AplicationServices.Application.CentroOperaciones;
 using DomainServices.Domain.Contracts.CentroOperaciones;
 using DomainServices.Domain.CentroOperaciones;
+using AplicationServices.Application.Contracts.Carpetas;
+using AplicationServices.Application.Carpetas;
+using DomainServices.Domain.Contracts.Carpetas;
+using DomainServices.Domain.Carpetas;
 
 namespace TelcosAppApi.DI
 {
@@ -59,6 +63,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<IUserServices, UserAppServices>();
             services.AddTransient<ICargosServices, CargosAppServices>();
             services.AddTransient<ICentroOperacionServices, CentroOperacionesAppServices>();
+            services.AddTransient<ICarpetasServices, CarpetasAppServices>();
 
 
             #endregion
@@ -71,6 +76,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<IUserDomain, UserDomain>();
             services.AddTransient<ICargosDomain, CargosDomain>();
             services.AddTransient<ICentroOperacionesDomain, CentroOperacionesDomain>();
+            services.AddTransient<ICarpetaDomain, CarpetasDomain>();
 
             #endregion Domain
         }

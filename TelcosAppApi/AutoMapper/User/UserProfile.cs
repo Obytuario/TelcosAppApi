@@ -14,6 +14,7 @@ namespace TelcosAppApi.AutoMapper.User
         {
             FromUserDtoToUsuario();
             FromUserUsuarioToDto();
+            FromUserCurrentToUserUpdate();
 
 
         }
@@ -27,6 +28,7 @@ namespace TelcosAppApi.AutoMapper.User
                  .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.numberDocument))
                  .ForMember(target => target.Rol, opt => opt.MapFrom(source => source.idRol))
                  .ForMember(target => target.Cargo, opt => opt.MapFrom(source => source.idCharge))
+                 .ForMember(target => target.UsuarioSuperior, opt => opt.MapFrom(source => source.idSuperior))
                  .ForMember(target => target.CentroOperacion, opt => opt.MapFrom(source => source.idOperationCenter))
                  .ForMember(target => target.PrimerNombre, opt => opt.MapFrom(source => source.fName))
                  .ForMember(target => target.NumeroContacto, opt => opt.MapFrom(source => source.mobile))
@@ -49,11 +51,24 @@ namespace TelcosAppApi.AutoMapper.User
                  .ForMember(target => target.mobile, opt => opt.MapFrom(source => source.NumeroDocumento))
                  .ForMember(target => target.idOperationCenter, opt => opt.MapFrom(source => source.CentroOperacion))
                  .ForMember(target => target.operationCenter, opt => opt.MapFrom(source => source.CentroOperacionNavigation.Descripcion))
+                 .ForMember(target => target.idSuperior, opt => opt.MapFrom(source => source.UsuarioSuperior))
+                 .ForMember(target => target.nameSuperior, opt => opt.MapFrom(source => source.UsuarioSuperiorNavigation != null? String.Format("{0} {1}", source.PrimerNombre, source.Apellidos): null))
                  .ForMember(target => target.lName, opt => opt.MapFrom(source => source.Apellidos))
                  .ForMember(target => target.email, opt => opt.MapFrom(source => source.Correo))
                  .ForMember(target => target.mobile, opt => opt.MapFrom(source => source.NumeroContacto))
                  .ForMember(target => target.fName, opt => opt.MapFrom(source => source.PrimerNombre));
                  //.ForMember(target => target.fName, opt => opt.MapFrom(source => source.Apellidos));
+        }
+        private void FromUserCurrentToUserUpdate()
+        {
+            // dest => usuario a actualizar   opt=> origen
+            _ = CreateMap<Usuario, Usuario>()
+
+                 .ForMember(dest => dest.GenerarContraseña, opt => opt.MapFrom(source => source.GenerarContraseña))
+                 .ForMember(dest => dest.Contraseña, opt => opt.MapFrom(source => source.Contraseña))
+                 .ForMember(dest => dest.Salt, opt => opt.MapFrom(source => source.Salt));
+                 
+              ;
         }
     }
 }

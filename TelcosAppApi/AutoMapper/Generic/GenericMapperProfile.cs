@@ -13,6 +13,7 @@ namespace TelcosAppApi.AutoMapper.Generic
             FromEstadoOrdenTrabajoToGenericDto();
             FromCargoToGenericDto();
             FromCentrooperacionToGenericDto();
+            FromCarpetaToGenericDto();
         }
         /// <summary>
         /// Convierte desde rol hasta GenericDto
@@ -60,6 +61,16 @@ namespace TelcosAppApi.AutoMapper.Generic
         private void FromCentrooperacionToGenericDto()
         {
             CreateMap<CentroOperacion, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
+        }
+        /// <summary>
+        /// Convierte carpeta hasta GenericDto
+        /// </summary>
+        private void FromCarpetaToGenericDto()
+        {
+            CreateMap<Carpeta, GenericDto>()
               .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
               .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
               .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
