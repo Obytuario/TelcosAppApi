@@ -2,6 +2,7 @@
 {
     public class RespuestaAutenticacionDto
     {
-        public string? Token { get; set; } 
+        public string? Token { get; set; }
+        public Guid UserID { get; set; }
     }
 }

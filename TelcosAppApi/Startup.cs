@@ -8,6 +8,8 @@ using System.Text;
 using TelcosAppApi.DI;
 using TelcosAppApi.DataAccess.DataAccess;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
 
 namespace TelcosAppApi
 {
@@ -63,9 +65,13 @@ namespace TelcosAppApi
             //services.AddDbContext<TelcosApiContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TelcosConnectionString")));
             services.AddAutoMapper(typeof(Startup));
             services.AddControllersWithViews();
+            
             _ConfigCorsPolicy(services);
+            _ConfigMvc(services);
             _ConfigOthers(services);
             _ConfigSQL(services);
+
+            
 
         }
         private void _ConfigCorsPolicy(IServiceCollection services)
@@ -79,6 +85,19 @@ namespace TelcosAppApi
                     o.AllowAnyOrigin();
                 });
             });
+        }
+
+        private void _ConfigMvc(IServiceCollection services)
+        {
+            services.AddMvc()
+            .AddNewtonsoftJson(jsonOptions =>
+            {
+                jsonOptions.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+                jsonOptions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                jsonOptions.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            })
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         private void _ConfigSQL(IServiceCollection services)
