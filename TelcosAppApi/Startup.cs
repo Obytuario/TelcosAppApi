@@ -28,7 +28,10 @@ namespace TelcosAppApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddJsonOptions(options => {
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
@@ -67,8 +70,10 @@ namespace TelcosAppApi
         }
         private void _ConfigCorsPolicy(IServiceCollection services)
         {
-            services.AddCors(opt => {
-                opt.AddPolicy(name: _NAMECORSPOLICY, o => {
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy(name: _NAMECORSPOLICY, o =>
+                {
                     o.AllowAnyHeader();
                     o.AllowAnyMethod();
                     o.AllowAnyOrigin();
@@ -92,8 +97,8 @@ namespace TelcosAppApi
             // Configure the HTTP request pipeline.
             //if (env.IsDevelopment())
             //{
-                app.UseSwagger();
-                app.UseSwaggerUI();
+            app.UseSwagger();
+            app.UseSwaggerUI();
             //}
 
             app.UseHttpsRedirection();
@@ -107,7 +112,7 @@ namespace TelcosAppApi
             {
                 endPoints.MapControllers();
             });
-            
+
         }
         private void _ConfigOthers(IServiceCollection services)
         {
