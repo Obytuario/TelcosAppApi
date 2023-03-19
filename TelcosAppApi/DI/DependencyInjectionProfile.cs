@@ -36,6 +36,10 @@ using AplicationServices.Application.Contracts.WorkOrderFollowUp;
 using AplicationServices.Application.WorkOrderFollowUp;
 using DomainServices.Domain.Contracts.WorkOrderFollowUp;
 using DomainServices.Domain.WorkOrderFollowUp;
+using AplicationServices.Application.Contracts.Subscriber;
+using DomainServices.Domain.Contracts.Subscriber;
+using DomainServices.Domain.Subscriber;
+using AplicationServices.Application.Subscriber;
 
 namespace TelcosAppApi.DI
 {
@@ -69,6 +73,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<ICentroOperacionServices, CentroOperacionesAppServices>();
             services.AddTransient<ICarpetasServices, CarpetasAppServices>();
             services.AddTransient<IWorkOrderFollowUpServices, WorkOrderFollowUpServices>();
+            services.AddTransient<ISubscriberServices, SubscriberAppServices> ();
 
 
             #endregion
@@ -83,6 +88,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<ICentroOperacionesDomain, CentroOperacionesDomain>();
             services.AddTransient<ICarpetaDomain, CarpetasDomain>();
             services.AddTransient<IWorkOrderFollowUpDomain, WorkOrderFollowUpDomain>();
+            services.AddTransient<ISubscriberDomain, SubscriberDomain>();
 
             #endregion Domain
         }
