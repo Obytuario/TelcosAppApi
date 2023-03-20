@@ -299,6 +299,12 @@ namespace TelcosAppApi.DataAccess.DataAccess
                 entity.Property(e => e.ID).ValueGeneratedNever();
                 entity.Property(e => e.FechaOrden).HasColumnType("datetime");
                 entity.Property(e => e.FechaRegistro).HasColumnType("datetime");
+                entity.Property(e => e.Latitud)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.Logitud)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
                 entity.Property(e => e.NumeroOrden)
                     .HasMaxLength(20)
                     .IsUnicode(false);

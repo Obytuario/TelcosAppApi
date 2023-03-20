@@ -23,6 +23,10 @@ public partial class OrdenTrabajo
 
     public Guid? TecnicoAuxiliar { get; set; }
 
+    public string? Latitud { get; set; }
+
+    public string? Logitud { get; set; }
+
     public Guid UsuarioRegistra { get; set; }
 
     public virtual Carpeta CarpetaNavigation { get; set; } = null!;
