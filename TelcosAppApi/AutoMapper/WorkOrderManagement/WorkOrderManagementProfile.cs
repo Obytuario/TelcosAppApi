@@ -43,7 +43,9 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                  .ForMember(target => target.FechaOrden, opt => opt.MapFrom(source => DateTime.Now.Date))
                  .ForMember(target => target.FechaRegistro, opt => opt.MapFrom(source => DateTime.Now))
                  .ForMember(target => target.UsuarioRegistra, opt => opt.MapFrom(source => source.UsuarioRegistraDto))
-                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenDTO))
+                 .ForMember(target => target.Carpeta, opt => opt.MapFrom(source => source.FolderDto))
+                 .ForMember(target => target.CentroOperacion, opt => opt.MapFrom(source => source.OperationCenterDto))
+                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenDto))
                  .ForMember(target => target.SuscriptorNavigation, opt => opt.MapFrom(source => new Suscriptor
                  {
                      ID = Guid.NewGuid(),

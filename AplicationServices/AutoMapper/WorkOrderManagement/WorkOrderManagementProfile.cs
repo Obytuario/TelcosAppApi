@@ -39,7 +39,7 @@ namespace AplicationServices.AutoMapper.WorkOrderManagement
                  .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
                  .ForMember(target => target.NumeroOrden, opt => opt.MapFrom(source => source.NumeroOrdenDto))
                  .ForMember(target => target.UsuarioRegistra, opt => opt.MapFrom(source => source.UsuarioRegistraDto))
-                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenDTO))
+                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenDto))
                  .ForMember(target => target.SuscriptorNavigation, opt => opt.MapFrom(source => new Suscriptor
                  {
                      ID = Guid.NewGuid(),

@@ -30,10 +30,11 @@ namespace TelcosAppApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddNewtonsoftJson();
-            services.AddControllers().AddJsonOptions(options => {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
-            });
+            services.AddControllers();
+            //services.AddControllers().AddNewtonsoftJson();
+            //services.AddControllers().AddJsonOptions(options => {
+            //    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+            //});
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen(c =>
@@ -89,15 +90,15 @@ namespace TelcosAppApi
 
         private void _ConfigMvc(IServiceCollection services)
         {
-            services.AddMvc()
-            .AddNewtonsoftJson(jsonOptions =>
-            {
-                jsonOptions.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
-                jsonOptions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-                jsonOptions.SerializerSettings.ContractResolver = new DefaultContractResolver();
-                jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
-            })
-            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddMvc();
+            //.AddNewtonsoftJson(jsonOptions =>
+            //{
+            //    jsonOptions.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            //    jsonOptions.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //    jsonOptions.SerializerSettings.ContractResolver = new DefaultContractResolver();
+            //    jsonOptions.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            //})
+            //.SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         private void _ConfigSQL(IServiceCollection services)
