@@ -318,9 +318,14 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrdenTrabajo_Suscriptor");
 
-                entity.HasOne(d => d.TecnicoAuxiliarNavigation).WithMany(p => p.OrdenTrabajo)
+                entity.HasOne(d => d.TecnicoAuxiliarNavigation).WithMany(p => p.OrdenTrabajoTecnicoAuxiliarNavigation)
                     .HasForeignKey(d => d.TecnicoAuxiliar)
                     .HasConstraintName("FK_OrdenTrabajo_Usuario");
+
+                entity.HasOne(d => d.UsuarioRegistraNavigation).WithMany(p => p.OrdenTrabajoUsuarioRegistraNavigation)
+                    .HasForeignKey(d => d.UsuarioRegistra)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrdenTrabajo_Usuario1");
             });
 
             modelBuilder.Entity<ParamEquipoActividad>(entity =>
@@ -465,7 +470,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasConstraintName("FK_Usuario_Usuario");
             });
 
-          
+            
         }
     }
 }

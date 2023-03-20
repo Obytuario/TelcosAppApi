@@ -8,13 +8,41 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
 {
     public class GetWorkOrderFollowUpDTO
     {
-        public Guid IdDto { get; set; }
-        public string? NumeroOrdenDto { get; set; }
-        public Guid UsuarioRegistraDto { get; set; }
-        public Guid EstadoOrdenDTO { get; set; }
-        public string? NombreEstadoOrdenDTO { get; set; }
-        public Guid IdSuscriptorDto { get; set; }
-        public string? NombreSuscriptorDto { get; set; }
-        public string? CuentaSuscriptorDto { get; set; }
+        public Guid IdOrden { get; set; }
+        public string? NumeroOrden { get; set; }
+        public string NombreTecnico { get; set; }
+        public string NumeroDocumento { get; set; }
+        public string EstadoOrden { get; set; }
+        public DateTime FechaOrdenTrabajo { get; set; }
+        public Guid IdCarpeta { get; set; }
+        public string NombreCarpeta { get; set; }
+        public List<DetailWorkOrderFollowMaterial> Detallematerial  { get; set; }
+        public List<DetailWorkOrderFollowequipment> DetalleEquipo { get; set; }
+
+    }
+    public class DetailWorkOrderFollowMaterial
+    {
+        public Guid IdDetalle { get; set; }
+        public Guid IdCarpeta { get; set; }
+        public Guid IdParamActividad { get; set; }
+        public string? CodigoMaterial { get; set; }
+        public string? NombreMaterial { get; set; }
+        public int CantidadMaterial { get; set; }
+        public string? NombreActividad { get; set; }
+
+    }
+    public class DetailWorkOrderFollowequipment
+    {
+        public Guid IdDetalle { get; set; }
+        public string? CodigoEquipo { get; set; }
+        public string? NombreEquipo { get; set; }
+        public string? SerialEquipo { get; set; }
+        public Guid IdMovimiento { get; set; }
+        public Guid IdParamActividad { get; set; }
+        public Guid IdCarpeta { get; set; }
+        public string? NombreMovimiento { get; set; }
+        public string? NombreActividad { get; set; }
+
+
     }
 }

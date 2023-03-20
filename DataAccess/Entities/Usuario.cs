@@ -51,7 +51,9 @@ public partial class Usuario
 
     public virtual ICollection<LogUsuario> LogUsuarioUsuarioNavigation { get; } = new List<LogUsuario>();
 
-    public virtual ICollection<OrdenTrabajo> OrdenTrabajo { get; } = new List<OrdenTrabajo>();
+    public virtual ICollection<OrdenTrabajo> OrdenTrabajoTecnicoAuxiliarNavigation { get; } = new List<OrdenTrabajo>();
+
+    public virtual ICollection<OrdenTrabajo> OrdenTrabajoUsuarioRegistraNavigation { get; } = new List<OrdenTrabajo>();
 
     public virtual Rol RolNavigation { get; set; } = null!;
 

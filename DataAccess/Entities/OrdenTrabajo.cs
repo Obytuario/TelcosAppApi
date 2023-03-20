@@ -38,4 +38,6 @@ public partial class OrdenTrabajo
     public virtual Suscriptor SuscriptorNavigation { get; set; } = null!;
 
     public virtual Usuario? TecnicoAuxiliarNavigation { get; set; }
+
+    public virtual Usuario UsuarioRegistraNavigation { get; set; } = null!;
 }

@@ -10,5 +10,7 @@ namespace AplicationServices.Application.Contracts.Carpetas
     public interface ICarpetasServices
     {
         Task<RequestResult<List<GenericDto>>> GetFiles();
+        Task<RequestResult<List<paramGenericDto>>> GetActyvitiMaterialByFile(Guid file);
+        Task<RequestResult<List<paramGenericDto>>> GetActyvitiEquipmentByFile(Guid file);
     }
 }

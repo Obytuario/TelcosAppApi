@@ -41,6 +41,32 @@ namespace AplicationServices.Application.Carpetas
                 return RequestResult<List<GenericDto>>.CreateError(ex.Message);
             }
         }
+        public async Task<RequestResult<List<paramGenericDto>>> GetActyvitiEquipmentByFile(Guid file)
+        {
+            try
+            {
+                return RequestResult<List<paramGenericDto>>.CreateSuccessful(_mapper.Map<List<ParamEquipoActividad>, List<paramGenericDto>>(await _carpetasDomain.GetActyvitiEquipmentByFile(file)));
+
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<paramGenericDto>>.CreateError(ex.Message);
+            }
+        }
+        public async Task<RequestResult<List<paramGenericDto>>> GetActyvitiMaterialByFile(Guid file)
+        {
+            try
+            {
+                return RequestResult<List<paramGenericDto>>.CreateSuccessful(_mapper.Map<List<ParamMaterialActividad>, List<paramGenericDto>>(await _carpetasDomain.GetActyvitiMaterialByFile(file)));
+
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<paramGenericDto>>.CreateError(ex.Message);
+            }
+        }
         #endregion
     }
 }

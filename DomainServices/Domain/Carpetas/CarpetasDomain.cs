@@ -23,6 +23,19 @@ namespace DomainServices.Domain.Carpetas
             return await _context.Carpeta.ToListAsync();
            
         }
+
+        public async Task<List<ParamEquipoActividad>> GetActyvitiEquipmentByFile(Guid file)
+        {
+            return await _context.ParamEquipoActividad.Where(x => x.ActividadNavigation.Carpeta.Equals(file) && x.Activo)
+                                                       .Include(x => x.ActividadNavigation)
+                                                       .Include(x => x.EquipoNavigation).ToListAsync();
+        }
+        public async Task<List<ParamMaterialActividad>> GetActyvitiMaterialByFile(Guid file)
+        {
+            return await _context.ParamMaterialActividad.Where(x => x.ActividadNavigation.Carpeta.Equals(file) && x.Activo)
+                                                       .Include(x => x.ActividadNavigation)
+                                                       .Include(x => x.MaterialNavigation).ToListAsync();
+        }
         #endregion|
     }
 }

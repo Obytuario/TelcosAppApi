@@ -1,4 +1,5 @@
-﻿using AplicationServices.Application.Contracts.WorkOrderFollowUp;
+﻿using AplicationServices.Application.Contracts.Roles;
+using AplicationServices.Application.Contracts.WorkOrderFollowUp;
 using AplicationServices.Application.Contracts.WorkOrderManagement;
 using AplicationServices.DTOs.Generics;
 using AplicationServices.DTOs.WorkOrderFollowUp;
@@ -34,11 +35,72 @@ namespace TelcosAppApi.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         /// <author>Ariel Bejarano</author>
-        [HttpGet("GetWorkOrderFollow")]
-        public async Task<RequestResult<List<GetWorkOrderFollowUpDTO>>> GetWorkOrderByUser(PostWorkOrderFollowUpDTO filter)
+        [HttpGet("GetDetailEquipmentByOrder")]
+        public async Task<RequestResult<List<DetailWorkOrderFollowequipment>>> GetDetailEquipmentByOrder(Guid order)
         {
 
+            return await _WorkOrderFollowUpServices.GetDetailEquipmentByOrder(order);
+        }
+        /// <summary>
+        /// Consulta las ordenes del dia de un tecnico.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetDetailMaterialByOrder")]
+        public async Task<RequestResult<List<DetailWorkOrderFollowMaterial>>> GetDetailMaterialByOrder(Guid order)
+        {
+
+            return await _WorkOrderFollowUpServices.GetDetailMaterialByOrder(order);
+        }
+        /// <summary>
+        /// Obtiene todos los movimientos de equipo
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetAllMovimientoEquipment")]
+        public async Task<RequestResult<List<GenericDto>>> GetAllMovimientoEquipment()
+        {
+            return await _WorkOrderFollowUpServices.GetAllMovimientoEquipment();
+        }
+
+        /// <summary>
+        /// Consulta las ordenes del dia de un tecnico.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        /// 
+        [HttpPost("GetWorkOrderFollow")]
+        public async Task<RequestResult<List<GetWorkOrderFollowUpDTO>>> GetWorkOrderByUser(PostWorkOrderFollowUpDTO filter)
+        {
             return await _WorkOrderFollowUpServices.GetWorkOrderFollowUp(filter);
         }
+        /// <summary>
+        /// Actualiza detalle de equipos.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        /// 
+        [HttpPost("UpdateDetailEquipmentFollow")]
+        public async Task<RequestResult<DetailWorkOrderFollowequipment>> UpdateDetailEquipmentFollow(DetailWorkOrderFollowequipment detail)
+        {
+            return await _WorkOrderFollowUpServices.UpdateDetailEquipmentFollow(detail);
+        }
+        /// <summary>
+        /// Actualiza detalle de equipos.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        /// 
+        [HttpPost("UpdateDetailMaterialFollow")]
+        public async Task<RequestResult<DetailWorkOrderFollowMaterial>> UpdateDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
+        {
+            return await _WorkOrderFollowUpServices.UpdateDetailMaterialFollow(detail);
+        }
+
     }
 }

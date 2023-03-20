@@ -14,6 +14,9 @@ namespace TelcosAppApi.AutoMapper.Generic
             FromCargoToGenericDto();
             FromCentrooperacionToGenericDto();
             FromCarpetaToGenericDto();
+            FromParamEquipoToGenericDto();
+            FromParamMaterialToGenericDto();
+            FromMovimientoToGenericDto();
         }
         /// <summary>
         /// Convierte desde rol hasta GenericDto
@@ -74,6 +77,36 @@ namespace TelcosAppApi.AutoMapper.Generic
               .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
               .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
               .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
+        }
+        /// <summary>
+        /// Convierte movimiento hasta GenericDto
+        /// </summary>
+        private void FromMovimientoToGenericDto()
+        {
+            CreateMap<MovimientoEquipo, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
+        }
+        /// <summary>
+        /// Convierte carpeta hasta GenericDto
+        /// </summary>
+        private void FromParamEquipoToGenericDto()
+        {
+            CreateMap<ParamEquipoActividad, paramGenericDto>()
+              .ForMember(target => target.IdParamGenericActividad, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ActividadNavigation.Descripcion))
+              .ForMember(target => target.NombreGeneric, opt => opt.MapFrom(source => source.EquipoNavigation.Descripcion));
+        }
+        /// <summary>
+        /// Convierte carpeta hasta GenericDto
+        /// </summary>
+        private void FromParamMaterialToGenericDto()
+        {
+            CreateMap<ParamMaterialActividad, paramGenericDto>()
+              .ForMember(target => target.IdParamGenericActividad, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ActividadNavigation))
+              .ForMember(target => target.NombreGeneric, opt => opt.MapFrom(source => source.MaterialNavigation.Descripcion));
         }
     }
 }

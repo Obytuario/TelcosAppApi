@@ -18,7 +18,7 @@ namespace TelcosAppApi.Controllers
 {
     [ApiController]
     [Route("Api/Authentication")]
-    [Produces("application/json")]
+    //[Produces("application/json")]
     public class AuthenticationController:ControllerBase
     {
 

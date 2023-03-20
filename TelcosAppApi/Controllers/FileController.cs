@@ -1,9 +1,11 @@
 ﻿using AplicationServices.Application.Contracts.Carpetas;
 using AplicationServices.Application.Contracts.Roles;
 using AplicationServices.DTOs.Generics;
+using AplicationServices.DTOs.WorkOrderFollowUp;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace TelcosAppApi.Controllers
 {
@@ -36,6 +38,28 @@ namespace TelcosAppApi.Controllers
         public async Task<RequestResult<List<GenericDto>>> Get()
         {
             return await _carpetasServices.GetFiles();
+        }
+        /// <summary>
+        /// Consulta las equipos agrupados por actividad filtrados por carpeta
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetActyvitiEquipmentByFile")]
+        public async Task<RequestResult<List<paramGenericDto>>> GetActyvitiEquipmentByFile(Guid file)
+        {
+            return await _carpetasServices.GetActyvitiEquipmentByFile(file);
+        }
+        /// <summary>
+        /// Consulta las equipos agrupados por actividad filtrados por carpeta
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetActyvitiMaterialByFile")]
+        public async Task<RequestResult<List<paramGenericDto>>> GetActyvitiMaterialByFile(Guid file)
+        {
+            return await _carpetasServices.GetActyvitiMaterialByFile(file);
         }
     }
 }

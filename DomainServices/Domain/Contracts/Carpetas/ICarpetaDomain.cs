@@ -10,5 +10,7 @@ namespace DomainServices.Domain.Contracts.Carpetas
     public interface ICarpetaDomain
     {
         Task<List<Carpeta>> GetCarpetas();
+        Task<List<ParamEquipoActividad>> GetActyvitiEquipmentByFile(Guid file);
+        Task<List<ParamMaterialActividad>> GetActyvitiMaterialByFile(Guid file);
     }
 }

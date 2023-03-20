@@ -10,5 +10,10 @@ namespace DomainServices.Domain.Contracts.WorkOrderFollowUp
     public interface IWorkOrderFollowUpDomain
     {
         Task<List<OrdenTrabajo>> GetWorkOrderFollowUp(DateTime fechaInicio, DateTime fechaFinal);
+        Task<List<DetalleEquipoOrdenTrabajo>> GetDetailEquipmentByOrder(Guid order);
+        Task<List<DetalleMaterialOrdenTrabajo>> GetDetailMaterialByOrder(Guid order);
+        Task<List<MovimientoEquipo>> GetAllMovimientoEquipment();
+        void UpdateDetailMaterial(DetalleMaterialOrdenTrabajo detailUpdate);
+        void UpdateDetailEquipment(DetalleEquipoOrdenTrabajo detailUpdate);
     }
 }
