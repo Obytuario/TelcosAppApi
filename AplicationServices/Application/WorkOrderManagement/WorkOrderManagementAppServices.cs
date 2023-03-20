@@ -18,6 +18,13 @@ namespace AplicationServices.Application.WorkOrderManagement
 
     public class WorkOrderManagementAppServices: IWorkOrderManagementServices
     {
+
+        #region CONST
+
+        public readonly string CODIGO_ESTADO_ENPROCESO = "ENPR";
+
+        #endregion
+
         /// <summary>
         /// Instancia al servicio de Dominio
         /// </summary>
@@ -94,8 +101,11 @@ namespace AplicationServices.Application.WorkOrderManagement
         {
             try
             {
-                var ordenTrabajo = _mapper.Map<PostWorkOrderManagementDTO, OrdenTrabajo>(workOrder);
+                OrdenTrabajo ordenTrabajo = _mapper.Map<PostWorkOrderManagementDTO, OrdenTrabajo>(workOrder);
+
+                ordenTrabajo.EstadoOrden = _workOrderManagementDomain.GetWorkOrderStatus().Result.Find(f => f.Codigo == CODIGO_ESTADO_ENPROCESO).ID;
                 _workOrderManagementDomain.SaveWorkOrder(ordenTrabajo);                
+
                 return RequestResult<PostWorkOrderManagementDTO>.CreateSuccessful(workOrder);
 
             }

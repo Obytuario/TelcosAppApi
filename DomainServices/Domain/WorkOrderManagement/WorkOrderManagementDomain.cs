@@ -17,7 +17,9 @@ namespace DomainServices.Domain.WorkOrderManagement
         {
             _context = telcosApiContext;
         }
+
         #region Method
+
         public async Task<List<OrdenTrabajo>> GetWorkOrderByUser(Guid? user)
         {
             return await _context.OrdenTrabajo.Where(x => x.UsuarioRegistra.Equals(user))
@@ -25,14 +27,17 @@ namespace DomainServices.Domain.WorkOrderManagement
                 .Include(x => x.SuscriptorNavigation)
                 .ToListAsync();
         }
+
         public async Task<List<TipoSuscriptor>> GetSubscriberType()
         {
             return await _context.TipoSuscriptor.Where(x => x.Activo).ToListAsync();
         }
+
         public async Task<List<EstadoOrdenTrabajo>> GetWorkOrderStatus()
         {
             return await _context.EstadoOrdenTrabajo.Where(x => x.Activo).ToListAsync();
         }
+
         /// <summary>
         ///     Guarda una orden de trabajo.
         /// </summary>
@@ -44,6 +49,7 @@ namespace DomainServices.Domain.WorkOrderManagement
             _context.OrdenTrabajo.Add(workOrder);
             _context.SaveChanges();
         }
+
         #endregion|
 
 
