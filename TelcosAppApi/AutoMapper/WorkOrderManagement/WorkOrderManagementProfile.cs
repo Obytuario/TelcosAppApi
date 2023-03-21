@@ -25,11 +25,14 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
             CreateMap<OrdenTrabajo, GetWorkOrderManagementDTO>()
                 .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
                 .ForMember(target => target.IdSuscriptorDto, opt => opt.MapFrom(source => source.Suscriptor))
+                .ForMember(target => target.IdCentroOperacionDto, opt => opt.MapFrom(source => source.CentroOperacion))
+                .ForMember(target => target.IdCarpetaDto, opt => opt.MapFrom(source => source.Carpeta))
                 .ForMember(target => target.NumeroOrdenDto, opt => opt.MapFrom(source => source.NumeroOrden))
                 .ForMember(target => target.NombreSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.Nombre+" "+source.SuscriptorNavigation.Apellido??""))
                 .ForMember(target => target.EstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrden))
                 .ForMember(target => target.CuentaSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.NumeroCuenta))
-                .ForMember(target => target.NombreEstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion)); 
+                .ForMember(target => target.NombreEstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion)) 
+                .ForMember(target => target.CodEstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Codigo)); 
         }
 
         /// <summary>
@@ -45,7 +48,6 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                  .ForMember(target => target.UsuarioRegistra, opt => opt.MapFrom(source => source.UsuarioRegistraDto))
                  .ForMember(target => target.Carpeta, opt => opt.MapFrom(source => source.FolderDto))
                  .ForMember(target => target.CentroOperacion, opt => opt.MapFrom(source => source.OperationCenterDto))
-                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenDto))
                  .ForMember(target => target.SuscriptorNavigation, opt => opt.MapFrom(source => new Suscriptor
                  {
                      ID = Guid.NewGuid(),

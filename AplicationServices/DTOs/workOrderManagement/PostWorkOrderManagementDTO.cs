@@ -6,7 +6,6 @@ namespace AplicationServices.DTOs.workOrderManagement
     {
         public string? NumeroOrdenDto { get; set; }       
         public Guid UsuarioRegistraDto { get; set; }
-        public Guid EstadoOrdenDto { get; set; }
         public Guid FolderDto { get; set; }
         public Guid? OperationCenterDto { get; set; }
         public SuscriptorDTO? suscriptorDTO { get; set; }   
