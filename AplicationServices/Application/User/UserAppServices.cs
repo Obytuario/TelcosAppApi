@@ -147,7 +147,7 @@ namespace AplicationServices.Application.User
                 if (errorMessageValidations.Any())
                     return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
 
-                Usuario findUser = await _userDomain.GetUser(user.NumeroDocumento);
+                Usuario findUser = await _userDomain.GetUserById(user.ID);
                 if (findUser == null)
                 {
                     //Context.Entry(resultUpdate).CurrentValues.SetValues(recordAnestesia);

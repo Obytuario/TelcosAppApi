@@ -74,6 +74,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
             CreateMap<DetailWorkOrderFollowequipment, DetalleEquipoOrdenTrabajo>()
                 .ForMember(target => target.ID, opt => opt.MapFrom(source => source.IdDetalle))
                 .ForMember(target => target.ParamEquipoActividad, opt => opt.MapFrom(source => source.IdParamActividad))
+                .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
                 .ForMember(target => target.Serial, opt => opt.MapFrom(source => source.SerialEquipo))
                 .ForMember(target => target.MovimientoEquipo, opt => opt.MapFrom(source => source.IdMovimiento));                
         }
@@ -82,6 +83,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
             CreateMap<DetailWorkOrderFollowMaterial, DetalleMaterialOrdenTrabajo>()
                 .ForMember(target => target.ID, opt => opt.MapFrom(source => source.IdDetalle))
                 .ForMember(target => target.ParamMaterialActividad, opt => opt.MapFrom(source => source.IdParamActividad))
+                .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
                 .ForMember(target => target.Cantidad, opt => opt.MapFrom(source => source.CantidadMaterial));
                 
         }

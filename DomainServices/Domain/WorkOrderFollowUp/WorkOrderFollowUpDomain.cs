@@ -58,8 +58,7 @@ namespace DomainServices.Domain.WorkOrderFollowUp
             var existDetail = _context.DetalleEquipoOrdenTrabajo.Where(x => x.ID.Equals(detailUpdate.ID)).FirstOrDefault();
             detailUpdate.OrdenTrabajo = existDetail.OrdenTrabajo;
             detailUpdate.UsuarioRegistra = existDetail.UsuarioRegistra;
-            detailUpdate.FechaHoraRegistra = existDetail.FechaHoraRegistra;
-            detailUpdate.Activo = existDetail.Activo;
+            detailUpdate.FechaHoraRegistra = existDetail.FechaHoraRegistra;          
             _context.Entry(existDetail).CurrentValues.SetValues(detailUpdate);
             _context.SaveChanges();
         }
@@ -73,8 +72,7 @@ namespace DomainServices.Domain.WorkOrderFollowUp
             var existDetail = _context.DetalleMaterialOrdenTrabajo.Where(x => x.ID.Equals(detailUpdate.ID)).FirstOrDefault();
             detailUpdate.OrdenTrabajo = existDetail.OrdenTrabajo;
             detailUpdate.UsuarioRegistra = existDetail.UsuarioRegistra;
-            detailUpdate.FechaHoraRegistra = existDetail.FechaHoraRegistra;
-            detailUpdate.Activo = existDetail.Activo;
+            detailUpdate.FechaHoraRegistra = existDetail.FechaHoraRegistra;        
             _context.Entry(existDetail).CurrentValues.SetValues(detailUpdate);
             _context.SaveChanges();
         }
