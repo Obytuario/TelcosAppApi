@@ -111,6 +111,15 @@ namespace DomainServices.Domain.User
         {            
             return await _context.Usuario.Where(x => x.NumeroDocumento.Equals(numeroDocumento)).FirstOrDefaultAsync();
         }
+        /// <summary>
+        ///     obtiene usuario por id
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">entidad usuario para obtener los datos</param>
+        public async Task<Usuario> GetUserById(Guid user)
+        {
+            return await _context.Usuario.Where(x => x.ID.Equals(user)).FirstOrDefaultAsync();
+        }
 
         /// <summary>
         ///     Guarda un usuario

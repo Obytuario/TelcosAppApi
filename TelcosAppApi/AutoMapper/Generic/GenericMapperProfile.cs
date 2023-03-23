@@ -105,7 +105,7 @@ namespace TelcosAppApi.AutoMapper.Generic
         {
             CreateMap<ParamMaterialActividad, paramGenericDto>()
               .ForMember(target => target.IdParamGenericActividad, opt => opt.MapFrom(source => source.ID))
-              .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ActividadNavigation))
+              .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ActividadNavigation.Descripcion))
               .ForMember(target => target.NombreGeneric, opt => opt.MapFrom(source => source.MaterialNavigation.Descripcion));
         }
     }

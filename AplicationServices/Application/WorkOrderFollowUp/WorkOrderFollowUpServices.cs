@@ -150,6 +150,59 @@ namespace AplicationServices.Application.WorkOrderFollowUp
                 return RequestResult<DetailWorkOrderFollowMaterial>.CreateError(ex.Message);
             }
         }
+        /// <summary>
+        ///     ianctiva detalle equipos de una orden
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="detail">obejteo con los datos</param>
+        public async Task<RequestResult<DetailWorkOrderFollowequipment>> DeleteDetailEquipmentFollow(DetailWorkOrderFollowequipment detail)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                DetalleEquipoOrdenTrabajo detalleEquipo = _mapper.Map<DetailWorkOrderFollowequipment, DetalleEquipoOrdenTrabajo>(detail);
+                detalleEquipo.Activo = false;
+                SaveWorkFollowEquipmentValidations(ref errorMessageValidations, detalleEquipo);
+                if (errorMessageValidations.Any())
+                    return RequestResult<DetailWorkOrderFollowequipment>.CreateUnsuccessful(errorMessageValidations);
+
+
+
+                _workOrderFollowUpDomain.UpdateDetailEquipment(detalleEquipo);
+                return RequestResult<DetailWorkOrderFollowequipment>.CreateSuccessful(detail);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<DetailWorkOrderFollowequipment>.CreateError(ex.Message);
+            }
+        }
+        /// <summary>
+        ///     inactiva detalle material de una orden
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="detail">obejteo con los datos</param>
+        public async Task<RequestResult<DetailWorkOrderFollowMaterial>> DeleteDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                DetalleMaterialOrdenTrabajo detalleMaterial = _mapper.Map<DetailWorkOrderFollowMaterial, DetalleMaterialOrdenTrabajo>(detail);
+                detalleMaterial.Activo = false;
+                SaveWorkFollowMaterialValidations(ref errorMessageValidations, detalleMaterial);
+                if (errorMessageValidations.Any())
+                    return RequestResult<DetailWorkOrderFollowMaterial>.CreateUnsuccessful(errorMessageValidations);
+
+                _workOrderFollowUpDomain.UpdateDetailMaterial(detalleMaterial);
+
+                return RequestResult<DetailWorkOrderFollowMaterial>.CreateSuccessful(detail);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<DetailWorkOrderFollowMaterial>.CreateError(ex.Message);
+            }
+        }
 
         #region Private Methods
         /// <summary>

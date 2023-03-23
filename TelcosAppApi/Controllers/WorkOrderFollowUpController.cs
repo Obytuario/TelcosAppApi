@@ -101,6 +101,30 @@ namespace TelcosAppApi.Controllers
         {
             return await _WorkOrderFollowUpServices.UpdateDetailMaterialFollow(detail);
         }
+        /// <summary>
+        /// Actualiza detalle de equipos.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        /// 
+        [HttpPost("DeleteDetailEquipmentFollow")]
+        public async Task<RequestResult<DetailWorkOrderFollowequipment>> DeleteDetailEquipmentFollow(DetailWorkOrderFollowequipment detail)
+        {
+            return await _WorkOrderFollowUpServices.DeleteDetailEquipmentFollow(detail);
+        }
+        /// <summary>
+        /// Actualiza detalle de equipos.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        /// 
+        [HttpPost("DeleteDetailMaterialFollow")]
+        public async Task<RequestResult<DetailWorkOrderFollowMaterial>> DeleteDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
+        {
+            return await _WorkOrderFollowUpServices.DeleteDetailMaterialFollow(detail);
+        }
 
     }
 }

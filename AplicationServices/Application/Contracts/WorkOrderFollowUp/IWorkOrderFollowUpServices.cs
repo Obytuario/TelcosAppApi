@@ -16,5 +16,8 @@ namespace AplicationServices.Application.Contracts.WorkOrderFollowUp
         Task<RequestResult<List<GenericDto>>> GetAllMovimientoEquipment();
         Task<RequestResult<DetailWorkOrderFollowequipment>> UpdateDetailEquipmentFollow(DetailWorkOrderFollowequipment detail);
         Task<RequestResult<DetailWorkOrderFollowMaterial>> UpdateDetailMaterialFollow(DetailWorkOrderFollowMaterial detail);
+        Task<RequestResult<DetailWorkOrderFollowMaterial>> DeleteDetailMaterialFollow(DetailWorkOrderFollowMaterial detail);
+        Task<RequestResult<DetailWorkOrderFollowequipment>> DeleteDetailEquipmentFollow(DetailWorkOrderFollowequipment detail);
+
     }
 }
