@@ -24,7 +24,7 @@ namespace DomainServices.Domain.WorkOrderManagement
         {
             return await _context.OrdenTrabajo.Where(x => x.UsuarioRegistra.Equals(user))
                 .Include(x => x.EstadoOrdenNavigation)
-                .Include(x => x.SuscriptorNavigation)
+                .Include(x => x.SuscriptorNavigation).ThenInclude(x => x.TipoSuscriptorNavigation)
                 .ToListAsync();
         }
 
