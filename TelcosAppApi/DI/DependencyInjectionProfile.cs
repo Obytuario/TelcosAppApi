@@ -40,6 +40,11 @@ using AplicationServices.Application.Contracts.Subscriber;
 using DomainServices.Domain.Contracts.Subscriber;
 using DomainServices.Domain.Subscriber;
 using AplicationServices.Application.Subscriber;
+using AplicationServices.ScopeService;
+using AplicationServices.Application.Contracts.Location;
+using AplicationServices.Application.Location;
+using DomainServices.Domain.Contracts.Location;
+using DomainServices.Domain.Location;
 
 namespace TelcosAppApi.DI
 {
@@ -74,6 +79,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<ICarpetasServices, CarpetasAppServices>();
             services.AddTransient<IWorkOrderFollowUpServices, WorkOrderFollowUpServices>();
             services.AddTransient<ISubscriberServices, SubscriberAppServices> ();
+            services.AddTransient<ILocationServices, LocationAppServices>();
 
 
             #endregion
@@ -89,8 +95,14 @@ namespace TelcosAppApi.DI
             services.AddTransient<ICarpetaDomain, CarpetasDomain>();
             services.AddTransient<IWorkOrderFollowUpDomain, WorkOrderFollowUpDomain>();
             services.AddTransient<ISubscriberDomain, SubscriberDomain>();
+            services.AddTransient<ILocationDomain, LocationDomain>();
 
             #endregion Domain
+
+            #region Others
+            services.AddTransient<IServiceScopeDI, ServiceScope>();
+            services.AddTransient<IServiceProvider, ServiceProvider>();
+            #endregion
         }
 
     }

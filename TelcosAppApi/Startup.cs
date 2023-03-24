@@ -113,6 +113,8 @@ namespace TelcosAppApi
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+            //serviceProvider = app.ApplicationServices;
             // Configure the HTTP request pipeline.
             //if (env.IsDevelopment())
             //{

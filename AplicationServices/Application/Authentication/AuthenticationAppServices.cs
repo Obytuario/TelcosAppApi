@@ -19,6 +19,10 @@ using AplicationServices.DTOs.User;
 using AplicationServices.Helpers.TextResorce;
 using DomainServices.Domain.Contracts.User;
 using Microsoft.VisualBasic;
+using AplicationServices.DTOs.Location;
+using Microsoft.Extensions.DependencyInjection;
+using AplicationServices.ScopeService;
+using AplicationServices.Application.Contracts.Location;
 
 namespace TelcosAppApi.AplicationServices.Application.Authentication
 {
@@ -35,13 +39,16 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
         private readonly Hash _hash;
-        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IUserDomain userDomain, IConfiguration configuration, IMapper mapper)
+        private readonly ILocationServices _LocationServices; // => _serviceScope.GetService<ILocationServices>();
+      
+        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IUserDomain userDomain, IConfiguration configuration, IMapper mapper, ILocationServices locationServices)
         {
             _authenticationDomain = authenticationDomain;
             _userDomain = userDomain;
             _configuration = configuration;
             _mapper = mapper;
-            _hash = new Hash();
+            _hash = new Hash();          
+            _LocationServices = locationServices;
         }
 
         public async Task<RequestResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credencialesUsuario)
@@ -64,8 +71,9 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
                 /*comparacion de hash*/               
                 bool isHash = _hash.GetHash(credencialesUsuario.Password, Convert.FromBase64String(user.Salt)).Hash.Equals(user.Contraseña);
                 if (!isHash)
-                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(new string[] { ResourceUserMsm.CredentialsInvalidate });                
-
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(new string[] { ResourceUserMsm.CredentialsInvalidate });
+                /*Guardado Ubicacion*/
+                GenerateLocation(user, credencialesUsuario);
                 /*Construccion de token*/
                 return RequestResult<RespuestaAutenticacionDto>.CreateSuccessful(ConstruirToken(credencialesUsuario, user.ID)); 
               
@@ -121,6 +129,17 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
             {
                 errorMessageValidations.Add(ResourceUserMsm.InvalidParameterDocument);
             }            
+        }
+        /// <summary>
+        ///     valida los datos para crear un usuario.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="userDto">objeto para guardar orden de trabajo</param>
+        private async void GenerateLocation(Usuario user, CredencialesUsuarioDto credencialesUsuarioDto)
+        {
+            var userLocation = _mapper.Map<CredencialesUsuarioDto, LocationDto> (credencialesUsuarioDto);
+            userLocation.IdUser = user.ID;
+            await _LocationServices.SaveLocationUser(userLocation);
         }
         #endregion
     }

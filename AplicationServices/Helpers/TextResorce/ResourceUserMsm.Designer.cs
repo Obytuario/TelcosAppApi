@@ -19,7 +19,7 @@ namespace AplicationServices.Helpers.TextResorce {
     // a través de una herramienta como ResGen o Visual Studio.
     // Para agregar o quitar un miembro, edite el archivo .ResX y, a continuación, vuelva a ejecutar ResGen
     // con la opción /str o recompile su proyecto de VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ResourceUserMsm {
@@ -79,6 +79,15 @@ namespace AplicationServices.Helpers.TextResorce {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Cordenadas Invalidas.
+        /// </summary>
+        internal static string InvalidLocation {
+            get {
+                return ResourceManager.GetString("InvalidLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Numero de Documento Invalido.
         /// </summary>
         internal static string InvalidParameterDocument {
@@ -93,6 +102,15 @@ namespace AplicationServices.Helpers.TextResorce {
         internal static string NotExistUser {
             get {
                 return ResourceManager.GetString("NotExistUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Cordenadas guardadas.
+        /// </summary>
+        internal static string SucessFullLocation {
+            get {
+                return ResourceManager.GetString("SucessFullLocation", resourceCulture);
             }
         }
     }

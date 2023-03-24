@@ -123,10 +123,16 @@
   <data name="ExistUser" xml:space="preserve">
     <value>Usuario ya existe, valide por favor.</value>
   </data>
+  <data name="InvalidLocation" xml:space="preserve">
+    <value>Cordenadas Invalidas</value>
+  </data>
   <data name="InvalidParameterDocument" xml:space="preserve">
     <value>Numero de Documento Invalido</value>
   </data>
   <data name="NotExistUser" xml:space="preserve">
     <value>Usuario No existe, valide por favor.</value>
+  </data>
+  <data name="SucessFullLocation" xml:space="preserve">
+    <value>Cordenadas guardadas</value>
   </data>
 </root>
