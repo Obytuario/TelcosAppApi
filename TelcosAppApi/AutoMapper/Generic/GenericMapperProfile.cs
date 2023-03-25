@@ -17,6 +17,8 @@ namespace TelcosAppApi.AutoMapper.Generic
             FromParamEquipoToGenericDto();
             FromParamMaterialToGenericDto();
             FromMovimientoToGenericDto();
+            FromActivityToGenericDto();
+            FromTipoImagenToGenericDto();
         }
         /// <summary>
         /// Convierte desde rol hasta GenericDto
@@ -96,7 +98,8 @@ namespace TelcosAppApi.AutoMapper.Generic
             CreateMap<ParamEquipoActividad, paramGenericDto>()
               .ForMember(target => target.IdParamGenericActividad, opt => opt.MapFrom(source => source.ID))
               .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ActividadNavigation.Descripcion))
-              .ForMember(target => target.NombreGeneric, opt => opt.MapFrom(source => source.EquipoNavigation.Descripcion));
+              .ForMember(target => target.NombreGeneric, opt => opt.MapFrom(source => source.EquipoNavigation.Descripcion))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.EquipoNavigation.Codigo));
         }
         /// <summary>
         /// Convierte carpeta hasta GenericDto
@@ -106,7 +109,30 @@ namespace TelcosAppApi.AutoMapper.Generic
             CreateMap<ParamMaterialActividad, paramGenericDto>()
               .ForMember(target => target.IdParamGenericActividad, opt => opt.MapFrom(source => source.ID))
               .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ActividadNavigation.Descripcion))
-              .ForMember(target => target.NombreGeneric, opt => opt.MapFrom(source => source.MaterialNavigation.Descripcion));
+              .ForMember(target => target.NombreGeneric, opt => opt.MapFrom(source => source.MaterialNavigation.Descripcion))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.MaterialNavigation.Codigo));
+        }
+
+        /// <summary>
+        /// Convierte movimiento hasta GenericDto
+        /// </summary>
+        private void FromActivityToGenericDto()
+        {
+            CreateMap<Actividad, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
+        }
+
+        /// <summary>
+        /// Convierte movimiento hasta GenericDto
+        /// </summary>
+        private void FromTipoImagenToGenericDto()
+        {
+            CreateMap<TipoImagen, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
         }
     }
 }

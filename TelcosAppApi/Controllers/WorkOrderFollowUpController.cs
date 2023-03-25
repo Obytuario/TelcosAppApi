@@ -1,4 +1,5 @@
 ﻿using AplicationServices.Application.Contracts.Roles;
+using AplicationServices.Application.Contracts.Subscriber;
 using AplicationServices.Application.Contracts.WorkOrderFollowUp;
 using AplicationServices.Application.Contracts.WorkOrderManagement;
 using AplicationServices.DTOs.Generics;
@@ -124,6 +125,28 @@ namespace TelcosAppApi.Controllers
         public async Task<RequestResult<DetailWorkOrderFollowMaterial>> DeleteDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
         {
             return await _WorkOrderFollowUpServices.DeleteDetailMaterialFollow(detail);
+        }
+
+        /// <summary>
+        /// Obtiene todos las actividades
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        [HttpGet("GetActivity")]
+        public async Task<RequestResult<List<GenericDto>>> GetActivity()
+        {
+            return await _WorkOrderFollowUpServices.GetActivity();
+        }
+
+        /// <summary>
+        /// Obtiene todos los tipos de foto
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        [HttpGet("GetPhotoType")]
+        public async Task<RequestResult<List<GenericDto>>> GetPhotoType()
+        {
+            return await _WorkOrderFollowUpServices.GetPhotoType();
         }
 
     }

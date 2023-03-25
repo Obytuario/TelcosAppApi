@@ -34,5 +34,6 @@ namespace TelcosAppApi.Controllers
         {
             return await _subscriberServices.GetAllSubscriberType();
         }
+
     }
 }

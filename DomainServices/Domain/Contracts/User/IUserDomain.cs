@@ -16,5 +16,6 @@ namespace DomainServices.Domain.Contracts.User
         Task<Usuario> GetUserById(Guid user);
         void SaveUser(Usuario user);
         void UpdateUser(Usuario userUpdate, Usuario user);
+        Task<List<Usuario>> GetAllUsersByRolCode(string code);
     }
 }

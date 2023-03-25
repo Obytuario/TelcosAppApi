@@ -30,7 +30,8 @@ namespace DomainServices.Domain.User
                                          .Include(i => i.CargoNavigation)
                                          .Include(i => i.UsuarioSuperiorNavigation)
                                          .Include(i => i.CentroOperacionNavigation).ToListAsync();
-        }/// <summary>
+        }
+        /// <summary>
          ///     obtiene lista de usuarios asignados
          /// </summary>
          /// <author>Ariel Bejarano</author>       
@@ -143,6 +144,22 @@ namespace DomainServices.Domain.User
             _context.Entry(userUpdate).CurrentValues.SetValues(user);           
             _context.SaveChanges();
         }
+
+        /// <summary>
+        /// Obtiene todos los usuarios del sistema por Rol
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        public async Task<List<Usuario>> GetAllUsersByRolCode(string code)
+        {
+            return await _context.Usuario.Where(x => x.Activo == true && x.RolNavigation.Codigo == code)
+                                         .Include(i => i.RolNavigation)
+                                         .Include(i => i.CargoNavigation)
+                                         .Include(i => i.UsuarioSuperiorNavigation)
+                                         .Include(i => i.CentroOperacionNavigation).ToListAsync();
+        }
+
         #endregion|
     }
 }

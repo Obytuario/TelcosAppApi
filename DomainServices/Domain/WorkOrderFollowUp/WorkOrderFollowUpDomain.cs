@@ -77,6 +77,25 @@ namespace DomainServices.Domain.WorkOrderFollowUp
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Obtiene todos las actividades
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        public async Task<List<Actividad>> GetActivity()
+        {
+            return await _context.Actividad.ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtiene todos los tipos de foto
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        public async Task<List<TipoImagen>> GetPhotoType()
+        {
+            return await _context.TipoImagen.ToListAsync();
+        }
 
         #endregion|
     }

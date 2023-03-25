@@ -18,6 +18,7 @@ namespace AplicationServices.DTOs.Generics
         public string IdParamGenericActividad { get; set; }
         public string NombreGeneric { get; set; }
         public string NombreActividad { get; set; }
-       
+        public string CodigoDto { get; set; }
+
     }
 }

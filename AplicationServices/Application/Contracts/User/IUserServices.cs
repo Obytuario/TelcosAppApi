@@ -1,5 +1,6 @@
 ﻿using AplicationServices.DTOs.Generics;
 using AplicationServices.DTOs.User;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,5 +17,6 @@ namespace AplicationServices.Application.Contracts.User
         Task<RequestResult<List<PostUserDto>>> GetAssignmentByRol(Guid rol);
         Task<RequestResult<PostUserDto>> SaveUser(PostUserDto userDto);        
         Task<RequestResult<PostUserDto>> UpdateUser(PostUserDto userDto);
+        Task<RequestResult<List<PostUserDto>>> GetAllUsersByRolCode(string code);
     }
 }

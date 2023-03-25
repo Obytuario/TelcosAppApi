@@ -15,5 +15,7 @@ namespace DomainServices.Domain.Contracts.WorkOrderFollowUp
         Task<List<MovimientoEquipo>> GetAllMovimientoEquipment();
         void UpdateDetailMaterial(DetalleMaterialOrdenTrabajo detailUpdate);
         void UpdateDetailEquipment(DetalleEquipoOrdenTrabajo detailUpdate);
+        Task<List<Actividad>> GetActivity();
+        Task<List<TipoImagen>> GetPhotoType();
     }
 }

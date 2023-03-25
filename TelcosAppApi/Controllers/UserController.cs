@@ -95,5 +95,17 @@ namespace TelcosAppApi.Controllers
             return await _userServices.UpdateUser(userDto);
         }
 
+        /// <summary>
+        /// Obtiene todos los usuarios del sistema por Rol
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        [HttpGet("GetAllUsersByRolCode")]
+        public async Task<RequestResult<List<PostUserDto>>> GetAllUsersByRolCode(string code)
+        {
+            return await _userServices.GetAllUsersByRolCode(code);
+        }
+
     }
 }

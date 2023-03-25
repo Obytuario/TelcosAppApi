@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
 using AplicationServices.Helpers.TextResorce;
 using TelcosAppApi.AplicationServices.DTOs.Authentication;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AplicationServices.Application.User
 {
@@ -166,6 +167,35 @@ namespace AplicationServices.Application.User
                 return RequestResult<PostUserDto>.CreateError(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Obtiene todos los usuarios del sistema por Rol
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        public async Task<RequestResult<List<PostUserDto>>> GetAllUsersByRolCode(string code)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                //var user = _mapper.Map<PostUserDto, Usuario>(userDto);
+
+                //if (errorMessageValidations.Any())
+                //    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                var findUser = await _userDomain.GetAllUsersByRolCode(code);
+                var Users = _mapper.Map<List<Usuario>, List<PostUserDto>>(await _userDomain.GetAllUsersByRolCode(code));
+
+
+                return RequestResult<List<PostUserDto>>.CreateSuccessful(Users);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<PostUserDto>>.CreateError(ex.Message);
+            }
+        }
+
         #region Private Methods
         /// <summary>
         ///     valida los datos para crear un usuario.

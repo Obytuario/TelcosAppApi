@@ -204,6 +204,40 @@ namespace AplicationServices.Application.WorkOrderFollowUp
             }
         }
 
+        /// <summary>
+        /// Obtiene todos las actividades
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        public async Task<RequestResult<List<GenericDto>>> GetActivity()
+        {
+            try
+            {
+                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<Actividad>, List<GenericDto>>(await _workOrderFollowUpDomain.GetActivity()));
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<GenericDto>>.CreateError(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene todos los tipos de foto
+        /// </summary>
+        /// <returns></returns>
+        /// <author>Diego Molina</author>
+        public async Task<RequestResult<List<GenericDto>>> GetPhotoType()
+        {
+            try
+            {
+                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<TipoImagen>, List<GenericDto>>(await _workOrderFollowUpDomain.GetPhotoType()));
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<GenericDto>>.CreateError(ex.Message);
+            }
+        }
+
         #region Private Methods
         /// <summary>
         ///     valida los datos para crear un usuario.
