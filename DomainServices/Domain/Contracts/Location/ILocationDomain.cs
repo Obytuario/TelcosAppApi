@@ -10,5 +10,6 @@ namespace DomainServices.Domain.Contracts.Location
     public interface ILocationDomain
     {
         void SaveLocationUser(UbicacionUsuario user);
+        Task<List<UbicacionUsuario>> GetLocationByUser(Guid user);
     }
 }

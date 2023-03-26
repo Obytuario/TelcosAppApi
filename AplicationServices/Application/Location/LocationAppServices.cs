@@ -60,12 +60,42 @@ namespace AplicationServices.Application.Location
                 return RequestResult<string>.CreateError(ex.Message);
             }
         }
+        /// <summary>
+        ///     obtiene la lista de usuarios por usuario.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">objeto para guardar orden de trabajo</param>
+        public async Task<RequestResult<List<LocationDto>>> GetAllLocationUser(Guid? user)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                //SaveUserLocationValidations(ref errorMessageValidations, user);               
+              
+              
+                if (errorMessageValidations.Any())
+                    return RequestResult<List<LocationDto>>.CreateUnsuccessful(errorMessageValidations);
+
+                var Users = _mapper.Map<List<UbicacionUsuario>, List<LocationDto>>(await _locationDomain.GetLocationByUser(user ?? Guid.Empty));
+
+
+
+     
+                return RequestResult<List<LocationDto>>.CreateSuccessful(Users);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<LocationDto>>.CreateError(ex.Message);
+            }
+        }
         #region Private Methods
         /// <summary>
         ///     valida los datos para crear un usuario.
         /// </summary>
         /// <author>Ariel Bejarano</author>
         /// <param name="userDto">objeto para guardar orden de trabajo</param>
+        ///         
         private void SaveUserLocationValidations(ref List<string> errorMessageValidations, UbicacionUsuario user)
         {
             if (string.IsNullOrEmpty(user.Longitud)|| string.IsNullOrEmpty(user.Latitud))

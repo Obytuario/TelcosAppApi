@@ -38,5 +38,16 @@ namespace TelcosAppApi.Controllers
         {
             return await _locationServices.SaveLocationUser(userDto);
         }
+        /// <summary>
+        /// obtener l aubicacion de todos los usuarios del dia
+        /// </summary>
+        /// <param name="userDto"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetAllLocationUser")]
+        public async Task<RequestResult<List<LocationDto>>> GetAllLocationUser(Guid user)
+        {
+            return await _locationServices.GetAllLocationUser(user);
+        }
     }
 }
