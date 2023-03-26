@@ -65,7 +65,7 @@ namespace AplicationServices.Application.Location
         /// </summary>
         /// <author>Ariel Bejarano</author>
         /// <param name="user">objeto para guardar orden de trabajo</param>
-        public async Task<RequestResult<List<LocationDto>>> GetAllLocationUser(Guid? user)
+        public async Task<RequestResult<List<GetLocationUserDto>>> GetAllLocationUser(Guid? user)
         {
             try
             {
@@ -74,19 +74,19 @@ namespace AplicationServices.Application.Location
               
               
                 if (errorMessageValidations.Any())
-                    return RequestResult<List<LocationDto>>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<List<GetLocationUserDto>>.CreateUnsuccessful(errorMessageValidations);
 
-                var Users = _mapper.Map<List<UbicacionUsuario>, List<LocationDto>>(await _locationDomain.GetLocationByUser(user ?? Guid.Empty));
+                var Users = _mapper.Map<List<UbicacionUsuario>, List<GetLocationUserDto>>(await _locationDomain.GetLocationByUser(user ?? Guid.Empty));
 
 
 
      
-                return RequestResult<List<LocationDto>>.CreateSuccessful(Users);
+                return RequestResult<List<GetLocationUserDto>>.CreateSuccessful(Users);
 
             }
             catch (Exception ex)
             {
-                return RequestResult<List<LocationDto>>.CreateError(ex.Message);
+                return RequestResult<List<GetLocationUserDto>>.CreateError(ex.Message);
             }
         }
         #region Private Methods
@@ -99,6 +99,10 @@ namespace AplicationServices.Application.Location
         private void SaveUserLocationValidations(ref List<string> errorMessageValidations, UbicacionUsuario user)
         {
             if (string.IsNullOrEmpty(user.Longitud)|| string.IsNullOrEmpty(user.Latitud))
+            {
+                errorMessageValidations.Add(ResourceUserMsm.InvalidLocation);
+            }
+            if (user.Longitud.Equals("0")|| user.Latitud.Equals("0"))
             {
                 errorMessageValidations.Add(ResourceUserMsm.InvalidLocation);
             }

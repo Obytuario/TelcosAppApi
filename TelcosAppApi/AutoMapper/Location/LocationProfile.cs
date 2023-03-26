@@ -11,6 +11,7 @@ namespace TelcosAppApi.AutoMapper.Location
         {
             FromLocationDtoToUbicacionUsuario();
             FromCredencialesDtoToLocationDto();
+            FromUbicacionUsuarioToLocationDto();
         }
         /// <summary>
         /// Convierte desde CredencialesUsuarioDto hasta Usuario
@@ -24,6 +25,22 @@ namespace TelcosAppApi.AutoMapper.Location
                 .ForMember(target => target.FechaHora, opt => opt.MapFrom(source => DateTime.Now))
                 .ForMember(target => target.Usuario, opt => opt.MapFrom(source => source.IdUser));
             
+        }
+        /// <summary>
+        /// Convierte desde CredencialesUsuarioDto hasta Usuario
+        /// </summary>
+        private void FromUbicacionUsuarioToLocationDto()
+        {
+            CreateMap<UbicacionUsuario, GetLocationUserDto>()
+                .ForMember(target => target.IdUser, opt => opt.MapFrom(source => source.ID))
+                .ForMember(target => target.Latitude, opt => opt.MapFrom(source => Convert.ToDecimal(source.Latitud)))
+                .ForMember(target => target.Longitude, opt => opt.MapFrom(source => Convert.ToDecimal(source.Longitud)))
+                .ForMember(target => target.labelOptions, opt => opt.MapFrom(source => new GetLabelUserDto
+                {
+                    Text = source.UsuarioNavigation.PrimerNombre + " " + source.UsuarioNavigation.Apellidos ?? ""
+                    
+                })); 
+          
         }
         /// <summary>
         /// Convierte desde CredencialesUsuarioDto hasta Usuario

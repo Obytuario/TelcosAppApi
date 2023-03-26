@@ -45,7 +45,7 @@ namespace TelcosAppApi.Controllers
         /// <returns></returns>
         /// <author>Ariel Bejarano</author>
         [HttpGet("GetAllLocationUser")]
-        public async Task<RequestResult<List<LocationDto>>> GetAllLocationUser(Guid user)
+        public async Task<RequestResult<List<GetLocationUserDto>>> GetAllLocationUser(Guid user)
         {
             return await _locationServices.GetAllLocationUser(user);
         }

@@ -11,6 +11,6 @@ namespace AplicationServices.Application.Contracts.Location
     public interface ILocationServices
     {
         Task<RequestResult<string>> SaveLocationUser(LocationDto userDto);
-        Task<RequestResult<List<LocationDto>>> GetAllLocationUser(Guid? user);
+        Task<RequestResult<List<GetLocationUserDto>>> GetAllLocationUser(Guid? user);
     }
 }
