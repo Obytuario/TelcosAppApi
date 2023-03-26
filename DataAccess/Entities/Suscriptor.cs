@@ -15,6 +15,8 @@ public partial class Suscriptor
 
     public string NumeroCuenta { get; set; } = null!;
 
+    public string? Direccion { get; set; }
+
     public virtual ICollection<OrdenTrabajo> OrdenTrabajo { get; } = new List<OrdenTrabajo>();
 
     public virtual TipoSuscriptor TipoSuscriptorNavigation { get; set; } = null!;

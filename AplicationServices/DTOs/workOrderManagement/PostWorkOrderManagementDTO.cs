@@ -16,5 +16,6 @@ namespace AplicationServices.DTOs.workOrderManagement
         public string? ApellidoDTO { get; set; }
         public Guid TipoSuscriptorDto { get; set; }
         public string? NumeroCuentaDto { get; set; }
+        public string? DireccionDto { get; set; }
     }
 }

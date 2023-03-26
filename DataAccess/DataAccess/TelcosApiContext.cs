@@ -391,6 +391,9 @@ namespace TelcosAppApi.DataAccess.DataAccess
                 entity.Property(e => e.NumeroCuenta)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+                entity.Property(e => e.Direccion)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.TipoSuscriptorNavigation).WithMany(p => p.Suscriptor)
                     .HasForeignKey(d => d.TipoSuscriptor)

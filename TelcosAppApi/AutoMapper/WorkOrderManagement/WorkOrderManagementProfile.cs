@@ -33,7 +33,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                 .ForMember(target => target.NombreCompletoSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.Nombre+" "+source.SuscriptorNavigation.Apellido??""))
                 .ForMember(target => target.NombreSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.Nombre))
                 .ForMember(target => target.ApellidoSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.Apellido??""))
-                .ForMember(target => target.DireccionSuscriptorDto, opt => opt.MapFrom(source => ""))
+                .ForMember(target => target.DireccionSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.Direccion??""))
                 .ForMember(target => target.EstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrden))
                 .ForMember(target => target.CuentaSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.NumeroCuenta))
                 .ForMember(target => target.NombreEstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion)) 
@@ -59,7 +59,8 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                      Nombre = source.suscriptorDTO.NombreDTO ?? "",
                      Apellido = source.suscriptorDTO.ApellidoDTO ?? "",
                      TipoSuscriptor = source.suscriptorDTO.TipoSuscriptorDto,
-                     NumeroCuenta = source.suscriptorDTO.NumeroCuentaDto                    
+                     NumeroCuenta = source.suscriptorDTO.NumeroCuentaDto,
+                     Direccion = source.suscriptorDTO.DireccionDto                    
                  }));
         }
     }
