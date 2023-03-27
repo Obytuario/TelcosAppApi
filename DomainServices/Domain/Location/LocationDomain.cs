@@ -56,6 +56,32 @@ namespace DomainServices.Domain.Location
 
             return resultUbicacion;
         }
+        /// <summary>
+        ///     obtiene ubicacion de usuarios segun su superior
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">objeto para guardar un usuario</param>
+        public async Task<List<OrdenTrabajo>> GetLocationWorkOrder(Guid user)
+        {
+            var resultUbicacion = await _context.OrdenTrabajo.Where(x => x.FechaOrden.Date.Equals(DateTime.Now.Date))
+                                        .Include(i => i.UsuarioRegistraNavigation)
+                                        .Include(i => i.SuscriptorNavigation).ToListAsync();
+
+
+
+            //List<UbicacionUsuario> usuarios = new List<UbicacionUsuario>();
+
+            //validateUsers(resultRoles);
+
+            //void validateUsers(List<Rol> roles)
+            //{
+            //    roles.ForEach(rol => {
+            //        usuarios.AddRange(rol.Usuario);
+            //    });
+            //}
+
+            return resultUbicacion;
+        }
 
 
         #endregion|

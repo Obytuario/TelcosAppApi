@@ -49,5 +49,16 @@ namespace TelcosAppApi.Controllers
         {
             return await _locationServices.GetAllLocationUser(user);
         }
+        /// <summary>
+        /// obtener la ubicacion de todas las ordenes de trabajo del dia
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetAllLocationWorkOrder")]
+        public async Task<RequestResult<List<GetLocationWorkOrderDto>>> GetAllLocationWorkOrder(Guid user)
+        {
+            return await _locationServices.GetLocationWorkOrder(user);
+        }
     }
 }

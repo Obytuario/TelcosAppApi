@@ -89,6 +89,35 @@ namespace AplicationServices.Application.Location
                 return RequestResult<List<GetLocationUserDto>>.CreateError(ex.Message);
             }
         }
+        /// <summary>
+        ///     obtiene la lista de ordenes de trabajo por usuario.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">objeto para guardar orden de trabajo</param>
+        public async Task<RequestResult<List<GetLocationWorkOrderDto>>> GetLocationWorkOrder(Guid? user)
+        {
+            try
+            {
+                List<string> errorMessageValidations = new List<string>();
+                //SaveUserLocationValidations(ref errorMessageValidations, user);               
+
+
+                if (errorMessageValidations.Any())
+                    return RequestResult<List<GetLocationWorkOrderDto>>.CreateUnsuccessful(errorMessageValidations);
+
+                var Users = _mapper.Map<List<OrdenTrabajo>, List<GetLocationWorkOrderDto>>(await _locationDomain.GetLocationWorkOrder(user ?? Guid.Empty));
+
+
+
+
+                return RequestResult<List<GetLocationWorkOrderDto>>.CreateSuccessful(Users);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<GetLocationWorkOrderDto>>.CreateError(ex.Message);
+            }
+        }
         #region Private Methods
         /// <summary>
         ///     valida los datos para crear un usuario.

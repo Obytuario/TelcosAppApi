@@ -12,5 +12,6 @@ namespace AplicationServices.Application.Contracts.Location
     {
         Task<RequestResult<string>> SaveLocationUser(LocationDto userDto);
         Task<RequestResult<List<GetLocationUserDto>>> GetAllLocationUser(Guid? user);
+        Task<RequestResult<List<GetLocationWorkOrderDto>>> GetLocationWorkOrder(Guid? user);
     }
 }

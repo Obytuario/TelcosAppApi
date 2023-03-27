@@ -20,10 +20,26 @@ namespace AplicationServices.DTOs.Location
         public GetLabelUserDto labelOptions { get; set; }   
 
     }
+    public class GetLocationWorkOrderDto
+    {
+        public Guid IdWork { get; set; }
+        public decimal Longitude { get; set; }
+        public decimal Latitude { get; set; }
+        public string Tecnico { get; set; }
+        public string Suscriptor { get; set; }        
+        public GetLabelWorkOrderDto labelOptions { get; set; }
+
+    }
     public class GetLabelUserDto
     {        
         public string Text { get; set; }
-        public string Color { get; set; } = "#FFFFFF";       
+        public string Color { get; set; } = "#FFFFFF";        
+
+    }
+    public class GetLabelWorkOrderDto
+    {
+        public string Text { get; set; }
+        public string Color { get; set; } = "#FFFFFF";
 
     }
 }
