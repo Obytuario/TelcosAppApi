@@ -26,8 +26,18 @@ namespace DomainServices.Domain.Location
         /// <param name="user">objeto para guardar un usuario</param>
         public void SaveLocationUser(UbicacionUsuario user)
         {
-            _context.UbicacionUsuario.Add(user);
-            _context.SaveChanges();
+            var existUbicacion = _context.UbicacionUsuario.Where(x => x.FechaHora.Date.Equals(DateTime.Now.Date) && x.Usuario.Equals(user.Usuario)).FirstOrDefault();
+            if(existUbicacion != null)
+            {
+                user.ID = existUbicacion.ID;
+                _context.Entry(existUbicacion).CurrentValues.SetValues(user);
+            }
+            else
+            {
+                _context.UbicacionUsuario.Add(user);
+            }         
+            _context.SaveChanges();          
+           
         }
 
      
