@@ -1,4 +1,5 @@
 ﻿using DomainServices.Domain.Contracts.WorkOrderManagement;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -43,11 +44,40 @@ namespace DomainServices.Domain.WorkOrderManagement
         /// </summary>
         /// <author>Ariel Bejarano</author>
         /// <param name="workOrder">objeto para guardar orden de trabajo</param>
-        public  void SaveWorkOrder(OrdenTrabajo workOrder)
-        {     
-           
+        public void SaveWorkOrder(OrdenTrabajo workOrder)
+        {
+
             _context.OrdenTrabajo.Add(workOrder);
             _context.SaveChanges();
+        }
+
+        public async Task<OrdenTrabajo> GetWorkOrderById(Guid Id)
+        {
+            return await _context.OrdenTrabajo.Where(x => x.ID.Equals(Id))
+                .Include(x => x.EstadoOrdenNavigation)
+                .Include(x => x.DetalleEquipoOrdenTrabajo)
+                .Include(x => x.DetalleMaterialOrdenTrabajo)
+                .Include(x => x.SuscriptorNavigation).ThenInclude(x => x.TipoSuscriptorNavigation)
+                .FirstOrDefaultAsync();
+        }
+
+        public void SaveDetalleEquipoOrdenTrabajo(ICollection<DetalleEquipoOrdenTrabajo> detalleEquipoOrdenTrabajo)
+        {
+
+            _context.DetalleEquipoOrdenTrabajo.AddRange(detalleEquipoOrdenTrabajo);
+        }
+
+        public void SaveDetalleMaterialOrdenTrabajo(ICollection<DetalleMaterialOrdenTrabajo> detalleMaterialOrdenTrabajo)
+        {
+
+            _context.DetalleMaterialOrdenTrabajo.AddRange(detalleMaterialOrdenTrabajo);
+        }
+
+        public void SaveChanges()
+        {
+
+            _context.SaveChanges();
+
         }
 
         #endregion|

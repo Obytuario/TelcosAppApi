@@ -22,6 +22,7 @@ namespace AplicationServices.Application.WorkOrderManagement
         #region CONST
 
         public readonly string CODIGO_ESTADO_ENPROCESO = "ENPR";
+        public readonly string CODIGO_ESTADO_EXITOSA = "EXIT";
 
         #endregion
 
@@ -114,6 +115,54 @@ namespace AplicationServices.Application.WorkOrderManagement
                 return RequestResult<PostWorkOrderManagementDTO>.CreateError(ex.Message);
             }
         }
+
+
+        /// <summary>
+        /// Actualiza y guarda la informacion de una gestión de orden de trabajo
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns></returns>
+        /// <author>Diego MOlina</author>
+        public async Task<RequestResult<Guid>> UpdateManageWorkOrder(UpdateWorkOrderManagementDTO workOrder)
+        {
+            try
+            {
+                
+                OrdenTrabajo ordenTrabajo = _workOrderManagementDomain.GetWorkOrderById(workOrder.IdWorkOrder).Result;
+                ordenTrabajo.EstadoOrden = _workOrderManagementDomain.GetWorkOrderStatus().Result.Find(f => f.Codigo == CODIGO_ESTADO_EXITOSA).ID;
+                ordenTrabajo.TecnicoAuxiliar = workOrder.IdAssitant;
+
+                ICollection<DetalleEquipoOrdenTrabajo> detalleEquipoOrdenTrabajo = _mapper.Map<List<EquiptmentDto>, ICollection<DetalleEquipoOrdenTrabajo>>(workOrder.Supplies.Equiptments);
+                ICollection<DetalleMaterialOrdenTrabajo>  detalleMaterialOrdenTrabajo = _mapper.Map<List<MaterialDto>, ICollection<DetalleMaterialOrdenTrabajo>>(workOrder.Supplies.Materials);
+
+                if(detalleEquipoOrdenTrabajo.Count() > 0)
+                {
+                    detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.UsuarioRegistra = workOrder.IdUser);
+                    detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
+                    _workOrderManagementDomain.SaveDetalleEquipoOrdenTrabajo(detalleEquipoOrdenTrabajo);
+                }
+                
+
+                if (detalleMaterialOrdenTrabajo.Count() > 0)
+                {
+                    detalleMaterialOrdenTrabajo.ToList().ForEach(x => x.UsuarioRegistra = workOrder.IdUser);
+                    detalleMaterialOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
+                    _workOrderManagementDomain.SaveDetalleMaterialOrdenTrabajo(detalleMaterialOrdenTrabajo);
+                }
+
+
+
+                _workOrderManagementDomain.SaveChanges();
+
+                return RequestResult<Guid>.CreateSuccessful(workOrder.IdWorkOrder);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<Guid>.CreateError(ex.Message);
+            }
+        }
+
         #endregion
 
 
