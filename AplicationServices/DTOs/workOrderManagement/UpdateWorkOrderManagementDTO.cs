@@ -10,7 +10,7 @@ namespace AplicationServices.DTOs.workOrderManagement
     {
         public Guid IdWorkOrder { get; set; }
 
-        public Guid IdAssitant { get; set; }
+        public Guid? IdAssitant { get; set; }
         
         public Guid IdUser { get; set; }
 

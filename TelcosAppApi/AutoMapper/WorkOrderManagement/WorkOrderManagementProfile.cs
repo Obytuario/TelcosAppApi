@@ -87,7 +87,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
         {
             CreateMap<MaterialDto, DetalleMaterialOrdenTrabajo>()
                 .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
-                .ForMember(target => target.ParamMaterialActividad, opt => opt.MapFrom(source => Guid.Parse(source.ParamMaterialDto)))
+                .ForMember(target => target.ParamMaterialActividad, opt => opt.MapFrom(source => new Guid(source.ParamMaterialDto)))
                 .ForMember(target => target.Cantidad, opt => opt.MapFrom(source => source.CantidadDto))
                 .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
                 .ForMember(target => target.FechaHoraRegistra, opt => opt.MapFrom(source => DateTime.Now));
