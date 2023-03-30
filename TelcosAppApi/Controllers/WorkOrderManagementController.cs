@@ -70,6 +70,18 @@ namespace TelcosAppApi.Controllers
         {
             return await _WorkOrderManagementServices.SaveWorkOrder(workOrder);
         }
-        
+
+        /// <summary>
+        /// Actualiza y guarda la informacion de una gestión de orden de trabajo
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns></returns>
+        /// <author>Diego MOlina</author>
+        [HttpPost("UpdateManageWorkOrder")]
+        public async Task<RequestResult<Guid>> UpdateManageWorkOrder(UpdateWorkOrderManagementDTO workOrder)
+        {
+            return await _WorkOrderManagementServices.UpdateManageWorkOrder(workOrder);
+        }
+
     }
 }

@@ -16,6 +16,8 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
         {
             FromPostWorkOrderDtoToOrdenTrabajo();
             FromOrdenTrabajoToGetWorkOrderManagementDTO();
+            FromEquiptmentDtoToDetalleEquipoOrdenTrabajo();
+            FromMaterialDtoToDetalleMaterialOrdenTrabajo();
         }
         /// <summary>
         /// Convierte desde Usuario hasta CredencialesUsuarioDto
@@ -62,6 +64,33 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                      NumeroCuenta = source.suscriptorDTO.NumeroCuentaDto,
                      Direccion = source.suscriptorDTO.DireccionDto                    
                  }));
+        }
+
+        /// <summary>
+        /// Convierte desde Usuario hasta CredencialesUsuarioDto
+        /// </summary>
+        private void FromEquiptmentDtoToDetalleEquipoOrdenTrabajo()
+        {
+            CreateMap<EquiptmentDto, DetalleEquipoOrdenTrabajo>()
+                .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
+                .ForMember(target => target.ParamEquipoActividad, opt => opt.MapFrom(source => source.ParamEquipoDto))
+                .ForMember(target => target.Serial, opt => opt.MapFrom(source => source.SerialDto))
+                .ForMember(target => target.MovimientoEquipo, opt => opt.MapFrom(source => source.IdMovimientoDto))
+                .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
+                .ForMember(target => target.FechaHoraRegistra, opt => opt.MapFrom(source => DateTime.Now));
+        }
+
+        /// <summary>
+        /// Convierte desde Usuario hasta CredencialesUsuarioDto
+        /// </summary>
+        private void FromMaterialDtoToDetalleMaterialOrdenTrabajo()
+        {
+            CreateMap<MaterialDto, DetalleMaterialOrdenTrabajo>()
+                .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
+                .ForMember(target => target.ParamMaterialActividad, opt => opt.MapFrom(source => new Guid(source.ParamMaterialDto)))
+                .ForMember(target => target.Cantidad, opt => opt.MapFrom(source => source.CantidadDto))
+                .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
+                .ForMember(target => target.FechaHoraRegistra, opt => opt.MapFrom(source => DateTime.Now));
         }
     }
 }
