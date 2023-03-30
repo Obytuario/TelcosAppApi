@@ -35,7 +35,20 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                 .ForMember(target => target.NombreTecnico, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.PrimerNombre + " " + source.UsuarioRegistraNavigation.Apellidos ?? ""))
                 .ForMember(target => target.FechaOrdenTrabajo, opt => opt.MapFrom(source => source.FechaOrden))
                 .ForMember(target => target.IdCarpeta, opt => opt.MapFrom(source => source.Carpeta))
-                .ForMember(target => target.NombreCarpeta, opt => opt.MapFrom(source => source.CarpetaNavigation.Descripcion));
+                .ForMember(target => target.NombreCarpeta, opt => opt.MapFrom(source => source.CarpetaNavigation.Descripcion))
+                .ForMember(target => target.DetalleEquipo, opt => opt.MapFrom(source => source.DetalleEquipoOrdenTrabajo.Select(s => new DetailWorkOrderFollowequipment()
+                {
+                    NombreEquipo = s.ParamEquipoActividadNavigation.EquipoNavigation.Descripcion,
+                    SerialEquipo = s.Serial,
+                    CodigoEquipo = s.ParamEquipoActividadNavigation.EquipoNavigation.Codigo,
+                    NombreMovimiento = s.MovimientoEquipoNavigation.Descripcion
+                })))
+                .ForMember(target => target.Detallematerial, opt => opt.MapFrom(source => source.DetalleMaterialOrdenTrabajo.Select(s => new DetailWorkOrderFollowMaterial()
+                {
+                    NombreMaterial = s.ParamMaterialActividadNavigation.MaterialNavigation.Descripcion,
+                    CantidadMaterial = s.Cantidad,
+                    CodigoMaterial = s.ParamMaterialActividadNavigation.MaterialNavigation.Codigo                  
+                })));
         }
         /// <summary>
         /// Convierte desde detalle equipo a GetWorkOrderManagementDTO
