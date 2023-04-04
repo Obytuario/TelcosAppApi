@@ -61,6 +61,16 @@ namespace DomainServices.Domain.WorkOrderManagement
                 .FirstOrDefaultAsync();
         }
 
+        public async Task<OrdenTrabajo> GetWorkOrderByNumber(string number)
+        {
+            return await _context.OrdenTrabajo.Where(x => x.NumeroOrden.Equals(number) && x.FechaRegistro.Date == DateTime.Now.Date)
+                .Include(x => x.EstadoOrdenNavigation)
+                .Include(x => x.DetalleEquipoOrdenTrabajo)
+                .Include(x => x.DetalleMaterialOrdenTrabajo)
+                .Include(x => x.SuscriptorNavigation).ThenInclude(x => x.TipoSuscriptorNavigation)
+                .FirstOrDefaultAsync();
+        }
+
         public void SaveDetalleEquipoOrdenTrabajo(ICollection<DetalleEquipoOrdenTrabajo> detalleEquipoOrdenTrabajo)
         {
 

@@ -120,6 +120,9 @@
   <data name="CredentialsInvalidate" xml:space="preserve">
     <value>Credenciales Invalidas</value>
   </data>
+  <data name="ExistingOrder" xml:space="preserve">
+    <value>El número de orden ya existe</value>
+  </data>
   <data name="ExistUser" xml:space="preserve">
     <value>Usuario ya existe, valide por favor.</value>
   </data>
