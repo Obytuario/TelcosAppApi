@@ -70,6 +70,15 @@ namespace AplicationServices.Helpers.TextResorce {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a El número de orden ya existe.
+        /// </summary>
+        internal static string ExistingOrder {
+            get {
+                return ResourceManager.GetString("ExistingOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Usuario ya existe, valide por favor..
         /// </summary>
         internal static string ExistUser {

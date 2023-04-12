@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
-
+using AplicationServices.Helpers.TextResorce;
 
 namespace AplicationServices.Application.WorkOrderManagement
 {
@@ -102,6 +102,16 @@ namespace AplicationServices.Application.WorkOrderManagement
         {
             try
             {
+                List<string> errorMessageValidations = new List<string>();
+
+                Guid? idOrdenTrabajo = _workOrderManagementDomain.GetWorkOrderByNumber(workOrder.NumeroOrdenDto).Result?.ID;
+
+                if (idOrdenTrabajo != null)
+                {
+                    errorMessageValidations.Add(ResourceUserMsm.ExistingOrder);
+                    return RequestResult<PostWorkOrderManagementDTO>.CreateUnsuccessful(errorMessageValidations);
+                }
+
                 OrdenTrabajo ordenTrabajo = _mapper.Map<PostWorkOrderManagementDTO, OrdenTrabajo>(workOrder);
 
                 ordenTrabajo.EstadoOrden = _workOrderManagementDomain.GetWorkOrderStatus().Result.Find(f => f.Codigo == CODIGO_ESTADO_ENPROCESO).ID;
