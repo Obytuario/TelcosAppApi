@@ -61,5 +61,27 @@ namespace TelcosAppApi.Controllers
         {
             return await _carpetasServices.GetActyvitiMaterialByFile(file);
         }
+        /// <summary>
+        /// Consulta las equipos por actividad
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetEquipmentByActivity")]
+        public async Task<RequestResult<List<paramGenericDto>>> GetEquipmentByActivity(Guid activity)
+        {
+            return await _carpetasServices.GetEquipmentByActivity(activity);
+        }
+        /// <summary>
+        /// Consulta los materiales por actividad
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetMaterialByActivity")]
+        public async Task<RequestResult<List<paramGenericDto>>> GetMaterialByActivity(Guid activity)
+        {
+            return await _carpetasServices.GetMaterialByActivity(activity);
+        }
     }
 }

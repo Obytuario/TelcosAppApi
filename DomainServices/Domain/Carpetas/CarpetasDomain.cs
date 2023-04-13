@@ -36,6 +36,18 @@ namespace DomainServices.Domain.Carpetas
                                                        .Include(x => x.ActividadNavigation)
                                                        .Include(x => x.MaterialNavigation).ToListAsync();
         }
+        public async Task<List<ParamEquipoActividad>> GetEquipmentByActivity(Guid activity)
+        {
+            return await _context.ParamEquipoActividad.Where(x => x.Actividad.Equals(activity) && x.Activo)
+                                                       .Include(x => x.ActividadNavigation)
+                                                       .Include(x => x.EquipoNavigation).ToListAsync();
+        }
+        public async Task<List<ParamMaterialActividad>> GetMaterialByActivity(Guid activity)
+        {
+            return await _context.ParamMaterialActividad.Where(x => x.Actividad.Equals(activity) && x.Activo)
+                                                       .Include(x => x.ActividadNavigation)
+                                                       .Include(x => x.MaterialNavigation).ToListAsync();
+        }
         #endregion|
     }
 }

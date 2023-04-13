@@ -64,6 +64,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                 .ForMember(target => target.IdMovimiento, opt => opt.MapFrom(source => source.MovimientoEquipo))
                 .ForMember(target => target.IdCarpeta, opt => opt.MapFrom(source => source.ParamEquipoActividadNavigation.ActividadNavigation.Carpeta))
                 .ForMember(target => target.NombreMovimiento, opt => opt.MapFrom(source => source.MovimientoEquipoNavigation.Descripcion))
+                .ForMember(target => target.IdActividad, opt => opt.MapFrom(source => source.ParamEquipoActividadNavigation.Actividad))
                 .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ParamEquipoActividadNavigation.ActividadNavigation.Descripcion));
         }
         /// <summary>
@@ -78,6 +79,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                 .ForMember(target => target.CantidadMaterial, opt => opt.MapFrom(source => source.Cantidad))
                 .ForMember(target => target.CodigoMaterial, opt => opt.MapFrom(source => source.ParamMaterialActividadNavigation.MaterialNavigation.Codigo))
                 .ForMember(target => target.NombreMaterial, opt => opt.MapFrom(source => source.ParamMaterialActividadNavigation.MaterialNavigation.Descripcion))
+                .ForMember(target => target.IdActividad, opt => opt.MapFrom(source => source.ParamMaterialActividadNavigation.Actividad))
                 .ForMember(target => target.NombreActividad, opt => opt.MapFrom(source => source.ParamMaterialActividadNavigation.ActividadNavigation.Descripcion));
            
         }

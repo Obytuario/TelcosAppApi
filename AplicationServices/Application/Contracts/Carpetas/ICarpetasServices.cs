@@ -12,5 +12,7 @@ namespace AplicationServices.Application.Contracts.Carpetas
         Task<RequestResult<List<GenericDto>>> GetFiles();
         Task<RequestResult<List<paramGenericDto>>> GetActyvitiMaterialByFile(Guid file);
         Task<RequestResult<List<paramGenericDto>>> GetActyvitiEquipmentByFile(Guid file);
+        Task<RequestResult<List<paramGenericDto>>> GetEquipmentByActivity(Guid activity);
+        Task<RequestResult<List<paramGenericDto>>> GetMaterialByActivity(Guid activity);
     }
 }

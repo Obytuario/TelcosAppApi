@@ -25,6 +25,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public Guid IdDetalle { get; set; }
         public Guid IdCarpeta { get; set; }
         public Guid IdParamActividad { get; set; }
+        public Guid IdActividad { get; set; }
         public string? CodigoMaterial { get; set; }
         public string? NombreMaterial { get; set; }
         public int CantidadMaterial { get; set; }
@@ -40,6 +41,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public Guid IdMovimiento { get; set; }
         public Guid IdParamActividad { get; set; }
         public Guid IdCarpeta { get; set; }
+        public Guid IdActividad { get; set; }
         public string? NombreMovimiento { get; set; }
         public string? NombreActividad { get; set; }
 
