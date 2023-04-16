@@ -37,6 +37,8 @@ public partial class Usuario
 
     public virtual CentroOperacion? CentroOperacionNavigation { get; set; }
 
+    public virtual ICollection<DetalleCancelacionOrden> DetalleCancelacionOrden { get; } = new List<DetalleCancelacionOrden>();
+
     public virtual ICollection<DetalleEquipoOrdenTrabajo> DetalleEquipoOrdenTrabajo { get; } = new List<DetalleEquipoOrdenTrabajo>();
 
     public virtual ICollection<DetalleMaterialOrdenTrabajo> DetalleMaterialOrdenTrabajo { get; } = new List<DetalleMaterialOrdenTrabajo>();

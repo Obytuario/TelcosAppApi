@@ -15,6 +15,10 @@ public partial class Actividad
 
     public Guid Carpeta { get; set; }
 
+    public int? puntaje { get; set; }
+
+    public string? codigoBoom { get; set; }
+
     public virtual Carpeta CarpetaNavigation { get; set; } = null!;
 
     public virtual ICollection<ParamEquipoActividad> ParamEquipoActividad { get; } = new List<ParamEquipoActividad>();

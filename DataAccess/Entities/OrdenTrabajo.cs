@@ -27,9 +27,13 @@ public partial class OrdenTrabajo
 
     public string? Logitud { get; set; }
 
+    public Guid? DetalleCancelacionOrden { get; set; }
+
     public Guid UsuarioRegistra { get; set; }
 
     public virtual Carpeta CarpetaNavigation { get; set; } = null!;
+
+    public virtual DetalleCancelacionOrden? DetalleCancelacionOrdenNavigation { get; set; }
 
     public virtual ICollection<DetalleEquipoOrdenTrabajo> DetalleEquipoOrdenTrabajo { get; } = new List<DetalleEquipoOrdenTrabajo>();
 

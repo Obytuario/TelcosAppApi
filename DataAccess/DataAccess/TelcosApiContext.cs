@@ -20,6 +20,9 @@ namespace TelcosAppApi.DataAccess.DataAccess
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(200)
                     .IsUnicode(false);
+                entity.Property(e => e.codigoBoom)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.CarpetaNavigation).WithMany(p => p.Actividad)
                     .HasForeignKey(d => d.Carpeta)
@@ -64,6 +67,22 @@ namespace TelcosAppApi.DataAccess.DataAccess
                 entity.Property(e => e.Longitud)
                     .HasMaxLength(30)
                     .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<DetalleCancelacionOrden>(entity =>
+            {
+                entity.Property(e => e.ID).ValueGeneratedNever();
+                entity.Property(e => e.FechaRegistroCancelacion).HasColumnType("datetime");
+
+                entity.HasOne(d => d.MotivoCancelacionOrdenNavigation).WithMany(p => p.DetalleCancelacionOrden)
+                    .HasForeignKey(d => d.MotivoCancelacionOrden)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DetalleCancelacionOrden_MotivoCancelacionOrden");
+
+                entity.HasOne(d => d.UsuarioRegistraNavigation).WithMany(p => p.DetalleCancelacionOrden)
+                    .HasForeignKey(d => d.UsuarioRegistra)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_DetalleCancelacionOrden_Usuario");
             });
 
             modelBuilder.Entity<DetalleEquipoOrdenTrabajo>(entity =>
@@ -137,7 +156,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
             {
                 entity.Property(e => e.ID).ValueGeneratedNever();
                 entity.Property(e => e.Codigo)
-                    .HasMaxLength(6)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(50)
@@ -246,7 +265,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
             {
                 entity.Property(e => e.ID).ValueGeneratedNever();
                 entity.Property(e => e.Codigo)
-                    .HasMaxLength(6)
+                    .HasMaxLength(10)
                     .IsUnicode(false);
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(50)
@@ -261,6 +280,17 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .IsUnicode(false);
                 entity.Property(e => e.Descripcion)
                     .HasMaxLength(20)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<MotivoCancelacionOrden>(entity =>
+            {
+                entity.Property(e => e.ID).ValueGeneratedNever();
+                entity.Property(e => e.Codigo)
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+                entity.Property(e => e.Descripcion)
+                    .HasMaxLength(250)
                     .IsUnicode(false);
             });
 
@@ -313,6 +343,10 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasForeignKey(d => d.Carpeta)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrdenTrabajo_Carpeta");
+
+                entity.HasOne(d => d.DetalleCancelacionOrdenNavigation).WithMany(p => p.OrdenTrabajo)
+                    .HasForeignKey(d => d.DetalleCancelacionOrden)
+                    .HasConstraintName("FK_OrdenTrabajo_DetalleCancelacionOrden");
 
                 entity.HasOne(d => d.EstadoOrdenNavigation).WithMany(p => p.OrdenTrabajo)
                     .HasForeignKey(d => d.EstadoOrden)
@@ -385,14 +419,14 @@ namespace TelcosAppApi.DataAccess.DataAccess
                 entity.Property(e => e.Apellido)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+                entity.Property(e => e.Direccion)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
                 entity.Property(e => e.NumeroCuenta)
                     .HasMaxLength(20)
-                    .IsUnicode(false);
-                entity.Property(e => e.Direccion)
-                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.TipoSuscriptorNavigation).WithMany(p => p.Suscriptor)
@@ -448,7 +482,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .IsUnicode(false);
                 entity.Property(e => e.Contraseña).IsUnicode(false);
                 entity.Property(e => e.Correo)
-                    .HasMaxLength(30)
+                    .HasMaxLength(70)
                     .IsUnicode(false);
                 entity.Property(e => e.NumeroContacto)
                     .HasMaxLength(20)
