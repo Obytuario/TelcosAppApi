@@ -11,6 +11,7 @@ namespace DomainServices.Domain.WorkOrderFollowUp
 {
     public class WorkOrderFollowUpDomain:IWorkOrderFollowUpDomain
     {
+        public readonly string CODIGO_ESTADO_EXITOSA = "EXIT";
         private readonly TelcosSuiteContext _context;
 
         public WorkOrderFollowUpDomain(TelcosSuiteContext telcosApiContext)
@@ -29,6 +30,17 @@ namespace DomainServices.Domain.WorkOrderFollowUp
                .Include(x => x.UsuarioRegistraNavigation)
                .Include(x => x.SuscriptorNavigation)
                .ToListAsync();          
+        }
+        public async Task<List<OrdenTrabajo>> GetWorkOrderBilling(DateTime fechaInicio, DateTime fechaFinal)
+        {
+            return await _context.OrdenTrabajo.Where(x => x.FechaOrden.Date >= fechaInicio.Date && x.FechaOrden.Date <= fechaFinal.Date && x.EstadoOrdenNavigation.Codigo.Equals(CODIGO_ESTADO_EXITOSA))
+               .Include(x => x.EstadoOrdenNavigation)
+               .Include(x => x.DetalleEquipoOrdenTrabajo).ThenInclude(i => i.ParamEquipoActividadNavigation.ActividadNavigation)               
+               .Include(x => x.DetalleMaterialOrdenTrabajo).ThenInclude(i => i.ParamMaterialActividadNavigation.ActividadNavigation)               
+               .Include(x => x.UsuarioRegistraNavigation.CentroOperacionNavigation)
+               .Include(x => x.TecnicoAuxiliarNavigation)
+               .Include(x => x.SuscriptorNavigation)
+               .ToListAsync();
         }
         public async Task<List<DetalleEquipoOrdenTrabajo>> GetDetailEquipmentByOrder(Guid order)
         {

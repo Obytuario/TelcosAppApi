@@ -17,5 +17,6 @@ namespace DomainServices.Domain.Contracts.WorkOrderFollowUp
         void UpdateDetailEquipment(DetalleEquipoOrdenTrabajo detailUpdate);
         Task<List<Actividad>> GetActivity();
         Task<List<TipoImagen>> GetPhotoType();
+        Task<List<OrdenTrabajo>> GetWorkOrderBilling(DateTime fechaInicio, DateTime fechaFinal);
     }
 }

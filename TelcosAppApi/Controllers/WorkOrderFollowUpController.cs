@@ -74,9 +74,21 @@ namespace TelcosAppApi.Controllers
         /// <author>Ariel Bejarano</author>
         /// 
         [HttpPost("GetWorkOrderFollow")]
-        public async Task<RequestResult<List<GetWorkOrderFollowUpDTO>>> GetWorkOrderByUser(PostWorkOrderFollowUpDTO filter)
+        public async Task<RequestResult<List<GetWorkOrderFollowUpDTO>>> GetWorkOrderFollow(PostWorkOrderFollowUpDTO filter)
         {
             return await _WorkOrderFollowUpServices.GetWorkOrderFollowUp(filter);
+        }
+        /// <summary>
+        /// Consulta las ordenes para facturacion
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        /// 
+        [HttpPost("GetWorkOrderBilling")]
+        public async Task<RequestResult<List<GetWorkOrderBillingDTO>>> GetWorkOrderBilling(PostWorkOrderFollowUpDTO filter)
+        {
+            return await _WorkOrderFollowUpServices.GetWorkOrderBilling(filter);
         }
         /// <summary>
         /// Actualiza detalle de equipos.

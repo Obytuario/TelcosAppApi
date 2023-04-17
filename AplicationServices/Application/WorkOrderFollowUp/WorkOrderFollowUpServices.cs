@@ -15,6 +15,7 @@ using AplicationServices.DTOs.WorkOrderFollowUp;
 using AplicationServices.Application.Contracts.WorkOrderFollowUp;
 using AplicationServices.DTOs.User;
 using AplicationServices.Helpers.TextResorce;
+using System.Security.Cryptography.X509Certificates;
 
 namespace AplicationServices.Application.WorkOrderFollowUp
 {
@@ -49,7 +50,47 @@ namespace AplicationServices.Application.WorkOrderFollowUp
                 return RequestResult<List<GetWorkOrderFollowUpDTO>>.CreateError(ex.Message);
             }
         }
-        
+
+        /// <summary>
+        ///     Obtiene la lista de ordenes de trabajo para facturacion.
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="filter">id del tecnico</param>
+        public async Task<RequestResult<List<GetWorkOrderBillingDTO>>> GetWorkOrderBilling(PostWorkOrderFollowUpDTO filter)
+        {
+            try
+            {
+                List<Actividad> actividads = new List<Actividad>();
+                List<GetWorkOrderBillingDTO> getWorkOrderBillingDTOs = new List<GetWorkOrderBillingDTO>();
+                List <OrdenTrabajo> result = await _workOrderFollowUpDomain.GetWorkOrderBilling(filter.fechainicio, filter.fechaFin); 
+
+                result.ForEach(orden => {
+                    actividads = new List<Actividad>();
+                    orden.DetalleEquipoOrdenTrabajo.ToList().ForEach(de => {
+                    actividads.Add(de.ParamEquipoActividadNavigation.ActividadNavigation);
+                    });
+                    orden.DetalleMaterialOrdenTrabajo.ToList().ForEach(de => {
+                        actividads.Add(de.ParamMaterialActividadNavigation.ActividadNavigation);
+                    });
+                    var ordegroup = actividads.GroupBy(a => a.ID).ToList();
+                    ordegroup.ForEach(og => {
+                        GetWorkOrderBillingDTO getWorkOrderBillingDTO = new GetWorkOrderBillingDTO();
+                        getWorkOrderBillingDTO = _mapper.Map<OrdenTrabajo, GetWorkOrderBillingDTO>(orden);
+                        getWorkOrderBillingDTO.Puntaje = og.FirstOrDefault().puntaje.ToString();
+                        getWorkOrderBillingDTO.CodigoActividad = og.FirstOrDefault().Codigo;
+                        getWorkOrderBillingDTOs.Add(getWorkOrderBillingDTO);                        
+                    });
+
+                });
+
+                return RequestResult<List<GetWorkOrderBillingDTO>>.CreateSuccessful(getWorkOrderBillingDTOs);
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<GetWorkOrderBillingDTO>>.CreateError(ex.Message);
+            }
+        }
+
         /// <summary>
         ///     Obtiene la lista de ordenes de trabajo para seguimiento.
         /// </summary>

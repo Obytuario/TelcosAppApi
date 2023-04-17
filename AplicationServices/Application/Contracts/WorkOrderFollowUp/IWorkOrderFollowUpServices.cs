@@ -20,6 +20,7 @@ namespace AplicationServices.Application.Contracts.WorkOrderFollowUp
         Task<RequestResult<DetailWorkOrderFollowequipment>> DeleteDetailEquipmentFollow(DetailWorkOrderFollowequipment detail);
         Task<RequestResult<List<GenericDto>>> GetActivity();
         Task<RequestResult<List<GenericDto>>> GetPhotoType();
+        Task<RequestResult<List<GetWorkOrderBillingDTO>>> GetWorkOrderBilling(PostWorkOrderFollowUpDTO filter);
 
     }
 }

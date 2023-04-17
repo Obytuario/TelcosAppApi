@@ -18,6 +18,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
             FromOrdenTrabajoToGetWorkOrderManagementDTO();
             FromEquiptmentDtoToDetalleEquipoOrdenTrabajo();
             FromMaterialDtoToDetalleMaterialOrdenTrabajo();
+            FromCancelWorkOrderManagementDTOToDetalleCancelacionOrden();
         }
         /// <summary>
         /// Convierte desde Usuario hasta CredencialesUsuarioDto
@@ -91,6 +92,18 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                 .ForMember(target => target.Cantidad, opt => opt.MapFrom(source => source.CantidadDto))
                 .ForMember(target => target.Activo, opt => opt.MapFrom(source => true))
                 .ForMember(target => target.FechaHoraRegistra, opt => opt.MapFrom(source => DateTime.Now));
+        }
+        /// <summary>
+        /// Convierte desde dto cancelacion a detalle cancelacion de una orden de trabajo
+        /// </summary>
+        private void FromCancelWorkOrderManagementDTOToDetalleCancelacionOrden()
+        {
+            CreateMap<CancelWorkOrderManagementDTO, DetalleCancelacionOrden>()
+                .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
+                //.ForMember(target => target.OrdenTrabajo, opt => opt.MapFrom(source => source.IdWorkOrder))
+                .ForMember(target => target.UsuarioRegistra, opt => opt.MapFrom(source => source.IdUser))
+                .ForMember(target => target.MotivoCancelacionOrden, opt => opt.MapFrom(source => source.IdReasonCancellation))
+                .ForMember(target => target.FechaRegistroCancelacion, opt => opt.MapFrom(source => DateTime.Now));
         }
     }
 }

@@ -19,6 +19,7 @@ namespace TelcosAppApi.AutoMapper.Generic
             FromMovimientoToGenericDto();
             FromActivityToGenericDto();
             FromTipoImagenToGenericDto();
+            FromMotivoCancelacionOrdenToGenericDto();
         }
         /// <summary>
         /// Convierte desde rol hasta GenericDto
@@ -130,6 +131,16 @@ namespace TelcosAppApi.AutoMapper.Generic
         private void FromTipoImagenToGenericDto()
         {
             CreateMap<TipoImagen, GenericDto>()
+              .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
+              .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
+              .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));
+        }
+        /// <summary>
+        /// Convierte motivo cancelacion orden hasta GenericDto
+        /// </summary>
+        private void FromMotivoCancelacionOrdenToGenericDto()
+        {
+            CreateMap<MotivoCancelacionOrden, GenericDto>()
               .ForMember(target => target.IdDto, opt => opt.MapFrom(source => source.ID))
               .ForMember(target => target.CodigoDto, opt => opt.MapFrom(source => source.Codigo))
               .ForMember(target => target.DescripcionDto, opt => opt.MapFrom(source => source.Descripcion));

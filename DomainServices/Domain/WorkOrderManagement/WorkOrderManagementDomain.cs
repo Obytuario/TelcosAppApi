@@ -38,6 +38,11 @@ namespace DomainServices.Domain.WorkOrderManagement
         {
             return await _context.EstadoOrdenTrabajo.Where(x => x.Activo).ToListAsync();
         }
+        public async Task<List<MotivoCancelacionOrden>> GetWorkOrderReasonCancel()
+        {
+            return await _context.MotivoCancelacionOrden.Where(x => x.Activo).ToListAsync();
+        }
+        
 
         /// <summary>
         ///     Guarda una orden de trabajo.
@@ -81,6 +86,10 @@ namespace DomainServices.Domain.WorkOrderManagement
         {
 
             _context.DetalleMaterialOrdenTrabajo.AddRange(detalleMaterialOrdenTrabajo);
+        }
+        public void saveDetalleCancelacionOrden(DetalleCancelacionOrden detalleCancelacionOrden)
+        {
+            _context.DetalleCancelacionOrden.Add(detalleCancelacionOrden);
         }
 
         public void SaveChanges()

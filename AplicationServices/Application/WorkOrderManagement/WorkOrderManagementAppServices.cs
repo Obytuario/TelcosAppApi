@@ -23,6 +23,7 @@ namespace AplicationServices.Application.WorkOrderManagement
 
         public readonly string CODIGO_ESTADO_ENPROCESO = "ENPR";
         public readonly string CODIGO_ESTADO_EXITOSA = "EXIT";
+        public readonly string CODIGO_ESTADO_CANCELADA = "RAZO";
 
         #endregion
 
@@ -90,7 +91,24 @@ namespace AplicationServices.Application.WorkOrderManagement
                 return RequestResult<List<GenericDto>>.CreateError(ex.Message);
             }
         }
+        /// <summary>
+        ///     Obtiene la lista de motivos de consulta
+        /// </summary>
+        /// <author>Ariel Bejarano</author>       
+        public async Task<RequestResult<List<GenericDto>>> GetWorkOrderReasonCancel()
+        {
+            try
+            {
+                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<MotivoCancelacionOrden>, List<GenericDto>>(await _workOrderManagementDomain.GetWorkOrderReasonCancel()));
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<GenericDto>>.CreateError(ex.Message);
+            }
+        }
         
+
 
 
         /// <summary>
@@ -161,6 +179,36 @@ namespace AplicationServices.Application.WorkOrderManagement
                 }
 
 
+
+                _workOrderManagementDomain.SaveChanges();
+
+                return RequestResult<Guid>.CreateSuccessful(workOrder.IdWorkOrder);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<Guid>.CreateError(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Actualiza y guarda la informacion de una gestión de orden de trabajo
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        public async Task<RequestResult<Guid>> CancelWorkOrder(CancelWorkOrderManagementDTO workOrder)
+        {
+            try
+            {
+
+                OrdenTrabajo ordenTrabajo = _workOrderManagementDomain.GetWorkOrderById(workOrder.IdWorkOrder).Result;
+                ordenTrabajo.EstadoOrden = _workOrderManagementDomain.GetWorkOrderStatus().Result.Find(f => f.Codigo == CODIGO_ESTADO_CANCELADA).ID;
+                
+
+                DetalleCancelacionOrden detalleCancelacionOrden = _mapper.Map<CancelWorkOrderManagementDTO, DetalleCancelacionOrden>(workOrder);
+                detalleCancelacionOrden.OrdenTrabajo.Add(ordenTrabajo);
+
+                _workOrderManagementDomain.saveDetalleCancelacionOrden(detalleCancelacionOrden);
 
                 _workOrderManagementDomain.SaveChanges();
 

@@ -21,6 +21,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
             FromDetalleMaterialToDetailWorkOrderFollowMaterial();
             FromDetailWorkOrderFollowequipmentToDetalleEquipo();
             FromDetailWorkOrderFollowequipmentToDetalleMaterial();
+            FromOrdenTrabajoToGetWorkOrderBillingDTO();
         }
         /// <summary>
         /// Convierte desde orden trabajo a GetWorkOrderManagementDTO
@@ -32,6 +33,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                 .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.NumeroDocumento))
                 .ForMember(target => target.NumeroOrden, opt => opt.MapFrom(source => source.NumeroOrden))
                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion))
+                .ForMember(target => target.CodigoEstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Codigo))
                 .ForMember(target => target.NombreTecnico, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.PrimerNombre + " " + source.UsuarioRegistraNavigation.Apellidos ?? ""))
                 .ForMember(target => target.FechaOrdenTrabajo, opt => opt.MapFrom(source => source.FechaOrden))
                 .ForMember(target => target.IdCarpeta, opt => opt.MapFrom(source => source.Carpeta))
@@ -49,6 +51,24 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                     CantidadMaterial = s.Cantidad,
                     CodigoMaterial = s.ParamMaterialActividadNavigation.MaterialNavigation.Codigo                  
                 })));
+        }
+        /// <summary>
+        /// Convierte desde orden trabajo a GetWorkOrderBillingDTO
+        /// </summary>
+        private void FromOrdenTrabajoToGetWorkOrderBillingDTO()
+        {
+            CreateMap<OrdenTrabajo, GetWorkOrderBillingDTO>()
+                .ForMember(target => target.IdOrden, opt => opt.MapFrom(source => source.ID))
+                .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.NumeroDocumento))
+                .ForMember(target => target.NumeroDocumentoAuxiliar, opt => opt.MapFrom(source => source.TecnicoAuxiliar == null ? "" : source.TecnicoAuxiliarNavigation.NumeroDocumento??""))
+                .ForMember(target => target.NumeroOrden, opt => opt.MapFrom(source => source.NumeroOrden))
+                .ForMember(target => target.NumeroCuenta, opt => opt.MapFrom(source => source.SuscriptorNavigation.NumeroCuenta))
+                .ForMember(target => target.NombreAuxiliar, opt => opt.MapFrom(source => source.TecnicoAuxiliar == null?"": source.TecnicoAuxiliarNavigation.PrimerNombre??"" + " " + source.TecnicoAuxiliarNavigation.Apellidos ?? ""))
+                .ForMember(target => target.NombreTecnico, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.PrimerNombre + " " + source.UsuarioRegistraNavigation.Apellidos ?? ""))
+                .ForMember(target => target.FechaOrdenTrabajo, opt => opt.MapFrom(source => source.FechaOrden))
+                .ForMember(target => target.CentroOperaciones, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.CentroOperacionNavigation.Descripcion));
+                
+               
         }
         /// <summary>
         /// Convierte desde detalle equipo a GetWorkOrderManagementDTO

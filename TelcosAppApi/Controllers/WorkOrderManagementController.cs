@@ -58,7 +58,17 @@ namespace TelcosAppApi.Controllers
         {
             return await _WorkOrderManagementServices.GetWorkOrderStatus();
         }
-        
+        /// <summary>
+        /// Consulta los motivos de cancelacion de una orden de trabajo
+        /// </summary>        
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetWorkOrderReasonCancel")]
+        public async Task<RequestResult<List<GenericDto>>> GetWorkOrderReasonCancel()
+        {
+            return await _WorkOrderManagementServices.GetWorkOrderReasonCancel();
+        }
+
         /// <summary>
         /// Guarda la informacion de una orden de trabajo
         /// </summary>
@@ -81,6 +91,17 @@ namespace TelcosAppApi.Controllers
         public async Task<RequestResult<Guid>> UpdateManageWorkOrder(UpdateWorkOrderManagementDTO workOrder)
         {
             return await _WorkOrderManagementServices.UpdateManageWorkOrder(workOrder);
+        }
+        /// <summary>
+        /// razona una  orden de trabajo
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns></returns>
+        /// <author>Ariel bejarano</author>
+        [HttpPost("CancelWorkOrder")]
+        public async Task<RequestResult<Guid>> CancelWorkOrder(CancelWorkOrderManagementDTO workOrder)
+        {
+            return await _WorkOrderManagementServices.CancelWorkOrder(workOrder);
         }
 
     }

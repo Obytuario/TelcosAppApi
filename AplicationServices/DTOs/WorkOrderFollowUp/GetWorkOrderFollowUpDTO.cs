@@ -13,6 +13,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public string NombreTecnico { get; set; }
         public string NumeroDocumento { get; set; }
         public string EstadoOrden { get; set; }
+        public string CodigoEstadoOrden { get; set; }
         public DateTime FechaOrdenTrabajo { get; set; }
         public Guid IdCarpeta { get; set; }
         public string NombreCarpeta { get; set; }
@@ -45,6 +46,22 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public string? NombreMovimiento { get; set; }
         public string? NombreActividad { get; set; }
 
+
+    }
+    public class GetWorkOrderBillingDTO
+    {
+        public Guid IdOrden { get; set; }
+        public string? NumeroOrden { get; set; }
+        public string NumeroCuenta { get; set; }
+        public string NombreTecnico { get; set; }
+        public string NumeroDocumento { get; set; }
+        public string NombreAuxiliar { get; set; }
+        public string NumeroDocumentoAuxiliar { get; set; }
+        public string CentroOperaciones { get; set; }
+        public string CodigoActividad { get; set; }
+        public DateTime FechaOrdenTrabajo { get; set; }        
+        public string Puntaje { get; set; }
+        
 
     }
 }

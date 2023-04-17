@@ -17,6 +17,8 @@ namespace AplicationServices.Application.Contracts.WorkOrderManagement
         Task<RequestResult<List<GenericDto>>> GetWorkOrderStatus();
         Task<RequestResult<PostWorkOrderManagementDTO>> SaveWorkOrder(PostWorkOrderManagementDTO workOrder);
         Task<RequestResult<Guid>> UpdateManageWorkOrder(UpdateWorkOrderManagementDTO workOrder);
+        Task<RequestResult<Guid>> CancelWorkOrder(CancelWorkOrderManagementDTO workOrder);
+        Task<RequestResult<List<GenericDto>>> GetWorkOrderReasonCancel();
 
     }
 }
