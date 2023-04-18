@@ -110,7 +110,8 @@ namespace DomainServices.Domain.User
         /// <param name="user">entidad usuario para obtener los datos</param>
         public async Task<Usuario> GetUser(string numeroDocumento)
         {            
-            return await _context.Usuario.Where(x => x.NumeroDocumento.Equals(numeroDocumento)).FirstOrDefaultAsync();
+            return await _context.Usuario.Include(x => x.RolNavigation)
+                                         .Include(x => x.CargoNavigation).Where(x => x.NumeroDocumento.Equals(numeroDocumento)).FirstOrDefaultAsync();
         }
         /// <summary>
         ///     obtiene usuario por id

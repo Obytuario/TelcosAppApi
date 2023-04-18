@@ -75,7 +75,7 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
                 /*Guardado Ubicacion*/
                 GenerateLocation(user, credencialesUsuario);
                 /*Construccion de token*/
-                return RequestResult<RespuestaAutenticacionDto>.CreateSuccessful(ConstruirToken(credencialesUsuario, user.ID)); 
+                return RequestResult<RespuestaAutenticacionDto>.CreateSuccessful(ConstruirToken(credencialesUsuario, user)); 
               
             }
             catch (Exception ex)
@@ -86,12 +86,12 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
         }
 
         #region Private Methods
-        private RespuestaAutenticacionDto ConstruirToken(CredencialesUsuarioDto credencialesUsuario, Guid idUser)
+        private RespuestaAutenticacionDto ConstruirToken(CredencialesUsuarioDto credencialesUsuario, Usuario User)
         {
             var claims = new List<Claim>()
             {
                 new Claim("user", credencialesUsuario.User??""),
-                new Claim("id", idUser.ToString())
+                new Claim("id", User.ID.ToString())
             };
 
             //var usuario = await userManager.FindByEmailAsync(credencialesUsuario.Email);
@@ -102,7 +102,7 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
             var llave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["KeyJwt"]));
             var creds = new SigningCredentials(llave, SecurityAlgorithms.HmacSha256);
 
-            var expiracion = DateTime.UtcNow.AddYears(1);
+            var expiracion = DateTime.UtcNow.AddDays(2);
 
             var securityToken = new JwtSecurityToken(issuer: null, audience: null, claims: claims,
                 expires: expiracion, signingCredentials: creds);
@@ -110,7 +110,10 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
             return new RespuestaAutenticacionDto()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(securityToken),
-                UserID = idUser
+                UserID = User.ID,
+                NameUser = string.Concat(User.PrimerNombre ?? "", " ", User.Apellidos ?? ""),
+                ChargeUser = User.CargoNavigation?.Descripcion??"",
+                RolCode = User.RolNavigation?.Codigo??""
                 //Expiracion = expiracion
             };
         }
