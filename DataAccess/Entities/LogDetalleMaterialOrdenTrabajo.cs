@@ -15,6 +15,8 @@ public partial class LogDetalleMaterialOrdenTrabajo
 
     public Guid UsuarioModifica { get; set; }
 
+    public string? ObservacionModifica { get; set; }
+
     public DateTime FechaHoraModifica { get; set; }
 
     public Guid DetalleMaterialOrdenTrabajo { get; set; }

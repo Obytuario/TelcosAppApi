@@ -89,6 +89,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
             {
                 entity.Property(e => e.ID).ValueGeneratedNever();
                 entity.Property(e => e.FechaHoraRegistra).HasColumnType("datetime");
+                entity.Property(e => e.ObservacionModifica).IsUnicode(false);
                 entity.Property(e => e.Serial)
                     .HasMaxLength(30)
                     .IsUnicode(false);
@@ -135,6 +136,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
             {
                 entity.Property(e => e.ID).ValueGeneratedNever();
                 entity.Property(e => e.FechaHoraRegistra).HasColumnType("datetime");
+                entity.Property(e => e.ObservacionModifica).IsUnicode(false);
 
                 entity.HasOne(d => d.OrdenTrabajoNavigation).WithMany(p => p.DetalleMaterialOrdenTrabajo)
                     .HasForeignKey(d => d.OrdenTrabajo)
@@ -178,6 +180,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
             {
                 entity.Property(e => e.ID).ValueGeneratedNever();
                 entity.Property(e => e.FechaHoraModifica).HasColumnType("datetime");
+                entity.Property(e => e.ObservacionModifica).IsUnicode(false);
                 entity.Property(e => e.Serial)
                     .HasMaxLength(30)
                     .IsUnicode(false);
@@ -207,6 +210,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
             {
                 entity.Property(e => e.ID).ValueGeneratedNever();
                 entity.Property(e => e.FechaHoraModifica).HasColumnType("datetime");
+                entity.Property(e => e.ObservacionModifica).IsUnicode(false);
 
                 entity.HasOne(d => d.DetalleMaterialOrdenTrabajoNavigation).WithMany(p => p.LogDetalleMaterialOrdenTrabajo)
                     .HasForeignKey(d => d.DetalleMaterialOrdenTrabajo)
@@ -513,7 +517,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasConstraintName("FK_Usuario_Usuario");
             });
 
-            
+           
         }
     }
 }

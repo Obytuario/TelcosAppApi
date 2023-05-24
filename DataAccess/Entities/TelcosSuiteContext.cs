@@ -69,7 +69,7 @@ public partial class TelcosSuiteContext : DbContext
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-   
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Actividad>(entity =>
@@ -150,6 +150,7 @@ public partial class TelcosSuiteContext : DbContext
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
             entity.Property(e => e.FechaHoraRegistra).HasColumnType("datetime");
+            entity.Property(e => e.ObservacionModifica).IsUnicode(false);
             entity.Property(e => e.Serial)
                 .HasMaxLength(30)
                 .IsUnicode(false);
@@ -196,6 +197,7 @@ public partial class TelcosSuiteContext : DbContext
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
             entity.Property(e => e.FechaHoraRegistra).HasColumnType("datetime");
+            entity.Property(e => e.ObservacionModifica).IsUnicode(false);
 
             entity.HasOne(d => d.OrdenTrabajoNavigation).WithMany(p => p.DetalleMaterialOrdenTrabajo)
                 .HasForeignKey(d => d.OrdenTrabajo)
@@ -239,6 +241,7 @@ public partial class TelcosSuiteContext : DbContext
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
             entity.Property(e => e.FechaHoraModifica).HasColumnType("datetime");
+            entity.Property(e => e.ObservacionModifica).IsUnicode(false);
             entity.Property(e => e.Serial)
                 .HasMaxLength(30)
                 .IsUnicode(false);
@@ -268,6 +271,7 @@ public partial class TelcosSuiteContext : DbContext
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
             entity.Property(e => e.FechaHoraModifica).HasColumnType("datetime");
+            entity.Property(e => e.ObservacionModifica).IsUnicode(false);
 
             entity.HasOne(d => d.DetalleMaterialOrdenTrabajoNavigation).WithMany(p => p.LogDetalleMaterialOrdenTrabajo)
                 .HasForeignKey(d => d.DetalleMaterialOrdenTrabajo)

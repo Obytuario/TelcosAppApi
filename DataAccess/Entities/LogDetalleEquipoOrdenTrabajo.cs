@@ -19,6 +19,8 @@ public partial class LogDetalleEquipoOrdenTrabajo
 
     public Guid UsuarioModifica { get; set; }
 
+    public string? ObservacionModifica { get; set; }
+
     public DateTime FechaHoraModifica { get; set; }
 
     public virtual DetalleEquipoOrdenTrabajo DetalleEquipoOrdenTRabajoNavigation { get; set; } = null!;

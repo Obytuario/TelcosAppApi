@@ -17,6 +17,8 @@ public partial class DetalleMaterialOrdenTrabajo
 
     public Guid UsuarioRegistra { get; set; }
 
+    public string? ObservacionModifica { get; set; }
+
     public DateTime FechaHoraRegistra { get; set; }
 
     public virtual ICollection<LogDetalleMaterialOrdenTrabajo> LogDetalleMaterialOrdenTrabajo { get; } = new List<LogDetalleMaterialOrdenTrabajo>();

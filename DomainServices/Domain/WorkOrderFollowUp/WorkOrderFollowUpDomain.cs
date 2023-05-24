@@ -75,6 +75,8 @@ namespace DomainServices.Domain.WorkOrderFollowUp
             detailUpdate.UsuarioRegistra = existDetail.UsuarioRegistra;
             detailUpdate.FechaHoraRegistra = existDetail.FechaHoraRegistra;          
             _context.Entry(existDetail).CurrentValues.SetValues(detailUpdate);
+            //Log de modificacion.
+            AddLogDetailEquipment(existDetail);
             _context.SaveChanges();
         }
         /// <summary>
@@ -110,6 +112,25 @@ namespace DomainServices.Domain.WorkOrderFollowUp
         public async Task<List<TipoImagen>> GetPhotoType()
         {
             return await _context.TipoImagen.ToListAsync();
+        }
+
+        /// <summary>
+        ///     actualiza un equipo
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+        /// <param name="user">objeto para adicionar un log de modificacion de equipos</param>
+        public void AddLogDetailEquipment(DetalleEquipoOrdenTrabajo detailexist)
+        {
+            LogDetalleEquipoOrdenTrabajo   log = new LogDetalleEquipoOrdenTrabajo();
+            log.ID = Guid.NewGuid();
+            log.DetalleEquipoOrdenTRabajo = detailexist.ID;
+            log.ParamEquipoActividad = detailexist.ParamEquipoActividad;
+            log.Activo = detailexist.Activo;
+            log.FechaHoraModifica = DateTime.Now;
+            log.MovimientoEquipo = detailexist.MovimientoEquipo;    
+            log.Serial= detailexist.Serial;
+            log.UsuarioModifica = detailexist.UsuarioRegistra??Guid.Empty;
+            _context.LogDetalleEquipoOrdenTrabajo.Add(log);         
         }
 
         #endregion|
