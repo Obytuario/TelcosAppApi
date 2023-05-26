@@ -110,7 +110,7 @@ namespace TelcosAppApi.Controllers
         /// <author>Ariel Bejarano</author>
         /// 
         [HttpPost("UpdateDetailMaterialFollow")]
-        public async Task<RequestResult<DetailWorkOrderFollowMaterial>> UpdateDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
+        public async Task<RequestResult<DetailWorkOrderFollowMaterial>>UpdateDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
         {
             return await _WorkOrderFollowUpServices.UpdateDetailMaterialFollow(detail);
         }

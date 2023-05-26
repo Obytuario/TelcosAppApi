@@ -42,8 +42,23 @@ namespace AplicationServices.Application.WorkOrderFollowUp
         public async Task<RequestResult<List<GetWorkOrderFollowUpDTO>>> GetWorkOrderFollowUp(PostWorkOrderFollowUpDTO filter)
         {
             try
-            {               
-                return RequestResult<List<GetWorkOrderFollowUpDTO>>.CreateSuccessful(_mapper.Map<List<OrdenTrabajo>, List<GetWorkOrderFollowUpDTO>>(await _workOrderFollowUpDomain.GetWorkOrderFollowUp(filter.fechainicio, filter.fechaFin)));
+            {
+                var listWorkOrders = _mapper.Map<List<OrdenTrabajo>, List<GetWorkOrderFollowUpDTO>>(await _workOrderFollowUpDomain.GetWorkOrderFollowUp(filter.fechainicio, filter.fechaFin));
+                listWorkOrders.ForEach(x =>
+                {
+                    x.DetalleEquipo.ForEach(d =>
+                    {
+                        d.ReporteEquipoDetalleHistorico = _mapper.Map<List<LogDetalleEquipoOrdenTrabajo>, List<LogReportEquipmentDetailDTO>>(_workOrderFollowUpDomain.GetWorkOrderEquipmentLogByID(d.IdDetalle));
+                    });
+                    x.Detallematerial.ForEach(d =>
+                    {
+                        d.ReporteMaterialDetalleHistorico = _mapper.Map<List<LogDetalleMaterialOrdenTrabajo>, List<LogReportMaterialDetailDTO>>(_workOrderFollowUpDomain.GetWorkOrderMaterialLogByID(d.IdDetalle));
+                    });
+
+                    
+
+                });
+                    return RequestResult<List<GetWorkOrderFollowUpDTO>>.CreateSuccessful(listWorkOrders);
             }
             catch (Exception ex)
             {
@@ -171,7 +186,7 @@ namespace AplicationServices.Application.WorkOrderFollowUp
         /// </summary>
         /// <author>Ariel Bejarano</author>
         /// <param name="detail">obejteo con los datos</param>
-        public async Task<RequestResult<DetailWorkOrderFollowMaterial>> UpdateDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
+        public async Task<RequestResult<DetailWorkOrderFollowMaterial>>UpdateDetailMaterialFollow(DetailWorkOrderFollowMaterial detail)
         {
             try
             {
