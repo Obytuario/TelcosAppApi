@@ -48,9 +48,7 @@ namespace AplicationServices.Application.Location
                 SaveUserLocationValidations(ref errorMessageValidations, user);
                 if (errorMessageValidations.Any())
                     return RequestResult<string>.CreateUnsuccessful(errorMessageValidations);
-
-
-
+                _locationDomain.ValidateLocationsUser();
                 _locationDomain.SaveLocationUser(user);
                 return RequestResult<string>.CreateSuccessful(ResourceUserMsm.SucessFullLocation);
 

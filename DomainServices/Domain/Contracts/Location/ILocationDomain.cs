@@ -12,5 +12,6 @@ namespace DomainServices.Domain.Contracts.Location
         void SaveLocationUser(UbicacionUsuario user);
         Task<List<UbicacionUsuario>> GetLocationByUser(Guid user);
         Task<List<OrdenTrabajo>> GetLocationWorkOrder(Guid user);
+        void ValidateLocationsUser();
     }
 }

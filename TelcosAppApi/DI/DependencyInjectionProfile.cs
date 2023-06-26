@@ -45,6 +45,10 @@ using AplicationServices.Application.Contracts.Location;
 using AplicationServices.Application.Location;
 using DomainServices.Domain.Contracts.Location;
 using DomainServices.Domain.Location;
+using AplicationServices.Application.Contracts.DashBoard;
+using AplicationServices.Application.DashBoard;
+using DomainServices.Domain.Contracts.DashBoard;
+using DomainServices.Domain.DashBoard;
 
 namespace TelcosAppApi.DI
 {
@@ -80,6 +84,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<IWorkOrderFollowUpServices, WorkOrderFollowUpServices>();
             services.AddTransient<ISubscriberServices, SubscriberAppServices> ();
             services.AddTransient<ILocationServices, LocationAppServices>();
+            services.AddTransient<IDashBoardServices, DashBoardAppServices>();
 
 
             #endregion
@@ -96,6 +101,7 @@ namespace TelcosAppApi.DI
             services.AddTransient<IWorkOrderFollowUpDomain, WorkOrderFollowUpDomain>();
             services.AddTransient<ISubscriberDomain, SubscriberDomain>();
             services.AddTransient<ILocationDomain, LocationDomain>();
+            services.AddTransient<IDashBoardDomain, DashBoardDomain>();
 
             #endregion Domain
 

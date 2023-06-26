@@ -40,7 +40,19 @@ namespace DomainServices.Domain.Location
            
         }
 
-     
+        /// <summary>
+        ///     validar ubicaciones de usuario y borra los de dos dias hacia atras
+        /// </summary>
+        /// <author>Ariel Bejarano</author>
+      
+        public void ValidateLocationsUser()
+        {
+            var listaUbicaciones = _context.UbicacionUsuario.Where(x => x.FechaHora.Date < DateTime.Now.AddDays(-2).Date);
+
+            _context.RemoveRange(listaUbicaciones);           
+
+        }
+
         /// <summary>
         ///     obtiene ubicacion de usuarios segun su superior
         /// </summary>
