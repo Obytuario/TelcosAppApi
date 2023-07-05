@@ -83,5 +83,17 @@ namespace TelcosAppApi.Controllers
         {
             return await _carpetasServices.GetMaterialByActivity(activity);
         }
+
+        /// <summary>
+        /// Consulta imagenes por id
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpGet("GetImageById")]
+        public async Task<RequestResult<List<imageGenericDto>>> GetImageById(Guid workOrder)
+        {
+            return await _carpetasServices.GetImageById(workOrder);
+        }
     }
 }

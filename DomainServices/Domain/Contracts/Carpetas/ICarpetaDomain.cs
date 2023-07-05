@@ -14,5 +14,6 @@ namespace DomainServices.Domain.Contracts.Carpetas
         Task<List<ParamMaterialActividad>> GetActyvitiMaterialByFile(Guid file);
         Task<List<ParamEquipoActividad>> GetEquipmentByActivity(Guid activity);
         Task<List<ParamMaterialActividad>> GetMaterialByActivity(Guid activity);
+        Task<List<DetalleImagenOrdenTrabajo>> GetImageById(Guid ordenTrabajo);
     }
 }

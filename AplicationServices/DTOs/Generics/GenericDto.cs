@@ -21,4 +21,11 @@ namespace AplicationServices.DTOs.Generics
         public string CodigoDto { get; set; }
 
     }
+    public class imageGenericDto
+    {
+        public string Image { get; set; }
+        public string ThumbImage { get; set; }
+        public string Title { get; set; }     
+
+    }
 }

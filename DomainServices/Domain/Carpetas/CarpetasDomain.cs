@@ -48,6 +48,12 @@ namespace DomainServices.Domain.Carpetas
                                                        .Include(x => x.ActividadNavigation)
                                                        .Include(x => x.MaterialNavigation).ToListAsync();
         }
+        public async Task<List<DetalleImagenOrdenTrabajo>> GetImageById(Guid ordenTrabajo)
+        {
+            return await _context.DetalleImagenOrdenTrabajo.Where(x => x.OrdenTrabajo.Equals(ordenTrabajo) && x.Activo)
+                                                            .Include(i => i.TipoImagenNavigation).ToListAsync();                                                     
+                                                       
+        }
         #endregion|
     }
 }
