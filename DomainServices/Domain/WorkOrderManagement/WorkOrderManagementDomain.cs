@@ -23,9 +23,9 @@ namespace DomainServices.Domain.WorkOrderManagement
 
         public async Task<List<OrdenTrabajo>> GetWorkOrderByUser(Guid? user)
         {
-            return await _context.OrdenTrabajo.Where(x => x.UsuarioRegistra.Equals(user))
+            return await _context.OrdenTrabajo.Where(x => x.UsuarioRegistra.Equals(user)&& x.FechaOrden.Date.Equals(DateTime.Now.Date))
                 .Include(x => x.EstadoOrdenNavigation)
-                .Include(x => x.SuscriptorNavigation).ThenInclude(x => x.TipoSuscriptorNavigation)
+                .Include(x => x.SuscriptorNavigation).ThenInclude(x => x.TipoSuscriptorNavigation).OrderBy(x => x.FechaRegistro)
                 .ToListAsync();
         }
 

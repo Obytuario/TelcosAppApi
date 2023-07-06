@@ -21,6 +21,10 @@ namespace DomainServices.Domain.DashBoard
         {
             return await _context.OrdenTrabajo.Where(ot => ot.FechaRegistro.Date.Equals(DateTime.Now.Date)).Include(i => i.EstadoOrdenNavigation).ToListAsync();
         }
+        public async Task<List<Usuario>> GetUserActiveLocation()
+        {
+            return await _context.Usuario.Where(ot => ot.Activo).Include(i => i.UbicacionUsuario).ToListAsync();
+        }
         #endregion|
 
     }

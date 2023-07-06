@@ -33,7 +33,7 @@ namespace TelcosAppApi.Controllers
         /// <returns></returns>
         /// <author>Ariel Bejarano</author>
         [HttpGet("GetDaskBoard")]
-        public async Task<RequestResult<List<DashBoardDTO>>> GetDaskBoard(string code)
+        public async Task<RequestResult<DashBoardOperationsDTO>> GetDaskBoard(string code)
         {
             //definir codigo segun dasboard a cargar.
             return await _dashBoardServices.GetDashBoard(code);

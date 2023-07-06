@@ -50,7 +50,8 @@ namespace AplicationServices.Application.WorkOrderManagement
         {
             try
             {
-                return RequestResult<List<GetWorkOrderManagementDTO>>.CreateSuccessful(_mapper.Map<List<OrdenTrabajo>, List<GetWorkOrderManagementDTO>>(await _workOrderManagementDomain.GetWorkOrderByUser(user)));
+                var result = await _workOrderManagementDomain.GetWorkOrderByUser(user);               
+                return RequestResult<List<GetWorkOrderManagementDTO>>.CreateSuccessful(_mapper.Map<List<OrdenTrabajo>, List<GetWorkOrderManagementDTO>>(result));
                                
             }
             catch (Exception ex)

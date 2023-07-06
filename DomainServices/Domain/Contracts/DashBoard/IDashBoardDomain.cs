@@ -10,5 +10,6 @@ namespace DomainServices.Domain.Contracts.DashBoard
     public interface IDashBoardDomain
     {
         Task<List<OrdenTrabajo>> GetDashBoard();
+        Task<List<Usuario>> GetUserActiveLocation();
     }
 }

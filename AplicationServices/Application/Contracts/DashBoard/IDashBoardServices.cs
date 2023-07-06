@@ -9,6 +9,6 @@ namespace AplicationServices.Application.Contracts.DashBoard
 {
     public interface IDashBoardServices
     {
-        Task<RequestResult<List<DashBoardDTO>>> GetDashBoard(string code);
+        Task<RequestResult<DashBoardOperationsDTO>> GetDashBoard(string code);
     }
 }
