@@ -19,12 +19,14 @@ namespace TelcosAppApi.Controllers
         /// Instancia al servicio de aplicación
         /// </summary>
         private readonly IWorkOrderManagementServices _WorkOrderManagementServices;
+        private IWebHostEnvironment _environment;
 
 
         #endregion Fiedls
-        public WorkOrderManagementController(IWorkOrderManagementServices WorkOrderManagementServices)
+        public WorkOrderManagementController(IWorkOrderManagementServices WorkOrderManagementServices, IWebHostEnvironment environment)
         {
             _WorkOrderManagementServices = WorkOrderManagementServices;
+            _environment = environment; 
         }
         /// <summary>
         /// Consulta las ordenes del dia de un tecnico.
@@ -90,7 +92,8 @@ namespace TelcosAppApi.Controllers
         [HttpPost("UpdateManageWorkOrder")]
         public async Task<RequestResult<Guid>> UpdateManageWorkOrder(UpdateWorkOrderManagementDTO workOrder)
         {
-            return await _WorkOrderManagementServices.UpdateManageWorkOrder(workOrder);
+            var RUTA = _environment.ContentRootPath;
+            return await _WorkOrderManagementServices.UpdateManageWorkOrder(workOrder,RUTA);
         }
         /// <summary>
         /// razona una  orden de trabajo

@@ -87,6 +87,11 @@ namespace DomainServices.Domain.WorkOrderManagement
 
             _context.DetalleMaterialOrdenTrabajo.AddRange(detalleMaterialOrdenTrabajo);
         }
+        public void SaveDetalleImagenOrdenTrabajo(List<DetalleImagenOrdenTrabajo> detalleImagenOrdenTrabajo)
+        {
+
+            _context.DetalleImagenOrdenTrabajo.AddRange(detalleImagenOrdenTrabajo);
+        }
         public void saveDetalleCancelacionOrden(DetalleCancelacionOrden detalleCancelacionOrden)
         {
             _context.DetalleCancelacionOrden.Add(detalleCancelacionOrden);

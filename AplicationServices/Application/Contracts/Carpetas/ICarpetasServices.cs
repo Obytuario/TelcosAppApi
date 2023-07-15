@@ -1,4 +1,5 @@
 ﻿using AplicationServices.DTOs.Generics;
+using AplicationServices.DTOs.workOrderManagement;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace AplicationServices.Application.Contracts.Carpetas
         Task<RequestResult<List<paramGenericDto>>> GetEquipmentByActivity(Guid activity);
         Task<RequestResult<List<paramGenericDto>>> GetMaterialByActivity(Guid activity);
         Task<RequestResult<List<imageGenericDto>>> GetImageById(Guid ordenTrabajo);
+        Task<RequestResult<string>> UploadImageByWorkOrder(ImageDto imageDto, string path);
     }
 }

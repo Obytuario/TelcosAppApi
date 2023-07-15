@@ -2,6 +2,7 @@
 using AplicationServices.Application.Contracts.Roles;
 using AplicationServices.DTOs.Generics;
 using AplicationServices.DTOs.WorkOrderFollowUp;
+using AplicationServices.DTOs.workOrderManagement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,12 +21,14 @@ namespace TelcosAppApi.Controllers
         /// Instancia al servicio de aplicación
         /// </summary>
         private readonly ICarpetasServices _carpetasServices;
+        private IWebHostEnvironment _environment;
 
 
         #endregion Fiedls
-        public FileController(ICarpetasServices carpetasServices)
+        public FileController(ICarpetasServices carpetasServices, IWebHostEnvironment environment)
         {
             _carpetasServices = carpetasServices;
+            _environment = environment;
         }
 
         /// <summary>
@@ -94,6 +97,19 @@ namespace TelcosAppApi.Controllers
         public async Task<RequestResult<List<imageGenericDto>>> GetImageById(Guid workOrder)
         {
             return await _carpetasServices.GetImageById(workOrder);
+        }
+        /// <summary>
+        /// Consulta imagenes por id
+        /// </summary>
+        /// <param name="workOrder"></param>
+        /// <returns></returns>
+        /// <author>Ariel Bejarano</author>
+        [HttpPost("UploadImagesByWorkOrder")]
+        public async Task<RequestResult<string>> UploadImagesByWorkOrder(ImageDto Photos)
+        {
+            
+            var RUTA = _environment.ContentRootPath;
+            return await _carpetasServices.UploadImageByWorkOrder(Photos, RUTA);
         }
     }
 }

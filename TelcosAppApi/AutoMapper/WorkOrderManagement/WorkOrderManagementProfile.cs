@@ -19,6 +19,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
             FromEquiptmentDtoToDetalleEquipoOrdenTrabajo();
             FromMaterialDtoToDetalleMaterialOrdenTrabajo();
             FromCancelWorkOrderManagementDTOToDetalleCancelacionOrden();
+            FromImageDtoToDetalleImagenOrdenTrabajo();
         }
         /// <summary>
         /// Convierte desde Usuario hasta CredencialesUsuarioDto
@@ -104,6 +105,16 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                 .ForMember(target => target.UsuarioRegistra, opt => opt.MapFrom(source => source.IdUser))
                 .ForMember(target => target.MotivoCancelacionOrden, opt => opt.MapFrom(source => source.IdReasonCancellation))
                 .ForMember(target => target.FechaRegistroCancelacion, opt => opt.MapFrom(source => DateTime.Now));
+        }
+        /// <summary>
+        /// Convierte desde ImageDto hasta CredencialesUsuarioDto
+        /// </summary>
+        private void FromImageDtoToDetalleImagenOrdenTrabajo()
+        {
+            CreateMap<ImageDto, DetalleImagenOrdenTrabajo>()
+                .ForMember(target => target.ID, opt => opt.MapFrom(source => Guid.NewGuid()))
+                .ForMember(target => target.TipoImagen, opt => opt.MapFrom(source => source.IdTipoPhoto))
+                .ForMember(target => target.Activo, opt => opt.MapFrom(source => true));
         }
     }
 }

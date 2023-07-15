@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using TelcosAppApi.DataAccess.Entities;
 using AplicationServices.Helpers.TextResorce;
+using Microsoft.EntityFrameworkCore.Metadata;
+using AplicationServices.Application.Contracts.Carpetas;
 
 namespace AplicationServices.Application.WorkOrderManagement
 {
@@ -31,13 +33,15 @@ namespace AplicationServices.Application.WorkOrderManagement
         /// Instancia al servicio de Dominio
         /// </summary>
         private readonly IWorkOrderManagementDomain _workOrderManagementDomain;
+        private readonly ICarpetasServices _carpetasServices;
         /// <summary>
         /// Mapper
         /// </summary>
         private readonly IMapper _mapper;
-        public WorkOrderManagementAppServices(IWorkOrderManagementDomain workOrderManagementDomain, IMapper mapper)
+        public WorkOrderManagementAppServices(IWorkOrderManagementDomain workOrderManagementDomain, IMapper mapper, ICarpetasServices carpetasServices )
         {
             _workOrderManagementDomain = workOrderManagementDomain;
+            _carpetasServices = carpetasServices;
             _mapper = mapper;
         }
         #region Method
@@ -152,7 +156,7 @@ namespace AplicationServices.Application.WorkOrderManagement
         /// <param name="workOrder"></param>
         /// <returns></returns>
         /// <author>Diego MOlina</author>
-        public async Task<RequestResult<Guid>> UpdateManageWorkOrder(UpdateWorkOrderManagementDTO workOrder)
+        public async Task<RequestResult<Guid>> UpdateManageWorkOrder(UpdateWorkOrderManagementDTO workOrder, string pathServer)
         {
             try
             {
@@ -164,7 +168,8 @@ namespace AplicationServices.Application.WorkOrderManagement
                 ICollection<DetalleEquipoOrdenTrabajo> detalleEquipoOrdenTrabajo = _mapper.Map<List<EquiptmentDto>, ICollection<DetalleEquipoOrdenTrabajo>>(workOrder.Supplies.Equiptments);
                 ICollection<DetalleMaterialOrdenTrabajo>  detalleMaterialOrdenTrabajo = _mapper.Map<List<MaterialDto>, ICollection<DetalleMaterialOrdenTrabajo>>(workOrder.Supplies.Materials);
 
-                if(detalleEquipoOrdenTrabajo.Count() > 0)
+
+                if (detalleEquipoOrdenTrabajo.Count() > 0)
                 {
                     detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.UsuarioRegistra = workOrder.IdUser);
                     detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
@@ -178,6 +183,21 @@ namespace AplicationServices.Application.WorkOrderManagement
                     detalleMaterialOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
                     _workOrderManagementDomain.SaveDetalleMaterialOrdenTrabajo(detalleMaterialOrdenTrabajo);
                 }
+
+                if (workOrder.Photos.Count() > 0)
+                {
+                    List<DetalleImagenOrdenTrabajo> detalleImagenOrdenTrabajo = new List<DetalleImagenOrdenTrabajo>();
+
+                    workOrder.Photos.ForEach(async x => {
+                        DetalleImagenOrdenTrabajo detalleImagenOrdenTrabajoDto = _mapper.Map<ImageDto, DetalleImagenOrdenTrabajo>(x);
+                        detalleImagenOrdenTrabajoDto.UrlImagen = (await _carpetasServices.UploadImageByWorkOrder(x, pathServer)).Result;
+                        detalleImagenOrdenTrabajoDto.OrdenTrabajo = workOrder.IdWorkOrder;
+                        detalleImagenOrdenTrabajo.Add(detalleImagenOrdenTrabajoDto);
+                    }) ;  
+                 
+                    _workOrderManagementDomain.SaveDetalleImagenOrdenTrabajo(detalleImagenOrdenTrabajo);
+                }
+
 
 
 

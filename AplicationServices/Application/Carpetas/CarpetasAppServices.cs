@@ -1,9 +1,13 @@
 ﻿using AplicationServices.Application.Contracts.Carpetas;
 using AplicationServices.DTOs.Generics;
+using AplicationServices.DTOs.workOrderManagement;
 using AutoMapper;
+using Azure.Core;
 using DomainServices.Domain.Contracts.Carpetas;
 using DomainServices.Domain.Contracts.Roles;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Internal;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,6 +29,8 @@ namespace AplicationServices.Application.Carpetas
         /// Mapper
         /// </summary>
         private readonly IMapper _mapper;
+    
+
         public CarpetasAppServices(ICarpetaDomain carpetasDomain, IMapper mapper)
         {
             _carpetasDomain = carpetasDomain;
@@ -120,6 +126,19 @@ namespace AplicationServices.Application.Carpetas
                 return RequestResult<List<imageGenericDto>>.CreateError(ex.Message);
             }
         }
+        public async Task<RequestResult<string>> UploadImageByWorkOrder(ImageDto imageDto,string path)
+        {
+            try
+            {
+                var urlFile = convertBase64toPath(imageDto.PhotoBase64String, path);
+                return RequestResult<string>.CreateSuccessful(urlFile);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<string>.CreateError(ex.Message);
+            }
+        }
         #endregion
 
         #region method Private
@@ -130,6 +149,38 @@ namespace AplicationServices.Application.Carpetas
             byte[] imageArray = System.IO.File.ReadAllBytes(url);
             string base64ImageRepresentation = Convert.ToBase64String(imageArray);
             return base64ImageRepresentation;          
+        }
+        private string convertBase64toPath(string base64, string path)
+        {     
+           
+            //Variable donde se coloca la ruta relativa de la carpeta de destino
+            //del archivo cargado
+            string NombreCarpeta = "Operaciones\\";            
+
+            //Se concatena las variables "RutaRaiz" y "NombreCarpeta"
+            //en una otra variable "RutaCompleta"
+            string RutaCompleta = path + NombreCarpeta;
+
+
+            //Se valida con la variable "RutaCompleta" si existe dicha carpeta            
+            if (!Directory.Exists(RutaCompleta))
+            {
+                //En caso de no existir se crea esa carpeta
+                Directory.CreateDirectory(RutaCompleta);
+            }
+
+           
+                //Se declara en esta variable el nombre del archivo cargado
+                string NombreArchivo = string.Concat(Guid.NewGuid().ToString(),".jpg");
+
+                //Se declara en esta variable la ruta completa con el nombre del archivo
+                string RutaFullCompleta = Path.Combine(RutaCompleta, NombreArchivo);
+
+                File.WriteAllBytes(RutaFullCompleta, Convert.FromBase64String(base64));
+
+            return RutaFullCompleta;
+
+           
         }
         #endregion
     }

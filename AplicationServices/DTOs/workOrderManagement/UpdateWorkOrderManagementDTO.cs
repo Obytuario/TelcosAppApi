@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,12 +15,15 @@ namespace AplicationServices.DTOs.workOrderManagement
         
         public Guid IdUser { get; set; }
 
+        public List<ImageDto> Photos { get; set; }
+
         public SuppliesDTO Supplies { get; set; }
     }
 
     public class ImageDto
     {
-        public Guid IdImage { get; set; }
+        public string PhotoBase64String { get; set; }
+        public Guid IdTipoPhoto { get; set; }
     }
 
     public class SuppliesDTO

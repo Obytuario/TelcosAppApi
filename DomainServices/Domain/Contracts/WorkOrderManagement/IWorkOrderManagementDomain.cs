@@ -17,6 +17,7 @@ namespace DomainServices.Domain.Contracts.WorkOrderManagement
         Task<OrdenTrabajo> GetWorkOrderByNumber(string number);
         void SaveDetalleEquipoOrdenTrabajo(ICollection<DetalleEquipoOrdenTrabajo> detalleEquipoOrdenTrabajo);
         void SaveDetalleMaterialOrdenTrabajo(ICollection<DetalleMaterialOrdenTrabajo> detalleMaterialOrdenTrabajo);
+        void SaveDetalleImagenOrdenTrabajo(List<DetalleImagenOrdenTrabajo> detalleImagenOrdenTrabajo);
         void SaveChanges();
 
         void saveDetalleCancelacionOrden(DetalleCancelacionOrden detalleCancelacionOrden);
