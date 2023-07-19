@@ -57,6 +57,8 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                  .ForMember(target => target.UsuarioRegistra, opt => opt.MapFrom(source => source.UsuarioRegistraDto))
                  .ForMember(target => target.Carpeta, opt => opt.MapFrom(source => source.FolderDto))
                  .ForMember(target => target.CentroOperacion, opt => opt.MapFrom(source => source.OperationCenterDto))
+                 .ForMember(target => target.Latitud, opt => opt.MapFrom(source => source.latitude))
+                 .ForMember(target => target.Logitud, opt => opt.MapFrom(source => source.longitude))
                  .ForMember(target => target.SuscriptorNavigation, opt => opt.MapFrom(source => new Suscriptor
                  {
                      ID = Guid.NewGuid(),
