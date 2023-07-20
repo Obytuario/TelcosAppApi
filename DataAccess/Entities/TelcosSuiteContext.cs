@@ -400,6 +400,9 @@ public partial class TelcosSuiteContext : DbContext
             entity.Property(e => e.Logitud)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+            entity.Property(e => e.Nodo)
+                .HasMaxLength(20)
+                .IsUnicode(false);
             entity.Property(e => e.NumeroOrden)
                 .HasMaxLength(20)
                 .IsUnicode(false);

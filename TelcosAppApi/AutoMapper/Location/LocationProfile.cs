@@ -53,10 +53,10 @@ namespace TelcosAppApi.AutoMapper.Location
                 .ForMember(target => target.Latitude, opt => opt.MapFrom(source => Convert.ToDecimal(source.Latitud)))
                 .ForMember(target => target.Longitude, opt => opt.MapFrom(source => Convert.ToDecimal(source.Logitud)))
                 .ForMember(target => target.Tecnico, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.PrimerNombre + " " + source.UsuarioRegistraNavigation.Apellidos ?? ""))
-                .ForMember(target => target.Tecnico, opt => opt.MapFrom(source => source.SuscriptorNavigation.Nombre + " " + source.SuscriptorNavigation.Apellido ?? ""))
+                .ForMember(target => target.Suscriptor, opt => opt.MapFrom(source => source.SuscriptorNavigation.Nombre + " " + source.SuscriptorNavigation.Apellido ?? ""))
                 .ForMember(target => target.labelOptions, opt => opt.MapFrom(source => new GetLabelWorkOrderDto
                 {
-                    Text = "OT " + source.NumeroOrden
+                    Text = "OT = " +source.NumeroOrden
 
                 }));
 

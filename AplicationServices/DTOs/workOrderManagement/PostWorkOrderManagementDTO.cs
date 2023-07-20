@@ -10,6 +10,7 @@ namespace AplicationServices.DTOs.workOrderManagement
         public Guid? OperationCenterDto { get; set; }
         public string? latitude { get; set; }
         public string? longitude { get; set; }
+        public string? Nodo { get; set; }
         public SuscriptorDTO? suscriptorDTO { get; set; }   
     }
     public class SuscriptorDTO

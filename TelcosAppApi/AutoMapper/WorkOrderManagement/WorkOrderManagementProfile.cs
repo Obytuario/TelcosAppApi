@@ -40,7 +40,8 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                 .ForMember(target => target.DireccionSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.Direccion??""))
                 .ForMember(target => target.EstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrden))
                 .ForMember(target => target.CuentaSuscriptorDto, opt => opt.MapFrom(source => source.SuscriptorNavigation.NumeroCuenta))
-                .ForMember(target => target.NombreEstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion)) 
+                .ForMember(target => target.NombreEstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion))
+                .ForMember(target => target.Node, opt => opt.MapFrom(source => source.Nodo??""))
                 .ForMember(target => target.CodEstadoOrdenDTO, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Codigo)); 
         }
 
@@ -57,8 +58,9 @@ namespace TelcosAppApi.AutoMapper.WorkOrderManagement
                  .ForMember(target => target.UsuarioRegistra, opt => opt.MapFrom(source => source.UsuarioRegistraDto))
                  .ForMember(target => target.Carpeta, opt => opt.MapFrom(source => source.FolderDto))
                  .ForMember(target => target.CentroOperacion, opt => opt.MapFrom(source => source.OperationCenterDto))
-                 .ForMember(target => target.Latitud, opt => opt.MapFrom(source => source.latitude))
-                 .ForMember(target => target.Logitud, opt => opt.MapFrom(source => source.longitude))
+                 .ForMember(target => target.Latitud, opt => opt.MapFrom(source => Convert.ToDecimal(source.latitude).ToString()))
+                 .ForMember(target => target.Logitud, opt => opt.MapFrom(source => Convert.ToDecimal(source.longitude).ToString()))
+                 .ForMember(target => target.Nodo, opt => opt.MapFrom(source => source.Nodo))
                  .ForMember(target => target.SuscriptorNavigation, opt => opt.MapFrom(source => new Suscriptor
                  {
                      ID = Guid.NewGuid(),
