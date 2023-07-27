@@ -8,8 +8,8 @@ namespace AplicationServices.DTOs.workOrderManagement
         public Guid UsuarioRegistraDto { get; set; }
         public Guid FolderDto { get; set; }
         public Guid? OperationCenterDto { get; set; }
-        public string? latitude { get; set; }
-        public string? longitude { get; set; }
+        public decimal? Latitude { get; set; }
+        public decimal? Longitude { get; set; }
         public SuscriptorDTO? suscriptorDTO { get; set; }   
     }
     public class SuscriptorDTO
