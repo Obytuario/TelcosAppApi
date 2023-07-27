@@ -34,6 +34,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                 .ForMember(target => target.IdOrden, opt => opt.MapFrom(source => source.ID))
                 .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.NumeroDocumento))
                 .ForMember(target => target.NumeroOrden, opt => opt.MapFrom(source => source.NumeroOrden))
+                .ForMember(target => target.Nodo, opt => opt.MapFrom(source => source.Nodo))
                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion))
                 .ForMember(target => target.CodigoEstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Codigo))
                 .ForMember(target => target.NombreTecnico, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.PrimerNombre + " " + source.UsuarioRegistraNavigation.Apellidos ?? ""))
@@ -48,6 +49,8 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                     CodigoEquipo = s.ParamEquipoActividadNavigation.EquipoNavigation.Codigo,
                     NombreMovimiento = s.MovimientoEquipoNavigation.Descripcion,
                     ObservacionModifica = s.ObservacionModifica,
+                    NombreActividad = s.ParamEquipoActividadNavigation.ActividadNavigation.Descripcion,
+                    CodigoActividad = s.ParamEquipoActividadNavigation.ActividadNavigation.Codigo,
                     UsuarioRegistra = s.UsuarioRegistraNavigation.PrimerNombre + " " + s.UsuarioRegistraNavigation.Apellidos ?? ""
 
                 })))
@@ -58,6 +61,8 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                     CantidadMaterial = s.Cantidad,
                     CodigoMaterial = s.ParamMaterialActividadNavigation.MaterialNavigation.Codigo,
                     ObservacionModifica = s.ObservacionModifica,
+                    NombreActividad = s.ParamMaterialActividadNavigation.ActividadNavigation.Descripcion,
+                    CodigoActividad = s.ParamMaterialActividadNavigation.ActividadNavigation.Codigo,
                     UsuarioRegistra = s.UsuarioRegistraNavigation.PrimerNombre + " " + s.UsuarioRegistraNavigation.Apellidos ?? ""
                 })));
         }

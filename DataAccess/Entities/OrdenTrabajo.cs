@@ -27,6 +27,8 @@ public partial class OrdenTrabajo
 
     public string? Logitud { get; set; }
 
+    public string? Nodo { get; set; }
+
     public Guid? DetalleCancelacionOrden { get; set; }
 
     public Guid UsuarioRegistra { get; set; }

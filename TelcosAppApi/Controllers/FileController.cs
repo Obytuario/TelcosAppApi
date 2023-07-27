@@ -5,8 +5,10 @@ using AplicationServices.DTOs.WorkOrderFollowUp;
 using AplicationServices.DTOs.workOrderManagement;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting.Server;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace TelcosAppApi.Controllers
 {
@@ -22,13 +24,15 @@ namespace TelcosAppApi.Controllers
         /// </summary>
         private readonly ICarpetasServices _carpetasServices;
         private IWebHostEnvironment _environment;
+        private IHostingEnvironment _hostingEnvironment;
 
 
         #endregion Fiedls
-        public FileController(ICarpetasServices carpetasServices, IWebHostEnvironment environment)
+        public FileController(ICarpetasServices carpetasServices, IWebHostEnvironment environment, IHostingEnvironment hostingEnvironment)
         {
             _carpetasServices = carpetasServices;
             _environment = environment;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -95,7 +99,7 @@ namespace TelcosAppApi.Controllers
         /// <author>Ariel Bejarano</author>
         [HttpGet("GetImageById")]
         public async Task<RequestResult<List<imageGenericDto>>> GetImageById(Guid workOrder)
-        {
+        {           
             return await _carpetasServices.GetImageById(workOrder);
         }
         /// <summary>
@@ -107,8 +111,7 @@ namespace TelcosAppApi.Controllers
         [HttpPost("UploadImagesByWorkOrder")]
         public async Task<RequestResult<string>> UploadImagesByWorkOrder(ImageDto Photos)
         {
-            
-            var RUTA = _environment.ContentRootPath;
+            var RUTA = Path.GetDirectoryName(Path.GetDirectoryName(_environment.ContentRootPath));
             return await _carpetasServices.UploadImageByWorkOrder(Photos, RUTA);
         }
     }

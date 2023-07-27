@@ -339,6 +339,9 @@ namespace TelcosAppApi.DataAccess.DataAccess
                 entity.Property(e => e.Logitud)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+                entity.Property(e => e.Nodo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
                 entity.Property(e => e.NumeroOrden)
                     .HasMaxLength(20)
                     .IsUnicode(false);
@@ -516,8 +519,7 @@ namespace TelcosAppApi.DataAccess.DataAccess
                     .HasForeignKey(d => d.UsuarioSuperior)
                     .HasConstraintName("FK_Usuario_Usuario");
             });
-
-           
+         
         }
     }
 }

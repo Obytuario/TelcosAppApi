@@ -10,6 +10,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
     {
         public Guid IdOrden { get; set; }
         public string? NumeroOrden { get; set; }
+        public string? Nodo { get; set; }
         public string NombreTecnico { get; set; }        
         public string NumeroDocumento { get; set; }
         public string EstadoOrden { get; set; }
@@ -36,6 +37,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public string? UsuarioRegistra { get; set; }
         public int CantidadMaterial { get; set; }
         public string? NombreActividad { get; set; }
+        public string? CodigoActividad { get; set; }        
         public List<LogReportMaterialDetailDTO>? ReporteMaterialDetalleHistorico { get; set; }
 
     }
@@ -54,6 +56,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public string? ObservacionModifica { get; set; }
         public string? NombreMovimiento { get; set; }
         public string? NombreActividad { get; set; }
+        public string? CodigoActividad { get; set; }
         public List<LogReportEquipmentDetailDTO>? ReporteEquipoDetalleHistorico { get; set; }
 
 
