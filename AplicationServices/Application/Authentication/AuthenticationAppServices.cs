@@ -84,6 +84,62 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
                
             }
         }
+        public async Task<RequestResult<string>> CargaMasiva(CargaDto cargaDto)
+        {
+            try
+            {
+               List<ParamEquipoActividad> equipoActividad = new List<ParamEquipoActividad>();
+               List<ParamMaterialActividad> materialActividad = new List<ParamMaterialActividad>();
+
+                cargaDto.Actividades.ForEach(actividad => {
+                    if(equipoActividad.Count>0 || materialActividad.Count>0)
+                    {
+                        var resultado =  _authenticationDomain.CargaMasiva(equipoActividad, materialActividad);
+                        if(resultado??false)
+                        {
+                            equipoActividad = new List<ParamEquipoActividad>();
+                            materialActividad = new List<ParamMaterialActividad>();
+                        }
+                    }
+
+                    cargaDto.Equipos.ForEach(equipo => {
+                        ParamEquipoActividad wresult =  _authenticationDomain.ConsultarParamEquipo(Guid.Parse(actividad.Actividad), Guid.Parse(equipo.Equipo)).Result;
+                        if(wresult == null)
+                        {
+                            ParamEquipoActividad paramEquipoActividad = new ParamEquipoActividad();
+                            paramEquipoActividad.ID = Guid.NewGuid();
+                            paramEquipoActividad.Equipo = Guid.Parse(equipo.Equipo);
+                            paramEquipoActividad.Actividad = Guid.Parse(actividad.Actividad);
+                            paramEquipoActividad.Activo = true;
+                            equipoActividad.Add(paramEquipoActividad);
+                        }
+                    });
+                    cargaDto.Materiales.ForEach(material => {
+                        ParamMaterialActividad wresult = _authenticationDomain.ConsultarParamMaterial(Guid.Parse(actividad.Actividad), Guid.Parse(material.Material)).Result;
+                        if (wresult == null)
+                        {
+                            ParamMaterialActividad paramMaterialActividad = new ParamMaterialActividad();
+                            paramMaterialActividad.ID = Guid.NewGuid();
+                            paramMaterialActividad.Material = Guid.Parse(material.Material);
+                            paramMaterialActividad.Actividad = Guid.Parse(actividad.Actividad);
+                            paramMaterialActividad.Activo = true;
+                            materialActividad.Add(paramMaterialActividad);
+                        }
+                    });
+
+                });
+
+                
+
+               return RequestResult<string>.CreateSuccessful("Proceso Exitoso");
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<string>.CreateError(ex.Message);
+
+            }
+        }
+
 
         #region Private Methods
         private RespuestaAutenticacionDto ConstruirToken(CredencialesUsuarioDto credencialesUsuario, Usuario User)

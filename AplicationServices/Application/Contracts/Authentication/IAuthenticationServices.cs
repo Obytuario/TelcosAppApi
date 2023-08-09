@@ -11,5 +11,6 @@ namespace TelcosAppApi.AplicationServices.Application.Contracts.Authentication
     public interface IAuthenticationServices
     {
         Task<RequestResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credencialesUsuario);
+        Task<RequestResult<string>> CargaMasiva(CargaDto cargaDto);
     }
 }

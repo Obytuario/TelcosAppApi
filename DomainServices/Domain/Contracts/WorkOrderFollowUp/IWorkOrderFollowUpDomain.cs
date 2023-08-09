@@ -15,7 +15,7 @@ namespace DomainServices.Domain.Contracts.WorkOrderFollowUp
         Task<List<MovimientoEquipo>> GetAllMovimientoEquipment();
         void UpdateDetailMaterial(DetalleMaterialOrdenTrabajo detailUpdate);
         void UpdateDetailEquipment(DetalleEquipoOrdenTrabajo detailUpdate);
-        Task<List<Actividad>> GetActivity();
+        Task<List<Actividad>> GetActivity(Guid? carpeta);
         Task<List<TipoImagen>> GetPhotoType();
         Task<List<OrdenTrabajo>> GetWorkOrderBilling(DateTime fechaInicio, DateTime fechaFinal);
         List<LogDetalleEquipoOrdenTrabajo> GetWorkOrderEquipmentLogByID(Guid idDetalle);

@@ -31,5 +31,34 @@ namespace DomainServices.Domain.Authentication
             return usuario;
 
         }
+
+        public bool? CargaMasiva(List<ParamEquipoActividad> paramEquipoActividads,List<ParamMaterialActividad> paramMaterialActividads)
+        {
+            _context.ParamEquipoActividad.AddRange(paramEquipoActividads);
+            _context.ParamMaterialActividad.AddRange(paramMaterialActividads);
+            _context.SaveChanges();
+            return true;
+
+        }
+        public async Task<ParamEquipoActividad?> ConsultarParamEquipo(Guid actividad, Guid equipo)
+        {
+            var param = await _context.ParamEquipoActividad.FirstOrDefaultAsync(i => i.Actividad.Equals(actividad) && i.Equipo.Equals(equipo));
+
+            if (param == null)
+                return null;
+
+            return param;
+
+        }
+        public async Task<ParamMaterialActividad?> ConsultarParamMaterial(Guid actividad, Guid material)
+        {
+            var param = await _context.ParamMaterialActividad.FirstOrDefaultAsync(i => i.Actividad.Equals(actividad) && i.Material.Equals(material));
+
+            if (param == null)
+                return null;
+
+            return param;
+
+        }
     }
 }

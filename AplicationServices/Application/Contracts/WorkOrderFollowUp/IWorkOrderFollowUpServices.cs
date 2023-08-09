@@ -18,7 +18,7 @@ namespace AplicationServices.Application.Contracts.WorkOrderFollowUp
         Task<RequestResult<DetailWorkOrderFollowMaterial>> UpdateDetailMaterialFollow(DetailWorkOrderFollowMaterial detail);
         Task<RequestResult<DetailWorkOrderFollowMaterial>> DeleteDetailMaterialFollow(DetailWorkOrderFollowMaterial detail);
         Task<RequestResult<DetailWorkOrderFollowequipment>> DeleteDetailEquipmentFollow(DetailWorkOrderFollowequipment detail);
-        Task<RequestResult<List<GenericDto>>> GetActivity();
+        Task<RequestResult<List<GenericDto>>> GetActivity(Guid? carpeta);
         Task<RequestResult<List<GenericDto>>> GetPhotoType();
         Task<RequestResult<List<GetWorkOrderBillingDTO>>> GetWorkOrderBilling(PostWorkOrderFollowUpDTO filter);
 

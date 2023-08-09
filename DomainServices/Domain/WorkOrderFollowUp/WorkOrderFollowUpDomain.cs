@@ -126,9 +126,9 @@ namespace DomainServices.Domain.WorkOrderFollowUp
         /// </summary>
         /// <returns></returns>
         /// <author>Diego Molina</author>
-        public async Task<List<Actividad>> GetActivity()
+        public async Task<List<Actividad>> GetActivity(Guid? carpeta)
         {
-            return await _context.Actividad.ToListAsync();
+            return await _context.Actividad.Where(x => ((carpeta != null)? x.Carpeta.Equals(carpeta): x.Carpeta != Guid.Empty)  && x.Activo).ToListAsync();
         }
 
         /// <summary>

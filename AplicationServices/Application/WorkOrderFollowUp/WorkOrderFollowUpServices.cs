@@ -265,11 +265,11 @@ namespace AplicationServices.Application.WorkOrderFollowUp
         /// </summary>
         /// <returns></returns>
         /// <author>Diego Molina</author>
-        public async Task<RequestResult<List<GenericDto>>> GetActivity()
+        public async Task<RequestResult<List<GenericDto>>> GetActivity(Guid? carpeta)
         {
             try
             {
-                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<Actividad>, List<GenericDto>>(await _workOrderFollowUpDomain.GetActivity()));
+                return RequestResult<List<GenericDto>>.CreateSuccessful(_mapper.Map<List<Actividad>, List<GenericDto>>(await _workOrderFollowUpDomain.GetActivity(carpeta)));
             }
             catch (Exception ex)
             {

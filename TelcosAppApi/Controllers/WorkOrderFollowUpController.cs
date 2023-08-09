@@ -145,9 +145,9 @@ namespace TelcosAppApi.Controllers
         /// <returns></returns>
         /// <author>Diego Molina</author>
         [HttpGet("GetActivity")]
-        public async Task<RequestResult<List<GenericDto>>> GetActivity()
+        public async Task<RequestResult<List<GenericDto>>> GetActivity(Guid? carpeta)
         {
-            return await _WorkOrderFollowUpServices.GetActivity();
+            return await _WorkOrderFollowUpServices.GetActivity(carpeta);
         }
 
         /// <summary>
