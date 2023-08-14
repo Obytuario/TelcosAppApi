@@ -23,6 +23,11 @@ using AplicationServices.DTOs.Location;
 using Microsoft.Extensions.DependencyInjection;
 using AplicationServices.ScopeService;
 using AplicationServices.Application.Contracts.Location;
+using DomainServices.Domain.Contracts.cargos;
+using DomainServices.Domain.Contracts.CentroOperaciones;
+using DomainServices.Domain.Contracts.Roles;
+using Microsoft.EntityFrameworkCore.Metadata;
+using AplicationServices.Application.Contracts.User;
 
 namespace TelcosAppApi.AplicationServices.Application.Authentication
 {
@@ -33,6 +38,9 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
         /// </summary>
         private readonly IAuthenticationDomain _authenticationDomain;
         private readonly IUserDomain _userDomain;
+        private readonly ICargosDomain _cargosDomain;
+        private readonly ICentroOperacionesDomain _centroOperacionDomain;
+        private readonly IRolesDomain _rolesDomain;       
         /// <summary>
         /// Mapper
         /// </summary>
@@ -40,15 +48,19 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
         private readonly IConfiguration _configuration;
         private readonly Hash _hash;
         private readonly ILocationServices _LocationServices; // => _serviceScope.GetService<ILocationServices>();
-      
-        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain, IUserDomain userDomain, IConfiguration configuration, IMapper mapper, ILocationServices locationServices)
+        private readonly IUserServices _userServices;      
+        public AuthenticationAppServices(IAuthenticationDomain authenticationDomain,ICentroOperacionesDomain centroOperacionesDomain, ICargosDomain cargosDomain,  IUserDomain userDomain, IRolesDomain rolesDomain, IConfiguration configuration, IMapper mapper, ILocationServices locationServices, IUserServices userServices)
         {
             _authenticationDomain = authenticationDomain;
             _userDomain = userDomain;
+            _rolesDomain = rolesDomain;
+            _centroOperacionDomain = centroOperacionesDomain;
+            _cargosDomain = cargosDomain;
             _configuration = configuration;
             _mapper = mapper;
             _hash = new Hash();          
             _LocationServices = locationServices;
+            _userServices = userServices;
         }
 
         public async Task<RequestResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credencialesUsuario)
@@ -136,6 +148,95 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
             catch (Exception ex)
             {
                 return RequestResult<string>.CreateError(ex.Message);
+
+            }
+        }
+        public async Task<RequestResult<List<CargaUserDto>>> CargaMasivaUsuarios(List<CargaUserDto> userDtos)
+        {
+            try
+            {
+                var cargos = _cargosDomain.GetCargos().Result;
+                var centros = _centroOperacionDomain.GetCentroOperaciones().Result;
+                var roles = _rolesDomain.GetRoles().Result;
+                List<CargaUserDto> cargaUserDtosRes = new List<CargaUserDto>();
+                foreach (var cargaUserDto in userDtos)
+                {
+                    var existeUsuario = _userDomain.GetUser(cargaUserDto.Cedula.ToString()).Result;
+                    if (existeUsuario == null)
+                    {
+                        var cargoId = cargos.Where(x => x.Descripcion.Trim().ToUpper().Contains(cargaUserDto.Cargo.Trim().ToUpper())).FirstOrDefault();
+                        if (cargoId == null)
+                        {
+                            cargaUserDto.Observacion = "No existe Cargo";
+                            cargaUserDtosRes.Add(cargaUserDto);
+                            continue;
+                        }
+                        var rolId = roles.Where(x => x.Descripcion.Trim().ToUpper().Contains(cargaUserDto.Rol.Trim().ToUpper())).FirstOrDefault();
+                        if (rolId == null)
+                        {
+                            cargaUserDto.Observacion = "No existe Rol";
+                            cargaUserDtosRes.Add(cargaUserDto);
+                            continue;
+                        }
+                        var centroId = centros.Where(x => x.Descripcion.Trim().ToUpper().Contains(cargaUserDto.CentroDeOperaciones.Trim().ToUpper())).FirstOrDefault();
+                        if (centroId == null)
+                        {
+                            cargaUserDto.Observacion = "No existe Centro de operaciones";
+                            cargaUserDtosRes.Add(cargaUserDto);
+                            continue;
+                        }
+
+                        // dividir nombre
+                        var ArrayNombre = cargaUserDto.Nombre.Trim().Split(' ');
+                        string Nombres = ConcatenateFromArray(ArrayNombre, 2, ArrayNombre.Length);
+                        string Apellidos = ConcatenateFromArray(ArrayNombre, 0, 2);
+
+                        PostUserDto postUserDto = new PostUserDto();
+                        postUserDto.id = Guid.NewGuid();
+                        postUserDto.idRol = rolId.ID;
+                        postUserDto.idOperationCenter = centroId.ID;
+                        postUserDto.idCharge = cargoId.ID;
+                        postUserDto.numberDocument = cargaUserDto.Cedula.ToString();
+                        postUserDto.fName = Nombres;
+                        postUserDto.lName = Apellidos;
+                        postUserDto.active = false;
+                        postUserDto.email = cargaUserDto.Correo.Trim();
+                        postUserDto.mobile = cargaUserDto.Telefono.ToString();
+
+                        var resultUser = _userServices.SaveUser(postUserDto).Result;
+                        if (resultUser.IsSuccessful)
+                        {
+                            cargaUserDto.Observacion = "Usuario Creado";
+                            cargaUserDtosRes.Add(cargaUserDto);
+                        }
+                        
+                    }
+                    else
+                    {
+                        cargaUserDto.Observacion = "Usuario ya existe con ese numero de documento.";
+                        cargaUserDtosRes.Add(cargaUserDto);
+                    }
+                }
+
+                return RequestResult<List<CargaUserDto>>.CreateSuccessful(cargaUserDtosRes);
+                static string ConcatenateFromArray(string[] array, int startIndex, int endIndex)
+                {
+                    if (startIndex < 0 || startIndex >= array.Length)
+                    {
+                        throw new ArgumentException("Índice de inicio fuera de los límites del array.");
+                    }
+
+                    string result = "";
+                    for (int i = startIndex; i < endIndex; i++)
+                    {
+                        result += array[i]+" ";
+                    }
+                    return result.Trim();
+                }
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<List<CargaUserDto>>.CreateError(ex.Message);
 
             }
         }

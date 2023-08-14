@@ -38,8 +38,9 @@ namespace TelcosAppApi.AutoMapper.Location
                 .ForMember(target => target.Longitude, opt => opt.MapFrom(source => Convert.ToDecimal(source.Longitud)))
                 .ForMember(target => target.labelOptions, opt => opt.MapFrom(source => new GetLabelUserDto
                 {
-                    Text = source.UsuarioNavigation.PrimerNombre + " " + source.UsuarioNavigation.Apellidos ?? ""
-                    
+                    Text = source.UsuarioNavigation.PrimerNombre + " " + source.UsuarioNavigation.Apellidos ?? "",
+                    Conection = source.FechaHora.ToString("hh:mm tt"),
+
                 })); 
           
         }
@@ -50,13 +51,14 @@ namespace TelcosAppApi.AutoMapper.Location
         {
             CreateMap<OrdenTrabajo, GetLocationWorkOrderDto>()
                 .ForMember(target => target.IdWork, opt => opt.MapFrom(source => source.ID))
-                .ForMember(target => target.Latitude, opt => opt.MapFrom(source => Convert.ToDecimal(source.Latitud)))
-                .ForMember(target => target.Longitude, opt => opt.MapFrom(source => Convert.ToDecimal(source.Logitud)))
+                .ForMember(target => target.Latitude, opt => opt.MapFrom(source => Convert.ToDecimal(String.IsNullOrEmpty(source.Latitud)? "0" : source.Latitud)))
+                .ForMember(target => target.Longitude, opt => opt.MapFrom(source => Convert.ToDecimal(String.IsNullOrEmpty(source.Logitud) ? "0" : source.Logitud)))
                 .ForMember(target => target.Tecnico, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.PrimerNombre + " " + source.UsuarioRegistraNavigation.Apellidos ?? ""))
                 .ForMember(target => target.Suscriptor, opt => opt.MapFrom(source => source.SuscriptorNavigation.Nombre + " " + source.SuscriptorNavigation.Apellido ?? ""))
                 .ForMember(target => target.labelOptions, opt => opt.MapFrom(source => new GetLabelWorkOrderDto
                 {
-                    Text = "OT = " +source.NumeroOrden
+                    Text = source.NumeroOrden,
+                    Code = source.EstadoOrdenNavigation.Codigo,
 
                 }));
 

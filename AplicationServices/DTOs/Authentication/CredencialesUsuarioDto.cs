@@ -26,4 +26,18 @@
     {
         public string? Actividad { get; set; }       
     }
+    public class CargaUserDto
+    {
+        public long? Cedula { get; set; }
+        public string? Nombre { get; set; }
+        public string? Cargo { get; set; }
+        public long? Telefono { get; set; }
+        public string? Correo { get; set; }
+        public string? CentroDeOperaciones { get; set; }
+        public string? Rol { get; set; }
+        public string? GRUPO { get; set; }
+        public string? Observacion { get; set; }
+
+
+    }
 }

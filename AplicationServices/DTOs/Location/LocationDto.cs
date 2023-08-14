@@ -33,13 +33,15 @@ namespace AplicationServices.DTOs.Location
     public class GetLabelUserDto
     {        
         public string Text { get; set; }
-        public string Color { get; set; } = "#FFFFFF";        
+        public string Color { get; set; } = "#FFFFFF";
+        public string Conection { get; set; } ="Sin conexión el dia de hoy.";
 
     }
     public class GetLabelWorkOrderDto
     {
         public string Text { get; set; }
         public string Color { get; set; } = "#FFFFFF";
+        public string Code { get; set; }
 
     }
 }

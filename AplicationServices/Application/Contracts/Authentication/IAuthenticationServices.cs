@@ -12,5 +12,6 @@ namespace TelcosAppApi.AplicationServices.Application.Contracts.Authentication
     {
         Task<RequestResult<RespuestaAutenticacionDto>> Login(CredencialesUsuarioDto credencialesUsuario);
         Task<RequestResult<string>> CargaMasiva(CargaDto cargaDto);
+        Task<RequestResult<List<CargaUserDto>>> CargaMasivaUsuarios(List<CargaUserDto> userDtos);
     }
 }

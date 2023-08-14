@@ -44,5 +44,10 @@ namespace TelcosAppApi.Controllers
         {
             return await _AuthenticationServices.CargaMasiva(cargaDto);
         }
+        [HttpPost("CargaMasivaUsuarios")]
+        public async Task<RequestResult<List<CargaUserDto>>> CargaMasivaUsuarios(List<CargaUserDto> userDtos)
+        {
+            return await _AuthenticationServices.CargaMasivaUsuarios(userDtos);
+        }
     }
 }

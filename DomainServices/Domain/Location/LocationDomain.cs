@@ -87,6 +87,7 @@ namespace DomainServices.Domain.Location
         {
             var resultUbicacion = await _context.OrdenTrabajo.Where(x => x.FechaOrden.Date.Equals(DateTime.Now.Date))
                                         .Include(i => i.UsuarioRegistraNavigation)
+                                        .Include(i => i.EstadoOrdenNavigation)
                                         .Include(i => i.SuscriptorNavigation).ToListAsync();
 
 
