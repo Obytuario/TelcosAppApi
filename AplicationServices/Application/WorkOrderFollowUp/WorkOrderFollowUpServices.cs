@@ -74,30 +74,74 @@ namespace AplicationServices.Application.WorkOrderFollowUp
         public async Task<RequestResult<List<GetWorkOrderBillingDTO>>> GetWorkOrderBilling(PostWorkOrderFollowUpDTO filter)
         {
             try
-            {
-                List<Actividad> actividads = new List<Actividad>();
+            {                
+                List<Actividad> actividadsOrden = new List<Actividad>();
                 List<GetWorkOrderBillingDTO> getWorkOrderBillingDTOs = new List<GetWorkOrderBillingDTO>();
                 List <OrdenTrabajo> result = await _workOrderFollowUpDomain.GetWorkOrderBilling(filter.fechainicio, filter.fechaFin); 
 
                 result.ForEach(orden => {
-                    actividads = new List<Actividad>();
-                    orden.DetalleEquipoOrdenTrabajo.ToList().ForEach(de => {
-                    actividads.Add(de.ParamEquipoActividadNavigation.ActividadNavigation);
+                    actividadsOrden = new List<Actividad>();
+                    orden.DetalleEquipoOrdenTrabajo.ToList().ForEach(de => {                   
+                        var existActividadNoAplica = getWorkOrderBillingDTOs.Any(x => x.CodigoSuministro == "0");
+                        if (!existActividadNoAplica)
+                        {
+                            GetWorkOrderBillingDTO getWorkOrderBillingDTO = new GetWorkOrderBillingDTO();
+                            getWorkOrderBillingDTO = _mapper.Map<OrdenTrabajo, GetWorkOrderBillingDTO>(orden);
+                            getWorkOrderBillingDTO.Puntaje = de.ParamEquipoActividadNavigation.ActividadNavigation.puntaje.ToString();
+                            getWorkOrderBillingDTO.CodigoActividad = de.ParamEquipoActividadNavigation.ActividadNavigation.Codigo;
+                            getWorkOrderBillingDTO.CodigoSuministro = de.ParamEquipoActividadNavigation.EquipoNavigation.Codigo;
+                            getWorkOrderBillingDTOs.Add(getWorkOrderBillingDTO);
+                        }
                     });
                     orden.DetalleMaterialOrdenTrabajo.ToList().ForEach(de => {
-                        actividads.Add(de.ParamMaterialActividadNavigation.ActividadNavigation);
+                      
+                        var existActividad = getWorkOrderBillingDTOs.Any(x => x.CodigoActividad == de.ParamMaterialActividadNavigation.ActividadNavigation.Codigo);
+                        if (!existActividad)// si no existe actividad
+                        {
+                            GetWorkOrderBillingDTO getWorkOrderBillingDTO = new GetWorkOrderBillingDTO();
+                            getWorkOrderBillingDTO = _mapper.Map<OrdenTrabajo, GetWorkOrderBillingDTO>(orden);
+                            getWorkOrderBillingDTO.Puntaje = de.ParamMaterialActividadNavigation.ActividadNavigation.puntaje.ToString();
+                            getWorkOrderBillingDTO.CodigoActividad = de.ParamMaterialActividadNavigation.ActividadNavigation.Codigo;
+                            getWorkOrderBillingDTO.CodigoSuministro = de.ParamMaterialActividadNavigation.MaterialNavigation.Codigo;
+                            getWorkOrderBillingDTOs.Add(getWorkOrderBillingDTO);
+                        }
                     });
-                    var ordegroup = actividads.GroupBy(a => a.ID).ToList();
-                    ordegroup.ForEach(og => {
-                        GetWorkOrderBillingDTO getWorkOrderBillingDTO = new GetWorkOrderBillingDTO();
-                        getWorkOrderBillingDTO = _mapper.Map<OrdenTrabajo, GetWorkOrderBillingDTO>(orden);
-                        getWorkOrderBillingDTO.Puntaje = og.FirstOrDefault().puntaje.ToString();
-                        getWorkOrderBillingDTO.CodigoActividad = og.FirstOrDefault().Codigo;
-                        getWorkOrderBillingDTOs.Add(getWorkOrderBillingDTO);                        
-                    });
+                    //var ordegroup = actividadsOrden.GroupBy(a => a.ID).ToList();
+                    //actividadsOrden.ForEach(og =>
+                    //{
+                    //    //busca las aactividades con el codigo de no aplica de materiales y equipos
+                    //    var existActividad = getWorkOrderBillingDTOs.Any(x => x.CodigoActividad == "0");
+                    //    if (!existActividad)// si no existe actividad
+                    //    {
+                    //        GetWorkOrderBillingDTO getWorkOrderBillingDTO = new GetWorkOrderBillingDTO();
+                    //        getWorkOrderBillingDTO = _mapper.Map<OrdenTrabajo, GetWorkOrderBillingDTO>(orden);
+                    //        getWorkOrderBillingDTO.Puntaje = og.puntaje.ToString();
+                    //        getWorkOrderBillingDTO.CodigoActividad = og.Codigo;
+                    //        getWorkOrderBillingDTOs.Add(getWorkOrderBillingDTO);
+                    //    }
+                            
+                        
+                    //});
+
+                    //actividadsOrden.ForEach(og => {
+                    //    GetWorkOrderBillingDTO getWorkOrderBillingDTO = new GetWorkOrderBillingDTO();
+                    //    getWorkOrderBillingDTO = _mapper.Map<OrdenTrabajo, GetWorkOrderBillingDTO>(orden);
+                    //    getWorkOrderBillingDTO.Puntaje = og.puntaje.ToString();
+                    //    getWorkOrderBillingDTO.CodigoActividad = og.Codigo;
+                    //    getWorkOrderBillingDTOs.Add(getWorkOrderBillingDTO);
+                    //});
+                    //actividadsMateriales.ForEach(og => {
+                    //    GetWorkOrderBillingDTO getWorkOrderBillingDTO = new GetWorkOrderBillingDTO();
+                    //    getWorkOrderBillingDTO = _mapper.Map<OrdenTrabajo, GetWorkOrderBillingDTO>(orden);
+                    //    getWorkOrderBillingDTO.Puntaje = og.puntaje.ToString();
+                    //    getWorkOrderBillingDTO.CodigoActividad = og.Codigo;
+                    //    getWorkOrderBillingDTOs.Add(getWorkOrderBillingDTO);
+                    //});
+
 
                 });
 
+             
                 return RequestResult<List<GetWorkOrderBillingDTO>>.CreateSuccessful(getWorkOrderBillingDTOs);
             }
             catch (Exception ex)

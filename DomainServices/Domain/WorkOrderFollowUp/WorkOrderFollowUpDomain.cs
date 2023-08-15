@@ -60,8 +60,10 @@ namespace DomainServices.Domain.WorkOrderFollowUp
         {
             return await _context.OrdenTrabajo.Where(x => x.FechaOrden.Date >= fechaInicio.Date && x.FechaOrden.Date <= fechaFinal.Date && x.EstadoOrdenNavigation.Codigo.Equals(CODIGO_ESTADO_EXITOSA))
                .Include(x => x.EstadoOrdenNavigation)
-               .Include(x => x.DetalleEquipoOrdenTrabajo).ThenInclude(i => i.ParamEquipoActividadNavigation.ActividadNavigation)               
-               .Include(x => x.DetalleMaterialOrdenTrabajo).ThenInclude(i => i.ParamMaterialActividadNavigation.ActividadNavigation)               
+               .Include(x => x.DetalleEquipoOrdenTrabajo).ThenInclude(i => i.ParamEquipoActividadNavigation.ActividadNavigation)
+                .Include(x => x.DetalleEquipoOrdenTrabajo).ThenInclude(i => i.ParamEquipoActividadNavigation.EquipoNavigation)
+               .Include(x => x.DetalleMaterialOrdenTrabajo).ThenInclude(i => i.ParamMaterialActividadNavigation.ActividadNavigation)
+               .Include(x => x.DetalleMaterialOrdenTrabajo).ThenInclude(i => i.ParamMaterialActividadNavigation.MaterialNavigation)
                .Include(x => x.UsuarioRegistraNavigation.CentroOperacionNavigation)
                .Include(x => x.TecnicoAuxiliarNavigation)
                .Include(x => x.SuscriptorNavigation)

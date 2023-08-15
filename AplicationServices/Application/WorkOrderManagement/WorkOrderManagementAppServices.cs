@@ -168,6 +168,17 @@ namespace AplicationServices.Application.WorkOrderManagement
                 ICollection<DetalleEquipoOrdenTrabajo> detalleEquipoOrdenTrabajo = _mapper.Map<List<EquiptmentDto>, ICollection<DetalleEquipoOrdenTrabajo>>(workOrder.Supplies.Equiptments);
                 ICollection<DetalleMaterialOrdenTrabajo>  detalleMaterialOrdenTrabajo = _mapper.Map<List<MaterialDto>, ICollection<DetalleMaterialOrdenTrabajo>>(workOrder.Supplies.Materials);
 
+                //workOrder.Activitys.ForEach(a => {
+
+                //    detalleEquipoOrdenTrabajo.ToList().ForEach(e => {
+                //        ParamEquipoActividad paramEquipoActividad = new ParamEquipoActividad();
+                //        if  (!(paramEquipoActividad.Actividad == Guid.Parse(a)))
+                //        {
+
+                //        }
+                //    });
+
+                //});
 
                 if (detalleEquipoOrdenTrabajo.Count() > 0)
                 {

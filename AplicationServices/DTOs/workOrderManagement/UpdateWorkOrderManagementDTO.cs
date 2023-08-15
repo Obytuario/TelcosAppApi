@@ -16,6 +16,7 @@ namespace AplicationServices.DTOs.workOrderManagement
         public Guid IdUser { get; set; }
 
         public List<ImageDto> Photos { get; set; }
+        //public List<string> Activitys { get; set; }
 
         public SuppliesDTO Supplies { get; set; }
     }
@@ -41,6 +42,11 @@ namespace AplicationServices.DTOs.workOrderManagement
     }
 
     public class MaterialDto
+    {
+        public string ParamMaterialDto { get; set; }
+        public int CantidadDto { get; set; }
+    }
+    public class activitysDto
     {
         public string ParamMaterialDto { get; set; }
         public int CantidadDto { get; set; }

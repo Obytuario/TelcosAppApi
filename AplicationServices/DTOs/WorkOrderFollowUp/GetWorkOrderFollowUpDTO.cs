@@ -107,6 +107,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public string NumeroDocumentoAuxiliar { get; set; }
         public string CentroOperaciones { get; set; }
         public string CodigoActividad { get; set; }
+        public string CodigoSuministro { get; set; }
         public DateTime FechaOrdenTrabajo { get; set; }        
         public string Puntaje { get; set; }
         
