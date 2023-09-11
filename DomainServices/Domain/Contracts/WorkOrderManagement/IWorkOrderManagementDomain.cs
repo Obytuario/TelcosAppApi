@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,5 +23,10 @@ namespace DomainServices.Domain.Contracts.WorkOrderManagement
 
         void saveDetalleCancelacionOrden(DetalleCancelacionOrden detalleCancelacionOrden);
         Task<List<MotivoCancelacionOrden>> GetWorkOrderReasonCancel();
+        Task<List<ParamEquipoActividad>> GetParamEquipmentByActivity(Guid activity);
+        Task<List<ParamMaterialActividad>> GetParammaterialByActivity(Guid activity);
+        Task<List<MovimientoEquipo>> GetMovimientoEquipo();
+
+
     }
 }

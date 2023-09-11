@@ -38,6 +38,21 @@ namespace DomainServices.Domain.WorkOrderManagement
         {
             return await _context.EstadoOrdenTrabajo.Where(x => x.Activo).ToListAsync();
         }
+
+        public async Task<List<ParamEquipoActividad>> GetParamEquipmentByActivity(Guid activity)
+        {
+            return await _context.ParamEquipoActividad.Where(x => x.Actividad.Equals(activity))
+                                                      .Include(x => x.EquipoNavigation).ToListAsync();
+        }
+        public async Task<List<ParamMaterialActividad>> GetParammaterialByActivity(Guid activity)
+        {
+            return await _context.ParamMaterialActividad.Where(x => x.Actividad.Equals(activity))
+                                                      .Include(x => x.MaterialNavigation).ToListAsync();
+        }
+        public async Task<List<MovimientoEquipo>> GetMovimientoEquipo()
+        {
+            return await _context.MovimientoEquipo.Where(x => x.Activo).ToListAsync();
+        }
         public async Task<List<MotivoCancelacionOrden>> GetWorkOrderReasonCancel()
         {
             return await _context.MotivoCancelacionOrden.Where(x => x.Activo).ToListAsync();

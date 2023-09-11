@@ -13,6 +13,7 @@ using TelcosAppApi.DataAccess.Entities;
 using AplicationServices.Helpers.TextResorce;
 using Microsoft.EntityFrameworkCore.Metadata;
 using AplicationServices.Application.Contracts.Carpetas;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace AplicationServices.Application.WorkOrderManagement
 {
@@ -168,32 +169,75 @@ namespace AplicationServices.Application.WorkOrderManagement
                 ICollection<DetalleEquipoOrdenTrabajo> detalleEquipoOrdenTrabajo = _mapper.Map<List<EquiptmentDto>, ICollection<DetalleEquipoOrdenTrabajo>>(workOrder.Supplies.Equiptments);
                 ICollection<DetalleMaterialOrdenTrabajo>  detalleMaterialOrdenTrabajo = _mapper.Map<List<MaterialDto>, ICollection<DetalleMaterialOrdenTrabajo>>(workOrder.Supplies.Materials);
 
-                //workOrder.Activitys.ForEach(a => {
-
-                //    detalleEquipoOrdenTrabajo.ToList().ForEach(e => {
-                //        ParamEquipoActividad paramEquipoActividad = new ParamEquipoActividad();
-                //        if  (!(paramEquipoActividad.Actividad == Guid.Parse(a)))
-                //        {
-
-                //        }
-                //    });
-
-                //});
+               
 
                 if (detalleEquipoOrdenTrabajo.Count() > 0)
                 {
+                    //detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.UsuarioRegistra = workOrder.IdUser);
+                    //detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
+                    //_workOrderManagementDomain.SaveDetalleEquipoOrdenTrabajo(detalleEquipoOrdenTrabajo);
+                }
+                
+                    workOrder.Activitys?.ForEach(a =>
+                    {
+                        List<ParamEquipoActividad> paramEquipoActividad = _workOrderManagementDomain.GetParamEquipmentByActivity(Guid.Parse(a)).Result;
+                        bool existActivity = false;
+                        foreach (var item in detalleEquipoOrdenTrabajo)
+                        {
+                            existActivity = paramEquipoActividad.Any(p => p.ID == item.ParamEquipoActividad);
+                            if(existActivity)
+                                break;
+                        }
+                        if (!existActivity)
+                        {
+                            Guid idMovimiento = _workOrderManagementDomain.GetMovimientoEquipo().Result.FirstOrDefault().ID;
+                            EquiptmentDto equiptmentDto = new EquiptmentDto();
+                            equiptmentDto.SerialDto = "0";
+                            equiptmentDto.ParamEquipoDto = paramEquipoActividad.Find(x => x.EquipoNavigation.Codigo=="0").ID;
+                            equiptmentDto.IdMovimientoDto = idMovimiento;
+                            detalleEquipoOrdenTrabajo.Add(_mapper.Map<EquiptmentDto, DetalleEquipoOrdenTrabajo>(equiptmentDto));
+                        }  
+
+                    });
                     detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.UsuarioRegistra = workOrder.IdUser);
                     detalleEquipoOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
                     _workOrderManagementDomain.SaveDetalleEquipoOrdenTrabajo(detalleEquipoOrdenTrabajo);
-                }
+
+                
                 
 
                 if (detalleMaterialOrdenTrabajo.Count() > 0)
                 {
+                    //detalleMaterialOrdenTrabajo.ToList().ForEach(x => x.UsuarioRegistra = workOrder.IdUser);
+                    //detalleMaterialOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
+                    //_workOrderManagementDomain.SaveDetalleMaterialOrdenTrabajo(detalleMaterialOrdenTrabajo);
+                }
+                
+                    workOrder.Activitys?.ForEach(a =>
+                    {
+                        List<ParamMaterialActividad> paramMaterialActividad = _workOrderManagementDomain.GetParammaterialByActivity(Guid.Parse(a)).Result;
+                        bool existActivity = false;
+                        foreach (var item in detalleMaterialOrdenTrabajo)
+                        {
+                            existActivity = paramMaterialActividad.Any(p => p.ID == item.ParamMaterialActividad);
+                            if (existActivity)
+                                break;
+                        }
+                        if (!existActivity)
+                        {
+                            Guid idMovimiento = _workOrderManagementDomain.GetMovimientoEquipo().Result.FirstOrDefault().ID;
+                            MaterialDto materialDto = new MaterialDto();
+                            materialDto.CantidadDto = 0;
+                            materialDto.ParamMaterialDto = paramMaterialActividad.Find(x => x.MaterialNavigation.Codigo == "0").ID.ToString();
+                            detalleMaterialOrdenTrabajo.Add(_mapper.Map<MaterialDto, DetalleMaterialOrdenTrabajo>(materialDto));
+                        }
+
+                    });
                     detalleMaterialOrdenTrabajo.ToList().ForEach(x => x.UsuarioRegistra = workOrder.IdUser);
                     detalleMaterialOrdenTrabajo.ToList().ForEach(x => x.OrdenTrabajo = workOrder.IdWorkOrder);
                     _workOrderManagementDomain.SaveDetalleMaterialOrdenTrabajo(detalleMaterialOrdenTrabajo);
-                }
+
+                
 
                 if (workOrder.Photos.Count() > 0)
                 {

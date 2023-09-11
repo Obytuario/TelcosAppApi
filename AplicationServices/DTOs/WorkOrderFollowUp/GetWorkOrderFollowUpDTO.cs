@@ -13,6 +13,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public string? Nodo { get; set; }
         public string NombreTecnico { get; set; }        
         public string NumeroDocumento { get; set; }
+        public string NumeroCuenta { get; set; }
         public string EstadoOrden { get; set; }
         public string CodigoEstadoOrden { get; set; }
         public DateTime FechaOrdenTrabajo { get; set; }

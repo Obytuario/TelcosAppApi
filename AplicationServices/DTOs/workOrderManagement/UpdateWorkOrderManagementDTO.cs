@@ -16,7 +16,7 @@ namespace AplicationServices.DTOs.workOrderManagement
         public Guid IdUser { get; set; }
 
         public List<ImageDto> Photos { get; set; }
-        //public List<string> Activitys { get; set; }
+        public List<string>? Activitys { get; set; }
 
         public SuppliesDTO Supplies { get; set; }
     }
