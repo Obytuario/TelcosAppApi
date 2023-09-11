@@ -128,7 +128,7 @@ namespace AplicationServices.Application.WorkOrderManagement
             {
                 List<string> errorMessageValidations = new List<string>();
 
-                Guid? idOrdenTrabajo = _workOrderManagementDomain.GetWorkOrderByNumber(workOrder.NumeroOrdenDto).Result?.ID;
+                Guid? idOrdenTrabajo = _workOrderManagementDomain.GetWorkOrderByNumber(workOrder.NumeroOrdenDto.Trim()).Result?.ID;
 
                 if (idOrdenTrabajo != null)
                 {

@@ -83,7 +83,7 @@ namespace DomainServices.Domain.WorkOrderManagement
 
         public async Task<OrdenTrabajo> GetWorkOrderByNumber(string number)
         {
-            return await _context.OrdenTrabajo.Where(x => x.NumeroOrden.Equals(number) && x.FechaRegistro.Date == DateTime.Now.Date)
+            return await _context.OrdenTrabajo.Where(x => x.NumeroOrden.Equals(number))
                 .Include(x => x.EstadoOrdenNavigation)
                 .Include(x => x.DetalleEquipoOrdenTrabajo)
                 .Include(x => x.DetalleMaterialOrdenTrabajo)
