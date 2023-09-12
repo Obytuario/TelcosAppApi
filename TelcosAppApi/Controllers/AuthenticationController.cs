@@ -39,6 +39,11 @@ namespace TelcosAppApi.Controllers
         {            
             return await _AuthenticationServices.Login(credencialesUsuario);           
         }
+        [HttpPost("RestoreLogin")]
+        public async Task<RequestResult<RespuestaAutenticacionDto>> RestoreLogin(CredencialesUsuarioDto credencialesUsuario)
+        {
+            return await _AuthenticationServices.RestoreLogin(credencialesUsuario);
+        }
         [HttpPost("CargaMasiva")]
         public async Task<RequestResult<string>> CargaMasiva(CargaDto cargaDto)
         {

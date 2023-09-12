@@ -135,6 +135,9 @@
   <data name="NotExistUser" xml:space="preserve">
     <value>Usuario No existe, valide por favor.</value>
   </data>
+  <data name="PasswordNotExist" xml:space="preserve">
+    <value>La contraseña no es valida.</value>
+  </data>
   <data name="SucessFullLocation" xml:space="preserve">
     <value>Cordenadas guardadas</value>
   </data>

@@ -116,9 +116,9 @@ namespace AplicationServices.DTOs.Generics
         //
         // Devuelve:
         //     Resultado de la petición
-        public static RequestResult<T> CreateUnsuccessful(IEnumerable<string> messages)
+        public static RequestResult<T> CreateUnsuccessful(T result ,IEnumerable<string> messages,string errorMessage = null )
         {
-            return new RequestResult<T>(isSuccessful: false, isError: false, null, messages, default(T));
+            return new RequestResult<T>(isSuccessful: false, isError: false, errorMessage, messages, result);
         }
 
         //

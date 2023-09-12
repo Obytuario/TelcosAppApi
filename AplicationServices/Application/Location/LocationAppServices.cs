@@ -47,7 +47,7 @@ namespace AplicationServices.Application.Location
                 var user = _mapper.Map<LocationDto, UbicacionUsuario>(userDto);
                 SaveUserLocationValidations(ref errorMessageValidations, user);
                 if (errorMessageValidations.Any())
-                    return RequestResult<string>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<string>.CreateUnsuccessful(null, errorMessageValidations);
                 _locationDomain.ValidateLocationsUser();
                 _locationDomain.SaveLocationUser(user);
                 return RequestResult<string>.CreateSuccessful(ResourceUserMsm.SucessFullLocation);
@@ -72,7 +72,7 @@ namespace AplicationServices.Application.Location
               
               
                 if (errorMessageValidations.Any())
-                    return RequestResult<List<GetLocationUserDto>>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<List<GetLocationUserDto>>.CreateUnsuccessful(null, errorMessageValidations);
 
                 var Users = _mapper.Map<List<UbicacionUsuario>, List<GetLocationUserDto>>(await _locationDomain.GetLocationByUser(user ?? Guid.Empty));
 
@@ -101,7 +101,7 @@ namespace AplicationServices.Application.Location
 
 
                 if (errorMessageValidations.Any())
-                    return RequestResult<List<GetLocationWorkOrderDto>>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<List<GetLocationWorkOrderDto>>.CreateUnsuccessful(null, errorMessageValidations);
 
                 var Users = _mapper.Map<List<OrdenTrabajo>, List<GetLocationWorkOrderDto>>(await _locationDomain.GetLocationWorkOrder(user ?? Guid.Empty));
 

@@ -115,6 +115,15 @@ namespace AplicationServices.Helpers.TextResorce {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a La contraseña no es valida..
+        /// </summary>
+        internal static string PasswordNotExist {
+            get {
+                return ResourceManager.GetString("PasswordNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Cordenadas guardadas.
         /// </summary>
         internal static string SucessFullLocation {

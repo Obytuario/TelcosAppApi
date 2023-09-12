@@ -110,13 +110,13 @@ namespace AplicationServices.Application.User
                 var user = _mapper.Map<PostUserDto, Usuario>(userDto);
                 SaveUserValidations(ref errorMessageValidations,user);
                 if(errorMessageValidations.Any())
-                    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<PostUserDto>.CreateUnsuccessful(null, errorMessageValidations);
 
                 var findUser = await _userDomain.GetUser(user.NumeroDocumento);
                 if (findUser != null)
                 {                    
                     errorMessageValidations.Add(ResourceUserMsm.ExistUser);
-                    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<PostUserDto>.CreateUnsuccessful(null, errorMessageValidations);
                 }
                 //detereminar contraseña generica en el config o una tabla de variables genericas
                 user.Contraseña = "Telcos2023";
@@ -146,14 +146,14 @@ namespace AplicationServices.Application.User
                 var user = _mapper.Map<PostUserDto, Usuario>(userDto);
                 SaveUserValidations(ref errorMessageValidations, user);
                 if (errorMessageValidations.Any())
-                    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<PostUserDto>.CreateUnsuccessful(null, errorMessageValidations);
 
                 Usuario findUser = await _userDomain.GetUserById(user.ID);
                 if (findUser == null)
                 {
                     //Context.Entry(resultUpdate).CurrentValues.SetValues(recordAnestesia);
                     errorMessageValidations.Add(ResourceUserMsm.NotExistUser);
-                    return RequestResult<PostUserDto>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<PostUserDto>.CreateUnsuccessful(null, errorMessageValidations);
                 }
 
                

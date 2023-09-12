@@ -214,7 +214,7 @@ namespace AplicationServices.Application.WorkOrderFollowUp
                 var detalleEquipo = _mapper.Map<DetailWorkOrderFollowequipment, DetalleEquipoOrdenTrabajo>(detail);
                 SaveWorkFollowEquipmentValidations(ref errorMessageValidations, detalleEquipo);
                 if (errorMessageValidations.Any())
-                    return RequestResult<DetailWorkOrderFollowequipment>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<DetailWorkOrderFollowequipment>.CreateUnsuccessful(null, errorMessageValidations);
 
                
 
@@ -240,7 +240,7 @@ namespace AplicationServices.Application.WorkOrderFollowUp
                 var detalleMaterial = _mapper.Map<DetailWorkOrderFollowMaterial, DetalleMaterialOrdenTrabajo>(detail);
                 SaveWorkFollowMaterialValidations(ref errorMessageValidations, detalleMaterial);
                 if (errorMessageValidations.Any())
-                    return RequestResult<DetailWorkOrderFollowMaterial>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<DetailWorkOrderFollowMaterial>.CreateUnsuccessful(null, errorMessageValidations);
 
                 _workOrderFollowUpDomain.UpdateDetailMaterial(detalleMaterial);
                 
@@ -266,7 +266,7 @@ namespace AplicationServices.Application.WorkOrderFollowUp
                 detalleEquipo.Activo = false;
                 SaveWorkFollowEquipmentValidations(ref errorMessageValidations, detalleEquipo);
                 if (errorMessageValidations.Any())
-                    return RequestResult<DetailWorkOrderFollowequipment>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<DetailWorkOrderFollowequipment>.CreateUnsuccessful(null, errorMessageValidations);
 
 
 
@@ -293,7 +293,7 @@ namespace AplicationServices.Application.WorkOrderFollowUp
                 detalleMaterial.Activo = false;
                 SaveWorkFollowMaterialValidations(ref errorMessageValidations, detalleMaterial);
                 if (errorMessageValidations.Any())
-                    return RequestResult<DetailWorkOrderFollowMaterial>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<DetailWorkOrderFollowMaterial>.CreateUnsuccessful(null, errorMessageValidations);
 
                 _workOrderFollowUpDomain.UpdateDetailMaterial(detalleMaterial);
 

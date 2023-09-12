@@ -71,29 +71,83 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
                 List<string> errorMessageValidations = new List<string>();
                 LoginValidations(ref errorMessageValidations, credencialesUsuario);
                 if (errorMessageValidations.Any())
-                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(null,errorMessageValidations);
                 var user = await _userDomain.GetUser(credencialesUsuario.User);
                 if (user == null)
                 {
                     errorMessageValidations.Add(ResourceUserMsm.CredentialsInvalidate);
-                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(null, errorMessageValidations);
                 }
                 #endregion
 
                 /*comparacion de hash*/               
                 bool isHash = _hash.GetHash(credencialesUsuario.Password, Convert.FromBase64String(user.Salt)).Hash.Equals(user.Contraseña);
                 if (!isHash)
-                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(new string[] { ResourceUserMsm.CredentialsInvalidate });
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(null,new string[] { ResourceUserMsm.CredentialsInvalidate });
                 /*Guardado Ubicacion*/
                 GenerateLocation(user, credencialesUsuario);
                 /*Construccion de token*/
-                return RequestResult<RespuestaAutenticacionDto>.CreateSuccessful(ConstruirToken(credencialesUsuario, user)); 
+                RespuestaAutenticacionDto respuestaAutenticacionDto =  ConstruirToken(credencialesUsuario, user);
+
+                /*reconstruccion de contraseña*/
+                if(respuestaAutenticacionDto.IsExpiration)
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(respuestaAutenticacionDto,new string[] { ResourceUserMsm.CredentialsInvalidate });
+
+                return RequestResult<RespuestaAutenticacionDto>.CreateSuccessful(respuestaAutenticacionDto); 
               
             }
             catch (Exception ex)
             {
                 return RequestResult<RespuestaAutenticacionDto>.CreateError(ex.Message);
                
+            }
+        }
+        public async Task<RequestResult<RespuestaAutenticacionDto>> RestoreLogin(CredencialesUsuarioDto credencialesUsuario)
+        {
+            try
+            {
+                #region Validaciones
+                List<string> errorMessageValidations = new List<string>();
+                Usuario user = new Usuario();
+                LoginValidations(ref errorMessageValidations, credencialesUsuario);
+                if (errorMessageValidations.Any())
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(null, errorMessageValidations);
+                Usuario userFind = await _userDomain.GetUserById(Guid.Parse(credencialesUsuario.User));
+                if (userFind == null)
+                {
+                    errorMessageValidations.Add(ResourceUserMsm.CredentialsInvalidate);
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(null, errorMessageValidations);
+                }
+                #endregion     
+
+              
+                
+                /*Construccion de token*/
+                RespuestaAutenticacionDto respuestaAutenticacionDto = ConstruirToken(credencialesUsuario, userFind);
+
+                /*reconstruccion de contraseña*/
+                if (!respuestaAutenticacionDto.IsExpiration)
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(respuestaAutenticacionDto, new string[] { ResourceUserMsm.CredentialsInvalidate });
+
+                //detereminar contraseña generica en el config o una tabla de variables genericas
+                user = userFind;
+                user.Contraseña = credencialesUsuario.Password;
+                var hash = _hash.GetHash(user.Contraseña);
+                user.Contraseña = hash.Hash;
+                user.GenerarContraseña = false;
+                user.Salt = Convert.ToBase64String(hash.SaltHash);
+
+                /*Guardado Ubicacion*/
+                GenerateLocation(user, credencialesUsuario);
+
+                _userDomain.UpdateUser(user, userFind);
+                return RequestResult<RespuestaAutenticacionDto>.CreateSuccessful(respuestaAutenticacionDto);
+
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<RespuestaAutenticacionDto>.CreateError(ex.Message);
+
             }
         }
         public async Task<RequestResult<string>> CargaMasiva(CargaDto cargaDto)
@@ -270,8 +324,8 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
                 UserID = User.ID,
                 NameUser = string.Concat(User.PrimerNombre ?? "", " ", User.Apellidos ?? ""),
                 ChargeUser = User.CargoNavigation?.Descripcion??"",
-                RolCode = User.RolNavigation?.Codigo??""
-                //Expiracion = expiracion
+                RolCode = User.RolNavigation?.Codigo??"",
+                IsExpiration = User.GenerarContraseña
             };
         }
         /// <summary>
@@ -283,11 +337,11 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
         {
             if (string.IsNullOrEmpty(credencialesUsuarioDto.User))
             {
-                errorMessageValidations.Add(ResourceUserMsm.InvalidParameterDocument);
+                errorMessageValidations.Add(ResourceUserMsm.NotExistUser);
             }
             if (string.IsNullOrEmpty(credencialesUsuarioDto.Password))
             {
-                errorMessageValidations.Add(ResourceUserMsm.InvalidParameterDocument);
+                errorMessageValidations.Add(ResourceUserMsm.PasswordNotExist);
             }            
         }
         /// <summary>

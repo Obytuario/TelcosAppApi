@@ -133,7 +133,7 @@ namespace AplicationServices.Application.WorkOrderManagement
                 if (idOrdenTrabajo != null)
                 {
                     errorMessageValidations.Add(ResourceUserMsm.ExistingOrder);
-                    return RequestResult<PostWorkOrderManagementDTO>.CreateUnsuccessful(errorMessageValidations);
+                    return RequestResult<PostWorkOrderManagementDTO>.CreateUnsuccessful(null, errorMessageValidations);
                 }
 
                 OrdenTrabajo ordenTrabajo = _mapper.Map<PostWorkOrderManagementDTO, OrdenTrabajo>(workOrder);

@@ -7,5 +7,6 @@
         public string RolCode { get; set; }
         public string NameUser { get; set; }
         public string ChargeUser { get; set; }
+        public bool IsExpiration { get; set; }
     }
 }
