@@ -19,6 +19,7 @@ namespace AplicationServices.DTOs.WorkOrderFollowUp
         public DateTime FechaOrdenTrabajo { get; set; }
         public Guid IdCarpeta { get; set; }
         public string NombreCarpeta { get; set; }
+        public string CentroOperaciones { get; set; }
         public List<DetailWorkOrderFollowMaterial> Detallematerial  { get; set; }
         public List<DetailWorkOrderFollowequipment> DetalleEquipo { get; set; }
         

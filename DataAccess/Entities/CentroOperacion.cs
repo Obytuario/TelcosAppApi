@@ -19,5 +19,7 @@ public partial class CentroOperacion
 
     public virtual ICollection<LogUsuario> LogUsuario { get; } = new List<LogUsuario>();
 
+    public virtual ICollection<OrdenTrabajo> OrdenTrabajo { get; } = new List<OrdenTrabajo>();
+
     public virtual ICollection<Usuario> Usuario { get; } = new List<Usuario>();
 }

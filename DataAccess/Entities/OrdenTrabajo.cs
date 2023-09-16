@@ -35,6 +35,8 @@ public partial class OrdenTrabajo
 
     public virtual Carpeta CarpetaNavigation { get; set; } = null!;
 
+    public virtual CentroOperacion? CentroOperacionNavigation { get; set; }
+
     public virtual DetalleCancelacionOrden? DetalleCancelacionOrdenNavigation { get; set; }
 
     public virtual ICollection<DetalleEquipoOrdenTrabajo> DetalleEquipoOrdenTrabajo { get; } = new List<DetalleEquipoOrdenTrabajo>();

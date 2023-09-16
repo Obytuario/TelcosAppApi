@@ -21,6 +21,7 @@ namespace AplicationServices.DTOs.User
         public string? nameSuperior { get; set; }
         public Guid idOperationCenter { get; set; }
         public bool active { get; set; }
+        public bool generatePassword { get; set; }       
         public string? operationCenter { get; set; }
         public string? mobile { get; set; }
         public string? email { get; set; }

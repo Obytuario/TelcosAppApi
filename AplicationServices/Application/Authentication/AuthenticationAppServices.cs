@@ -79,15 +79,15 @@ namespace TelcosAppApi.AplicationServices.Application.Authentication
                     return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(null, errorMessageValidations);
                 }
                 #endregion
-
-                /*comparacion de hash*/               
+                /*Construccion de token*/
+                RespuestaAutenticacionDto respuestaAutenticacionDto = ConstruirToken(credencialesUsuario, user);
+                /*comparacion de hash*/
                 bool isHash = _hash.GetHash(credencialesUsuario.Password, Convert.FromBase64String(user.Salt)).Hash.Equals(user.Contraseña);
                 if (!isHash)
-                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(null,new string[] { ResourceUserMsm.CredentialsInvalidate });
+                    return RequestResult<RespuestaAutenticacionDto>.CreateUnsuccessful(respuestaAutenticacionDto, new string[] { ResourceUserMsm.CredentialsInvalidate });
                 /*Guardado Ubicacion*/
                 GenerateLocation(user, credencialesUsuario);
-                /*Construccion de token*/
-                RespuestaAutenticacionDto respuestaAutenticacionDto =  ConstruirToken(credencialesUsuario, user);
+                
 
                 /*reconstruccion de contraseña*/
                 if(respuestaAutenticacionDto.IsExpiration)

@@ -16,6 +16,7 @@ using AplicationServices.Application.Contracts.WorkOrderFollowUp;
 using AplicationServices.DTOs.User;
 using AplicationServices.Helpers.TextResorce;
 using System.Security.Cryptography.X509Certificates;
+using System.Linq.Expressions;
 
 namespace AplicationServices.Application.WorkOrderFollowUp
 {
@@ -46,13 +47,15 @@ namespace AplicationServices.Application.WorkOrderFollowUp
                 var listWorkOrders = _mapper.Map<List<OrdenTrabajo>, List<GetWorkOrderFollowUpDTO>>(await _workOrderFollowUpDomain.GetWorkOrderFollowUp(filter.fechainicio, filter.fechaFin));
                 listWorkOrders.ForEach(x =>
                 {
-                    x.DetalleEquipo.ForEach(d =>
-                    {
-                        d.ReporteEquipoDetalleHistorico = _mapper.Map<List<LogDetalleEquipoOrdenTrabajo>, List<LogReportEquipmentDetailDTO>>(_workOrderFollowUpDomain.GetWorkOrderEquipmentLogByID(d.IdDetalle));
+                    x.DetalleEquipo.ForEach( d =>           
+                    {                      
+                        
+                        d.ReporteEquipoDetalleHistorico = _mapper.Map<IQueryable<LogDetalleEquipoOrdenTrabajo>, List<LogReportEquipmentDetailDTO>>(_workOrderFollowUpDomain.GetWorkOrderEquipmentLogByID(d.IdDetalle));
+                       
                     });
                     x.Detallematerial.ForEach(d =>
                     {
-                        d.ReporteMaterialDetalleHistorico = _mapper.Map<List<LogDetalleMaterialOrdenTrabajo>, List<LogReportMaterialDetailDTO>>(_workOrderFollowUpDomain.GetWorkOrderMaterialLogByID(d.IdDetalle));
+                        d.ReporteMaterialDetalleHistorico = _mapper.Map<IQueryable<LogDetalleMaterialOrdenTrabajo>, List<LogReportMaterialDetailDTO>>(_workOrderFollowUpDomain.GetWorkOrderMaterialLogByID(d.IdDetalle));                        
                     });
 
                     

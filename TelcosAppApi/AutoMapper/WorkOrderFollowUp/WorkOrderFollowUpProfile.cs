@@ -35,6 +35,7 @@ namespace TelcosAppApi.AutoMapper.WorkOrderFollowUp
                 .ForMember(target => target.NumeroDocumento, opt => opt.MapFrom(source => source.UsuarioRegistraNavigation.NumeroDocumento))
                 .ForMember(target => target.NumeroOrden, opt => opt.MapFrom(source => source.NumeroOrden))
                 .ForMember(target => target.NumeroCuenta, opt => opt.MapFrom(source => source.SuscriptorNavigation.NumeroCuenta))
+                .ForMember(target => target.CentroOperaciones, opt => opt.MapFrom(source => source.CentroOperacionNavigation.Descripcion))
                 .ForMember(target => target.Nodo, opt => opt.MapFrom(source => source.Nodo))
                 .ForMember(target => target.EstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Descripcion))
                 .ForMember(target => target.CodigoEstadoOrden, opt => opt.MapFrom(source => source.EstadoOrdenNavigation.Codigo))

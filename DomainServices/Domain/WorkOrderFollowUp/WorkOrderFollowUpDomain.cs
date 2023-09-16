@@ -13,6 +13,10 @@ namespace DomainServices.Domain.WorkOrderFollowUp
     {
         public readonly string CODIGO_ESTADO_EXITOSA = "EXIT";
         private readonly TelcosSuiteContext _context;
+        private static readonly object lockObject = new object();
+        public TelcosSuiteContext _ContextAsync { get; private set; }
+        //public DbSet<TEntity> Entity { get; private set; }
+
 
         public WorkOrderFollowUpDomain(TelcosSuiteContext telcosApiContext)
         {
@@ -33,28 +37,35 @@ namespace DomainServices.Domain.WorkOrderFollowUp
                .Include(x => x.CarpetaNavigation)
                .Include(x => x.UsuarioRegistraNavigation)
                .Include(x => x.SuscriptorNavigation)
-               .ToListAsync();          
+               .Include(x => x.CentroOperacionNavigation).ToListAsync();          
         }
-        public List<LogDetalleEquipoOrdenTrabajo> GetWorkOrderEquipmentLogByID(Guid idDetalle)
+        public IQueryable<LogDetalleEquipoOrdenTrabajo> GetWorkOrderEquipmentLogByID(Guid idDetalle)
         {
-            return _context.LogDetalleEquipoOrdenTrabajo.Where(x => x.DetalleEquipoOrdenTRabajo.Equals(idDetalle))
+            
+                return  _context.LogDetalleEquipoOrdenTrabajo.Where(x => x.DetalleEquipoOrdenTRabajo.Equals(idDetalle))
                .Include(x => x.ParamEquipoActividadNavigation.EquipoNavigation)
-               .Include(x => x.MovimientoEquipoNavigation)               
+               .Include(x => x.MovimientoEquipoNavigation)
                .Include(x => x.DetalleEquipoOrdenTRabajoNavigation.OrdenTrabajoNavigation.CarpetaNavigation)
                .Include(x => x.DetalleEquipoOrdenTRabajoNavigation.OrdenTrabajoNavigation.UsuarioRegistraNavigation)
                .Include(x => x.DetalleEquipoOrdenTRabajoNavigation.OrdenTrabajoNavigation.EstadoOrdenNavigation)
-               .Include(x => x.UsuarioModificaNavigation)               
-               .ToList();
+              .Include(x => x.UsuarioModificaNavigation).AsNoTracking();
+         
+                
         }
-        public List<LogDetalleMaterialOrdenTrabajo> GetWorkOrderMaterialLogByID(Guid idDetalle)
+        public IQueryable<LogDetalleMaterialOrdenTrabajo> GetWorkOrderMaterialLogByID(Guid idDetalle)
         {
-            return _context.LogDetalleMaterialOrdenTrabajo.Where(x => x.DetalleMaterialOrdenTrabajo.Equals(idDetalle))
-               .Include(x => x.ParamMaterialActividadNavigation.MaterialNavigation)               
-               .Include(x => x.DetalleMaterialOrdenTrabajoNavigation.OrdenTrabajoNavigation.CarpetaNavigation)
-               .Include(x => x.DetalleMaterialOrdenTrabajoNavigation.OrdenTrabajoNavigation.UsuarioRegistraNavigation)
-               .Include(x => x.DetalleMaterialOrdenTrabajoNavigation.OrdenTrabajoNavigation.EstadoOrdenNavigation)
-               .Include(x => x.UsuarioModificaNavigation)
-               .ToList();
+            
+            lock (lockObject)
+            {              
+                    return _context.LogDetalleMaterialOrdenTrabajo.Where(x => x.DetalleMaterialOrdenTrabajo.Equals(idDetalle))
+                 .Include(x => x.ParamMaterialActividadNavigation.MaterialNavigation)
+                 .Include(x => x.DetalleMaterialOrdenTrabajoNavigation.OrdenTrabajoNavigation.CarpetaNavigation)
+                 .Include(x => x.DetalleMaterialOrdenTrabajoNavigation.OrdenTrabajoNavigation.UsuarioRegistraNavigation)
+                 .Include(x => x.DetalleMaterialOrdenTrabajoNavigation.OrdenTrabajoNavigation.EstadoOrdenNavigation)
+                 .Include(x => x.UsuarioModificaNavigation).AsNoTracking().AsSingleQuery();
+                
+            }
+
         }
         public async Task<List<OrdenTrabajo>> GetWorkOrderBilling(DateTime fechaInicio, DateTime fechaFinal)
         {

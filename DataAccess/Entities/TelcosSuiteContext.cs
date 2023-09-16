@@ -69,14 +69,14 @@ public partial class TelcosSuiteContext : DbContext
 
     public virtual DbSet<Usuario> Usuario { get; set; }
 
-
+ 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Actividad>(entity =>
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
             entity.Property(e => e.Codigo)
-                .HasMaxLength(10)
+                .HasMaxLength(15)
                 .IsUnicode(false);
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(200)
@@ -179,7 +179,7 @@ public partial class TelcosSuiteContext : DbContext
         {
             entity.Property(e => e.ID).ValueGeneratedNever();
             entity.Property(e => e.UrlImagen)
-                .HasMaxLength(50)
+                .HasMaxLength(200)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.OrdenTrabajoNavigation).WithMany(p => p.DetalleImagenOrdenTrabajo)
@@ -411,6 +411,10 @@ public partial class TelcosSuiteContext : DbContext
                 .HasForeignKey(d => d.Carpeta)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OrdenTrabajo_Carpeta");
+
+            entity.HasOne(d => d.CentroOperacionNavigation).WithMany(p => p.OrdenTrabajo)
+                .HasForeignKey(d => d.CentroOperacion)
+                .HasConstraintName("FK_OrdenTrabajo_CentroOperacion");
 
             entity.HasOne(d => d.DetalleCancelacionOrdenNavigation).WithMany(p => p.OrdenTrabajo)
                 .HasForeignKey(d => d.DetalleCancelacionOrden)

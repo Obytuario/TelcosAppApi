@@ -18,7 +18,8 @@ namespace DomainServices.Domain.Contracts.WorkOrderFollowUp
         Task<List<Actividad>> GetActivity(Guid? carpeta);
         Task<List<TipoImagen>> GetPhotoType();
         Task<List<OrdenTrabajo>> GetWorkOrderBilling(DateTime fechaInicio, DateTime fechaFinal);
-        List<LogDetalleEquipoOrdenTrabajo> GetWorkOrderEquipmentLogByID(Guid idDetalle);
-        List<LogDetalleMaterialOrdenTrabajo> GetWorkOrderMaterialLogByID(Guid idDetalle);
+        IQueryable<LogDetalleEquipoOrdenTrabajo>GetWorkOrderEquipmentLogByID(Guid idDetalle);
+        //Task<List<LogDetalleMaterialOrdenTrabajo>> GetWorkOrderMaterialLogByID(Guid idDetalle);
+        IQueryable<LogDetalleMaterialOrdenTrabajo> GetWorkOrderMaterialLogByID(Guid idDetalle);
     }
 }
